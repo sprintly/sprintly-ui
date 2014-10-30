@@ -32,7 +32,7 @@ React.renderComponent(
 
 Example 2:
 ```
-var SelectorMenu = require('/path/sprintly-uikit').Widget;
+var Widget = require('/path/sprintly-uikit').Widget;
 
 React.renderComponent(
   <Widget
@@ -45,11 +45,13 @@ React.renderComponent(
 
 ## Testing
 
-Compile and build tests with ```npm run build-test``` and run tests via ```npm test```, or combine ```npm run build-test && npm test```.
+Before you can run the test suite, you'll need to compile and build the necessary files by running ```npm run setup-tests```. Thereafter, run tests via ```npm test```.
 
 
 ## Examples
 
 [Selector menu example][1]
 
-[1]: path_to_example.html
+![](http://g.recordit.co/iVmXZP8gLh.gif)
+
+[1]: http://sprintly.github.com/sprintly-uikit/examples/menus.html

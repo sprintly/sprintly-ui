@@ -36,6 +36,7 @@
     "build-production": "npm run build && npm run minify",
     "watch-test": "watchify test/index.js -o test/build.js -t reactify -d -v",
     "build-test": "browserify test/index.js -t reactify -o test/build.js",
+    "setup-tests": "npm run build-production && npm run build-test",
     "test": "node node_modules/gulp/bin/gulp.js test",
     "minify": "cat dist/sprintly-uikit.js | uglifyjs -cm > dist/sprintly-uikit.min.js"
   },
