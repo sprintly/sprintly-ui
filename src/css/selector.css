@@ -1,0 +1,82 @@
+.selector-menu-wrapper {
+  position: absolute;
+  width: 306px;
+  color: #2e2e2e;
+  background: #fff;
+  border: 1px solid #D3D3D3;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.selector-menu-wrapper.expanded {
+  border: 1px solid #5A96AB;
+  box-shadow: 0 5px 11px -4px rgba(0,0,0,0.5);
+}
+
+.inner-menu-wrapper {
+  display: none;
+}
+
+.selector-menu-wrapper.expanded .inner-menu-wrapper {
+  display: block;
+}
+
+.inner-menu-wrapper input {
+  width: 288px;
+  height: 26px;
+  margin: 10px 6px;
+  padding: 4px;
+  border: 1px solid #D3D3D3;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.inner-menu-wrapper input:focus {
+  outline: none;
+}
+
+.options .option,
+.label {
+  display: block;
+  width: 100%;
+}
+
+.options .option,
+.label span {
+  display: block;
+  padding: 5px 0;
+}
+
+.label span {
+  padding: 5px 10px;
+}
+
+/* TODO(fw): Need to add sprite sheet to repo */;
+.options .option,
+.label .icon {
+  position: absolute;
+  top: 13px;
+  left: 290px;
+}
+
+.options {
+  width: 100%;
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.option {
+  height: 40px;
+  width: 100%;
+}
+
+.option:hover {
+  background: #175574;
+  color: #fff;
+  text-transform: none;
+}
+
+.option span {
+  padding-left: 10px;
+}

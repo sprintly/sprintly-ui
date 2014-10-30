@@ -1,0 +1,4 @@
+.jshintrc
+.travis.yml
+/docs
+/examples
