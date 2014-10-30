@@ -1,11 +1,6 @@
-# Sprintly-UIKit  **UNDER CONSTRUCTION**
+# Sprintly-UIKit
 
 A library of reusable React components for building Sprintly UIs.
-
-
-## Installation
-
-To install, you may download directly from Github or install via ```npm install sprintly-uikit```.
 
 
 ## Usage
