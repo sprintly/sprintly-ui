@@ -1,5 +1,7 @@
 # Sprintly-UIKit
 
+[![wercker status](https://app.wercker.com/status/02fb8fa03abe6c3d616cfeb1672d44ff/m "wercker status")](https://app.wercker.com/project/bykey/02fb8fa03abe6c3d616cfeb1672d44ff)
+
 A library of reusable React components for building Sprintly UIs.
 
 
