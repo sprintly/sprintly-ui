@@ -52,7 +52,7 @@ var SelectorMenu = React.createClass({
       return option.title ? options.push(option.title) : options.push(option.name);
     });
 
-    return options;
+    return _.unique(options);
   },
 
   onLabelClicked: function() {
