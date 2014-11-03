@@ -2,7 +2,7 @@
 
 [![wercker status](https://app.wercker.com/status/02fb8fa03abe6c3d616cfeb1672d44ff/m "wercker status")](https://app.wercker.com/project/bykey/02fb8fa03abe6c3d616cfeb1672d44ff)
 
-A library of reusable React components for building Sprintly UIs. 
+A library of reusable React components for building Sprintly UIs.
 
 The goal of this repository is to make it easier for developers (those who work at Sprintly as well as those who use Sprintly) to build Sprintly interfaces that look and feel like the Sprintly product.
 
@@ -51,4 +51,4 @@ Before you can run the test suite a first time, you'll need to compile and build
 
 ![](http://g.recordit.co/iVmXZP8gLh.gif)
 
-[1]: http://sprintly.github.com/sprintly-uikit/examples/menus.html
+[1]: https://github.com/sprintly/sprintly-uikit/blob/master/examples/menus.html
