@@ -7,3 +7,10 @@ build:
         code: |
           npm run setup-tests
           npm test
+
+    - script:
+        name: Coverage
+        code: |
+            echo service_name: wercker > .coveralls.yml
+            echo repo_token: $COVERALLS_TOKEN >> .coveralls.yml
+            make coveralls

@@ -1,0 +1,3 @@
+service_name:
+repo_token:# The COVERALLS_TOKEN is set in the project at
+            # wercker as project environment variable.

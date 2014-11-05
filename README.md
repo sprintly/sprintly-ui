@@ -37,7 +37,7 @@ React.renderComponent(
 );
 ```
 
-To build production files, run ```npm run build-production```, which will compile the latest from source into ```dist```, giving you both _sprintly-uikit.js_ and _sprintly-uikit.min.js_. If you prefer to include the uikit as static files or include it in the <head> of your project, you'll want these build files.
+To build production files, run ```npm run build-production```, which will compile the latest from source into ```dist```, giving you both _sprintly-uikit.js_ and _sprintly-uikit.min.js_. If you prefer to include the uikit as static files or include it in the head of your project, you'll want these build files.
 
 
 ## Testing

@@ -22,7 +22,6 @@ var fuzzy = require('fuzzy');
  */
 
 var SelectorMenu = React.createClass({
-  __name__: "SelectorMenu",
 
   propTypes: {
     defaultSelection: React.PropTypes.string,
