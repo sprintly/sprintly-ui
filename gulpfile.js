@@ -93,62 +93,6 @@ gulp.task('test-coverage', ['instrument'], function(cb) {
     .on('end', cb);
 });
 
-// gulp.src('./test/build.js')
-//     .pipe(sourcemaps.init())
-//     .pipe(sourcemaps.write();
-
-// gulp.task('test-coverage', ['instrument'], function() {
-//   var page = require('webpage').create();
-//   var coverage = gulp.run('test')
-//     .pipe(page.evaluate(function() {
-//       return window.__coverage__.toJSON();
-//     }))
-//     .pipe(source('coverage.json'))
-//     .pipe(gulp.dest('./test/'));
-
-//   return coverage;
-// });
-
-// gulp.task('test-server', function() {
-//   connect.server({
-//     port: 9000,
-//     middleware: function(connect, opts) {
-//       return [
-//         ///....
-//       ]
-//     }
-//   });
-//   //run phantom tests
-//   connect.serverClose();
-// });
-
-// gulp.task('browser-coverage', function() {
-//   page.open('https://local.', function() {
-//     page.evaluate(function() {
-//       return window.coverage;
-//     });
-//     phantom.exit();
-//   });
-// });
-
-// gulp.task('istanbul', function(cb) {
-//   gulp.src(['./build/test/test.js'])
-//     .pipe(istanbul())
-//     .on('end', cb);
-// });
-
-// gulp.task('test-coverage', function() {
-//   gulp.run('istanbul', function() {
-//     gulp.src(['./build/test.js'])
-//       .pipe(mocha())
-//       .pipe(istanbul.writeReports({
-//         dir: './coverage',
-//         reporters: ['lcov'],
-//         reportOpts: {dir: './coverage'}
-//       }));
-//   });
-// });
-
 
 
 gulp.task('default', ['test']);
