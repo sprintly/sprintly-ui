@@ -2,5 +2,6 @@
 node_modules
 npm-debug.log
 test/build.js
+test/tmp/
 coverage/
 dist/sprintly-ui*
