@@ -66,7 +66,7 @@ gulp.task('watch-test', ['build-test'], function() {
 });
 
 gulp.task('test', function() {
-  var runner = gulp.src('./test/index.html')
+  gulp.src('./test/index.html')
     .pipe(mochaPhantomJS({
       reporter: 'dot'
     }));
