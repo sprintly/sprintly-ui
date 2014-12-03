@@ -26,27 +26,24 @@
     "gulp-connect": "^2.2.0",
     "gulp-istanbul": "^0.3.1",
     "gulp-mocha-phantomjs": "^0.5.1",
+    "gulp-sourcemaps": "^1.2.8",
+    "gulp-util": "^3.0.1",
     "istanbul": "^0.3.2",
+    "istanbul-middleware": "^0.2.0",
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
     "mocha": "^1.21.4",
+    "phantomjs": "^1.9.12",
+    "react-tools": "^0.12.0",
     "reactify": "^0.14.0",
     "sinon": "^1.11.1",
-    "uglify-js": "^2.4.14",
+    "uglify-js" : "^2.4.15",
     "underscore": "^1.7.0",
+    "vinyl-source-stream": "^1.0.0",
     "watchify": "^0.10.2"
   },
   "scripts": {
-    "watch": "watchify src/js/index.js -o dist/sprintly-uikit.js -t reactify -d -v",
-    "build": "browserify src/js/index.js -s SprintlyUIKit -u react -o dist/sprintly-uikit.js",
-    "build-production": "npm run build && npm run minify",
-    "watch-test": "watchify test/index.js -o build/test/index.js -t reactify -d -v",
-    "build-test": "browserify test/index.js -t reactify -o build/test/index.js",
-    "setup-tests": "npm run build-production && npm run build-test",
-    "test": "node node_modules/gulp/bin/gulp.js test",
-    "build-coverage": "browserify -t reactify -t browserify-istanbul test/index.js -o build/test/test.js -d",
-    "coveralls-reporting": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "minify": "cat dist/sprintly-uikit.js | uglifyjs -cm > dist/sprintly-uikit.min.js"
+    "package-distro": "node node_modules/gulp/bin/gulp.js build && cat dist/sprintly-ui.js | uglifyjs -cm > dist/sprintly-ui.min.js"
   },
   "browserify": {
     "transform": [
