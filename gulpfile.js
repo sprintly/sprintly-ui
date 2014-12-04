@@ -2,13 +2,9 @@
 
 var gulp = require('gulp');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
-var istanbul = require('gulp-istanbul');
-var jsx = require('gulp-jsx');
-var sourcemaps = require('gulp-sourcemaps');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream');
-
 
 /*
  * Dev
@@ -18,7 +14,6 @@ gulp.task('build', function() {
   var bundler = browserify('./src/js/index.js', {
     standalone: 'SprintlyUI',
     exclude: 'react',
-    transform: ['reactify'],
     debug: true,
     verbose: true
   });
@@ -44,7 +39,7 @@ gulp.task('watch', ['build'], function() {
  */
 
 
-gulp.task('build-test', function(cb) {
+gulp.task('build-test', function() {
   var bundler = browserify('./test/index.js', {
     debug: true,
     verbose: true
@@ -72,27 +67,15 @@ gulp.task('test', function() {
     }));
 });
 
-gulp.task('instrument', function() {
-  return gulp.src(['./src/js/**/**/*.js'])
-    .pipe(jsx())
-    .pipe(istanbul({
-      coverageVariable: '__coverage__'
-    }))
-    .pipe(gulp.dest('./test/tmp/'));
-});
-
-gulp.task('test-coverage', ['instrument'], function(cb) {
+gulp.task('test-coverage', ['build-test'], function() {
   gulp.src('./test/index.html')
     .pipe(mochaPhantomJS({
       path: 'file:///Users/floraworley/Projects/sprintly_ui/sprintly-ui/test/index.html',
       phantomjs: {
         hooks: '/Users/floraworley/Projects/sprintly_ui/sprintly-ui/test/phantom_hooks'
       },
-    }))
-    .pipe(istanbul.writeReports())
-    .on('end', cb);
+    }));
 });
-
 
 
 gulp.task('default', ['test']);

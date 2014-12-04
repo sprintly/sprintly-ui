@@ -29,7 +29,6 @@
     "gulp-sourcemaps": "^1.2.8",
     "gulp-util": "^3.0.1",
     "istanbul": "^0.3.2",
-    "istanbul-middleware": "^0.2.0",
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
     "mocha": "^1.21.4",
@@ -43,11 +42,14 @@
     "watchify": "^0.10.2"
   },
   "scripts": {
+    "coverage-reports": "node node_modules/gulp/bin/gulp.js test-coverage && istanbul report --root coverage lcov",
+    "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "package-distro": "node node_modules/gulp/bin/gulp.js build && cat dist/sprintly-ui.js | uglifyjs -cm > dist/sprintly-ui.min.js"
   },
   "browserify": {
     "transform": [
-      ["reactify", {"es6": true}]
+      ["reactify", {"es6": true}],
+      ["browserify-istanbul", {"ignore": ["**/node_modules/**", "**/test/**"]}]
     ],
     "ignore": "sinon"
   },
