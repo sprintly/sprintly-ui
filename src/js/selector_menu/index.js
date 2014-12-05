@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var React = window.React || require('react/addons');
 var _ = require('lodash');
 var Label = require('./label');

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var $ = require('jquery');
 var React = window.React || require('react/addons');
 

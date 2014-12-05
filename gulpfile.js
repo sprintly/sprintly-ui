@@ -18,11 +18,12 @@ var source = require('vinyl-source-stream');
 gulp.task('build', function() {
   var bundler = browserify('./src/js/index.js', {
     exclude: 'react',
+    standalone: 'SprintlyUI',
     debug: true,
     verbose: true
   });
 
-  return bundler.bundle({standalone: 'SprintlyUI'})
+  return bundler.bundle()
     .pipe(source('sprintly-ui.js'))
     .pipe(gulp.dest('./dist/'));
 });
