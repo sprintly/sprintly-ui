@@ -1,7 +1,7 @@
 # Sprintly-UI
 
 [![wercker status](https://app.wercker.com/status/6f1113d164af4141ba82b9608cc795bc/m "wercker status")](https://app.wercker.com/project/bykey/6f1113d164af4141ba82b9608cc795bc)
-[![Coverage Status](https://img.shields.io/coveralls/sprintly/sprintly-ui.svg)](https://coveralls.io/r/sprintly/sprintly-ui)
+[![Coverage Status](https://coveralls.io/repos/sprintly/sprintly-ui/badge.png)](https://coveralls.io/r/sprintly/sprintly-ui)
 [![dependencies](https://david-dm.org/sprintly/sprintly-ui.png)](https://david-dm.org/sprintly/sprintly-ui.png)
 
 A library of reusable React components for building Sprintly UIs.
