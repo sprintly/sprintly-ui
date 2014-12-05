@@ -15,40 +15,11 @@
     </style>
 
     <div id="main">
-      <h2>Menu Components</h2>
-        <h3>Selector Menu</h3>
-        <div id="selector"></div>
+      <!--DIV TO ATTACH COMPONENT/s TO-->
     </div>
 
     <script type="text/jsx">
-    /** @jsx React.DOM */
-
-    (function(){
-      var options = [
-        {"title": "Metroid"},
-        {"title": "1942"},
-        {"title": "Legend of Zelda"},
-        {"title": "Super Mario Brothers"},
-        {"title": "Donkey Kong"}
-      ];
-
-      showChoice = function(selected) {
-        if ($('.message')) {
-          $('.message').remove();
-        }
-
-        $('#selector').after('<div class="message" style="color:burlywood;margin-top:100px;">' + "YOUR GAME OF CHOICE IS: " + selected + '</div>');
-      };
-
-      React.renderComponent(
-        <SprintlyUI.SelectorMenu
-          optionsList={options}
-          defaultSelection='All'
-          onSelectionChange={showChoice}
-        />,
-        document.getElementById("selector")
-      );
-    })()
+      // YOUR COMPONENT/S HERE FOR TESTING
     </script>
 
   </body>

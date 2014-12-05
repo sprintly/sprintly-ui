@@ -25,4 +25,4 @@ to have either a 'name' or a 'title' field to show in the menu.
 If you'd like the default selection to be something other than 'All', specify an alternative string.
 
 #### props.onSelectionChange (required)
-Callback function that will be triggered when a user selects an item via the menu. You might use this, for example, to show the user different information via the parent view when selection changes. NOTE: The passed in method must be bound to the parent context, (ie, <SelectorMenu....onSelectionChange = _.bind(this.onSelectionChanged, this) />).
+Callback function that will be triggered when a user selects an item via the menu. You might use this, for example, to show the user different information via the parent view when selection changes. NOTE: The passed in method must be bound to the parent context, (ie, ```<SelectorMenu....onSelectionChange = _.bind(this.onSelectionChanged, this) />```).

@@ -1,4 +1,8 @@
 .jshintrc
-.travis.yml
+.gitignore
+.npmignore
+.coveralls.yml
+wercker.yml
+release-notes.md
 /docs
 /examples

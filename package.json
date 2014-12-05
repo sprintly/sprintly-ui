@@ -52,12 +52,11 @@
       ["reactify", {"es6": true}],
       ["browserify-istanbul", {"ignore": ["**/node_modules/**", "**/test/**"]}]
     ],
-    "ignore": "sinon",
-    "standalone": "SprintlyUI"
+    "ignore": "sinon"
   },
   "directories": {
     "docs": "docs",
-    "example": "example",
+    "examples": "examples",
     "src": "src",
     "test": "test"
   },
@@ -67,7 +66,11 @@
     "ui kit",
     "ui-kit",
     "ui library",
-    "component library"
+    "components",
+    "ui components",
+    "component library",
+    "quickleft",
+    "quick left"
   ],
   "author": {
     "name": "Quick Left Team",

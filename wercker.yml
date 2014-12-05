@@ -18,6 +18,6 @@ build:
             echo service_name: wercker >> .coveralls.yml
             echo repo_token: $COVERALLS_TOKEN >> .coveralls.yml
             echo git_commit: $WERCKER_GIT_COMMIT >> .coveralls.yml
-            export COVERALLS_GIT_BRANCH=$WERCKER_GIT_BRANCH
             echo service_job_id: $WERCKER_BUILD_ID >> .coveralls.yml
+            export COVERALLS_GIT_BRANCH=$WERCKER_GIT_BRANCH
             npm run coveralls

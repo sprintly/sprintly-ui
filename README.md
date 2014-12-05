@@ -18,10 +18,10 @@ To add a component to your project, require the package at the top of your js fi
 
 Example 1:
 ```
-var SprintlyUIKit = require('sprintly-uikit');
+var SprintlyUI = require('sprintly-ui');
 
 React.renderComponent(
-  <SprintlyUIKit.Widget
+  <SprintlyUI.Widget
     options={myOptions}
     callback={myCallback}
   />
@@ -31,7 +31,7 @@ React.renderComponent(
 
 Example 2:
 ```
-var Widget = require('sprintly-uikit').Widget;
+var Widget = require('sprintly-ui').Widget;
 
 React.renderComponent(
   <Widget
@@ -47,16 +47,15 @@ For unminified only, run the gulp ```build``` task.
 
 ## Development
 
-To run a dev server and Browserfy watch tasks, run ```npm run dev```. This currently requires including
-new React components in the example/index.html file for browser viewing/debugging.
-
 Note: While there are a handful of npm convenience scripts available for your use,
 you'll find more incremental tasks in the gulpfile.
+
+To run a dev server and Browserfy watch tasks, run ```npm run dev```. For browser viewing/debugging, you'll need to include your new component/s in the example/index.html template.
 
 
 ## Testing
 
-Run tests in the console and open in browser via ```npm test```. (Note: localhost:8080/test/ will open automatically when you run tests. To run in cli-only environment, run ```npm run test-cli```).
+Run tests in the console and in the browser via ```npm test```. (Note: localhost:8080/test/ will open automatically. To run in cli-only environment, run ```npm run test-cli```).
 
 To see Istanbul coverage information, run tests with ```npm test``` to build tests and start the server,
 and then in a new tab run ```npm run coverage```. To view coverage info in the browser, go to localhost:8080/test/coverage/lcov. If you are unfamiliar with lcov html reports, note that these allow you to drill down through code files to view per-file coverage data as well as line-by-line coverage.
@@ -68,4 +67,4 @@ and then in a new tab run ```npm run coverage```. To view coverage info in the b
 
 ![](http://g.recordit.co/iVmXZP8gLh.gif)
 
-[1]: https://github.com/sprintly/sprintly-uikit/blob/master/examples/index.html
+[1]: https://github.com/sprintly/sprintly-ui/blob/master/examples/menus.html

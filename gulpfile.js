@@ -5,7 +5,7 @@ var path = require('path');
 var http = require('http');
 var connect = require('connect');
 var serveStatic = require('serve-static');
-var open = require('open');
+var openPage = require('open');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var browserify = require('browserify');
 var watchify = require('watchify');
@@ -42,13 +42,13 @@ gulp.task('dev-server', function() {
   var tests = connect();
   tests.use(serveStatic('./'));
   http.createServer(tests).listen(8090);
-  open('http://localhost:8090/examples/index.html');
+  openPage('http://localhost:8090/examples/index.html');
 });
+
 
 /*
  * Test
  */
-
 
 gulp.task('build-test', function() {
   var bundler = browserify('./test/index.js', {
@@ -75,7 +75,7 @@ gulp.task('test-server', function() {
   var tests = connect();
   tests.use(serveStatic('./'));
   http.createServer(tests).listen(8080);
-  open('http://localhost:8080/test/');
+  openPage('http://localhost:8080/test/');
 });
 
 gulp.task('test', ['build-test'], function() {
