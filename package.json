@@ -20,6 +20,7 @@
     "browserify": "^4.2.3",
     "browserify-istanbul": "^0.1.2",
     "chai": "^1.9.1",
+    "connect": "^3.3.3",
     "coveralls": "^2.11.2",
     "es5-shim": "^4.0.3",
     "gulp": "^3.8.9",
@@ -32,26 +33,33 @@
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
     "mocha": "^1.21.4",
+    "open":"^0.0.5",
     "phantomjs": "^1.9.12",
     "react-tools": "^0.12.0",
     "reactify": "^0.14.0",
+    "serve-static": "^1.7.1",
     "sinon": "^1.11.1",
     "uglify-js" : "^2.4.15",
     "underscore": "^1.7.0",
     "vinyl-source-stream": "^1.0.0",
+    "vinyl-transform": "^1.0.0",
     "watchify": "^0.10.2"
   },
   "scripts": {
-    "coverage-reports": "node node_modules/gulp/bin/gulp.js test-coverage && istanbul report --root coverage lcov",
-    "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "package-distro": "node node_modules/gulp/bin/gulp.js build && cat dist/sprintly-ui.js | uglifyjs -cm > dist/sprintly-ui.min.js"
+    "dev": "./node_modules/gulp/bin/gulp.js build && ./node_modules/gulp/bin/gulp.js dev-server",
+    "test": "./node_modules/gulp/bin/gulp.js test && ./node_modules/gulp/bin/gulp.js test-server",
+    "test-cli": "./node_modules/gulp/bin/gulp.js test",
+    "coverage": "./node_modules/gulp/bin/gulp.js test-coverage && istanbul report --root coverage lcov && mv coverage/ test/",
+    "coveralls": "cat test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "package-distro": "./node_modules/gulp/bin/gulp.js build && cat dist/sprintly-ui.js | uglifyjs -cm > dist/sprintly-ui.min.js"
   },
   "browserify": {
     "transform": [
       ["reactify", {"es6": true}],
       ["browserify-istanbul", {"ignore": ["**/node_modules/**", "**/test/**"]}]
     ],
-    "ignore": "sinon"
+    "ignore": "sinon",
+    "standalone": "SprintlyUI"
   },
   "directories": {
     "docs": "docs",

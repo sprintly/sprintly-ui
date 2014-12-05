@@ -1,6 +1,11 @@
 'use strict';
 
 var gulp = require('gulp');
+var path = require('path');
+var http = require('http');
+var connect = require('connect');
+var serveStatic = require('serve-static');
+var open = require('open');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var browserify = require('browserify');
 var watchify = require('watchify');
@@ -12,13 +17,12 @@ var source = require('vinyl-source-stream');
 
 gulp.task('build', function() {
   var bundler = browserify('./src/js/index.js', {
-    standalone: 'SprintlyUI',
     exclude: 'react',
     debug: true,
     verbose: true
   });
 
-  return bundler.bundle()
+  return bundler.bundle({standalone: 'SprintlyUI'})
     .pipe(source('sprintly-ui.js'))
     .pipe(gulp.dest('./dist/'));
 });
@@ -33,6 +37,12 @@ gulp.task('watch', ['build'], function() {
   }
 });
 
+gulp.task('dev-server', function() {
+  var tests = connect();
+  tests.use(serveStatic('./'));
+  http.createServer(tests).listen(8090);
+  open('http://localhost:8090/examples/index.html');
+});
 
 /*
  * Test
@@ -60,20 +70,28 @@ gulp.task('watch-test', ['build-test'], function() {
   }
 });
 
-gulp.task('test', function() {
+gulp.task('test-server', function() {
+  var tests = connect();
+  tests.use(serveStatic('./'));
+  http.createServer(tests).listen(8080);
+  open('http://localhost:8080/test/');
+});
+
+gulp.task('test', ['build-test'], function() {
   gulp.src('./test/index.html')
     .pipe(mochaPhantomJS({
       reporter: 'dot'
     }));
 });
 
-gulp.task('test-coverage', ['build-test'], function() {
+gulp.task('test-coverage', function() {
+  var root = path.resolve('./test');
   gulp.src('./test/index.html')
     .pipe(mochaPhantomJS({
-      path: 'file:///Users/floraworley/Projects/sprintly_ui/sprintly-ui/test/index.html',
+      path: root + 'index.html',
       phantomjs: {
-        hooks: '/Users/floraworley/Projects/sprintly_ui/sprintly-ui/test/phantom_hooks'
-      },
+        hooks: root + '/phantom_hooks'
+      }
     }));
 });
 

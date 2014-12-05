@@ -5,13 +5,11 @@ build:
     - script:
         name: Unit Tests
         code: |
-          npm run setup-tests
-          npm test
+          npm run test-cli
 
-    # TODO (fw): Uncomment when coverage is wired in
-    # - script:
-    #     name: Coverage
-    #     code: |
-    #         echo service_name: wercker > .coveralls.yml
-    #         echo repo_token: $COVERALLS_TOKEN >> .coveralls.yml
-    #         make coveralls
+    - script:
+        name: Coverage
+        code: |
+            echo service_name: wercker > .coveralls.yml
+            echo repo_token: $COVERALLS_TOKEN >> .coveralls.yml
+            make coveralls
