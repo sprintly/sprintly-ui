@@ -1,3 +1,7 @@
+# The COVERALLS_TOKEN is set in wercker as project environment variable.
+# All others are set in wercker.yml
 service_name:
-repo_token:# The COVERALLS_TOKEN is set in the project at
-            # wercker as project environment variable.
+repo_token:
+git_commit:
+git_branch:
+service_job_id:

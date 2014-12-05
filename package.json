@@ -51,7 +51,8 @@
     "test-cli": "./node_modules/gulp/bin/gulp.js test",
     "coverage": "./node_modules/gulp/bin/gulp.js test-coverage && istanbul report --root coverage lcov && mv coverage/ test/",
     "coveralls": "cat test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "package-distro": "./node_modules/gulp/bin/gulp.js build && cat dist/sprintly-ui.js | uglifyjs -cm > dist/sprintly-ui.min.js"
+    "package-distro": "./node_modules/gulp/bin/gulp.js build && cat dist/sprintly-ui.js | uglifyjs -cm > dist/sprintly-ui.min.js",
+    "clean": "rm test/build.js && rm -rf test/coverage/"
   },
   "browserify": {
     "transform": [

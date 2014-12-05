@@ -10,6 +10,9 @@ build:
     - script:
         name: Coverage
         code: |
-            echo service_name: wercker > .coveralls.yml
+            echo service_name: wercker >> .coveralls.yml
             echo repo_token: $COVERALLS_TOKEN >> .coveralls.yml
-            make coveralls
+            echo git_commit: $WERCKER_GIT_COMMIT >> .coveralls.yml
+            echo git_branch: $WERCKER_GIT_BRANCH >> .coveralls.yml
+            echo service_job_id: $WERCKER_BUILD_ID >> .coveralls.yml
+            npm run coveralls

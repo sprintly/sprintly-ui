@@ -1,10 +1,8 @@
-# Sprintly-UIKit
+# Sprintly-UI
 
-[![wercker status](https://app.wercker.com/status/02fb8fa03abe6c3d616cfeb1672d44ff/m "wercker status")](https://app.wercker.com/project/bykey/02fb8fa03abe6c3d616cfeb1672d44ff)
-
-[![Coverage Status](https://img.shields.io/coveralls/sprintly/sprintly-uikit.svg)](https://coveralls.io/r/sprintly/sprintly-uikit)
-
-[![dependencies](https://david-dm.org/sprintly/sprintly-uikit.png)](https://david-dm.org/sprintly/sprintly-uikit.png)
+[![wercker status](https://app.wercker.com/status/6f1113d164af4141ba82b9608cc795bc/m "wercker status")](https://app.wercker.com/project/bykey/6f1113d164af4141ba82b9608cc795bc)
+[![Coverage Status](https://img.shields.io/coveralls/sprintly/sprintly-ui.svg)](https://coveralls.io/r/sprintly/sprintly-ui)
+[![dependencies](https://david-dm.org/sprintly/sprintly-ui.png)](https://david-dm.org/sprintly/sprintly-ui.png)
 
 A library of reusable React components for building Sprintly UIs.
 
@@ -42,19 +40,24 @@ React.renderComponent(
 ```
 
 To generate a UMD bundle containing unminified and minified versions, run ```npm package-distro```.
+For unminified only, run the gulp ```build``` task.
+
 
 ## Development
 
-To run a dev server and Browserfy watch tasks, run ```npm run dev```.
+To run a dev server and Browserfy watch tasks, run ```npm run dev```. This currently requires including
+new React components in the example/index.html file for browser viewing/debugging.
+
 Note: While there are a handful of npm convenience scripts available for your use,
 you'll find more incremental tasks in the gulpfile.
+
 
 ## Testing
 
 Run tests in the console and open in browser via ```npm test```. (Note: localhost:8080/test/ will open automatically when you run tests. To run in cli-only environment, run ```npm run test-cli```).
 
 To see Istanbul coverage information, run tests with ```npm test``` to build tests and start the server,
-and then in a new tab run ```npm run coverage``` to generate coverage data. To view coverage info in the browser, go to localhost:8080/test/coverage/lcov. If you are unfamiliar, note that lcov reports allow you to drill down through code files to view per-file coverage data as well as line-by-line coverage.
+and then in a new tab run ```npm run coverage```. To view coverage info in the browser, go to localhost:8080/test/coverage/lcov. If you are unfamiliar with lcov html reports, note that these allow you to drill down through code files to view per-file coverage data as well as line-by-line coverage.
 
 
 ## Examples
@@ -63,4 +66,4 @@ and then in a new tab run ```npm run coverage``` to generate coverage data. To v
 
 ![](http://g.recordit.co/iVmXZP8gLh.gif)
 
-[1]: https://github.com/sprintly/sprintly-uikit/blob/master/examples/menus.html
+[1]: https://github.com/sprintly/sprintly-uikit/blob/master/examples/index.html

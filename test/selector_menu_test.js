@@ -1,10 +1,10 @@
 /** @jsx React.DOM */
 var React = window.React || require('react/addons');
 var _ = require('lodash');
-var SelectorMenu = require('../../src/js/menus/selector_menu/index');
-var Label = require('../../src/js/menus/selector_menu/label');
-var List = require('../../src/js/menus/selector_menu/list');
-var Search = require('../../src/js/menus/selector_menu/search');
+var SelectorMenu = require('../src/js/selector_menu/index');
+var Label = require('../src/js/selector_menu/label');
+var List = require('../src/js/selector_menu/list');
+var Search = require('../src/js/selector_menu/search');
 var TestUtils = React.addons.TestUtils;
 var assert = require('chai').assert;
 var sinon = require('sinon');
