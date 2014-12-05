@@ -1,9 +1,7 @@
-/** @jsx React.DOM */
 var React = window.React || require('react/addons');
 
 
 var Search = React.createClass({
-  __name__: "Search",
 
   propTypes: {
     filterList: React.PropTypes.func.isRequired,

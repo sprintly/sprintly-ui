@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var React = window.React || require('react/addons');
 var _ = require('lodash');
 var Label = require('./label');
@@ -22,7 +21,6 @@ var fuzzy = require('fuzzy');
  */
 
 var SelectorMenu = React.createClass({
-  __name__: "SelectorMenu",
 
   propTypes: {
     defaultSelection: React.PropTypes.string,

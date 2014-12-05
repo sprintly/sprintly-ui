@@ -2,4 +2,6 @@
 node_modules
 npm-debug.log
 test/build.js
-dist/sprintly-uikit*
+test/coverage/
+coverage/
+dist/sprintly-ui*

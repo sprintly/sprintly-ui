@@ -1,9 +1,7 @@
-/** @jsx React.DOM */
 var React = window.React || require('react/addons');
 
 
 var Label = React.createClass({
-  __name__: "Label",
 
   propTypes: {
     selected: React.PropTypes.string,

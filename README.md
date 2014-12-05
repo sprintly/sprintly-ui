@@ -1,6 +1,10 @@
-# Sprintly-UIKit
+# Sprintly-UI
 
-[![wercker status](https://app.wercker.com/status/02fb8fa03abe6c3d616cfeb1672d44ff/m "wercker status")](https://app.wercker.com/project/bykey/02fb8fa03abe6c3d616cfeb1672d44ff)
+[![wercker status](https://app.wercker.com/status/6f1113d164af4141ba82b9608cc795bc/m "wercker status")](https://app.wercker.com/project/bykey/6f1113d164af4141ba82b9608cc795bc)
+
+[![Coverage Status](https://coveralls.io/repos/sprintly/sprintly-ui/badge.png)](https://coveralls.io/r/sprintly/sprintly-ui)
+[![Dependency Status](https://david-dm.org/sprintly/sprintly-ui.svg)](https://david-dm.org/sprintly/sprintly-ui)
+[![devDependency Status](https://david-dm.org/sprintly/sprintly-ui/dev-status.svg)](https://david-dm.org/sprintly/sprintly-ui#info=devDependencies)
 
 A library of reusable React components for building Sprintly UIs.
 
@@ -14,10 +18,10 @@ To add a component to your project, require the package at the top of your js fi
 
 Example 1:
 ```
-var SprintlyUIKit = require('sprintly-uikit');
+var SprintlyUI = require('sprintly-ui');
 
 React.renderComponent(
-  <SprintlyUIKit.Widget
+  <SprintlyUI.Widget
     options={myOptions}
     callback={myCallback}
   />
@@ -27,7 +31,7 @@ React.renderComponent(
 
 Example 2:
 ```
-var Widget = require('sprintly-uikit').Widget;
+var Widget = require('sprintly-ui').Widget;
 
 React.renderComponent(
   <Widget
@@ -37,12 +41,24 @@ React.renderComponent(
 );
 ```
 
-To build production files, run ```npm run build-production```, which will compile the latest from source into ```dist```, giving you both _sprintly-uikit.js_ and _sprintly-uikit.min.js_. If you prefer to include the uikit as static files or include it in the <head> of your project, you'll want these build files.
+To generate a UMD bundle containing unminified and minified versions, run ```npm package-distro```.
+For unminified only, run the gulp ```build``` task.
+
+
+## Development
+
+Note: While there are a handful of npm convenience scripts available for your use,
+you'll find more incremental tasks in the gulpfile.
+
+To run a dev server and Browserfy watch tasks, run ```npm run dev```. For browser viewing/debugging, you'll need to include your new component/s in the example/index.html template.
 
 
 ## Testing
 
-Before you can run the test suite a first time, you'll need to compile and build the necessary files by running ```npm run setup-tests```. Thereafter, run tests via ```npm test```.
+Run tests in the console and in the browser via ```npm test```. (Note: localhost:8080/test/ will open automatically. To run in cli-only environment, run ```npm run test-cli```).
+
+To see Istanbul coverage information, run tests with ```npm test``` to build tests and start the server,
+and then in a new tab run ```npm run coverage```. To view coverage info in the browser, go to localhost:8080/test/coverage/lcov. If you are unfamiliar with lcov html reports, note that these allow you to drill down through code files to view per-file coverage data as well as line-by-line coverage.
 
 
 ## Examples
@@ -51,4 +67,4 @@ Before you can run the test suite a first time, you'll need to compile and build
 
 ![](http://g.recordit.co/iVmXZP8gLh.gif)
 
-[1]: https://github.com/sprintly/sprintly-uikit/blob/master/examples/menus.html
+[1]: https://github.com/sprintly/sprintly-ui/blob/master/examples/menus.html
