@@ -2,7 +2,7 @@
 
 [![wercker status](https://app.wercker.com/status/6f1113d164af4141ba82b9608cc795bc/m "wercker status")](https://app.wercker.com/project/bykey/6f1113d164af4141ba82b9608cc795bc)
 
-[![Coverage Status](https://coveralls.io/repos/sprintly/sprintly-ui/badge.png)](https://coveralls.io/r/sprintly/sprintly-ui)
+[![Coverage Status](https://coveralls.io/repos/sprintly/sprintly-ui/badge.png?branch=master)](https://coveralls.io/r/sprintly/sprintly-ui?branch=master)
 [![Dependency Status](https://david-dm.org/sprintly/sprintly-ui.svg)](https://david-dm.org/sprintly/sprintly-ui)
 [![devDependency Status](https://david-dm.org/sprintly/sprintly-ui/dev-status.svg)](https://david-dm.org/sprintly/sprintly-ui#info=devDependencies)
 
