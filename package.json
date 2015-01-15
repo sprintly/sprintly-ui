@@ -29,12 +29,14 @@
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
     "mocha": "^2.0.1",
-    "open":"^0.0.5",
+    "moment": "^2.9.0",
+    "open": "^0.0.5",
+    "react-onclickoutside": "^0.2.0",
     "react-tools": "^0.12.0",
     "reactify": "^0.17.1",
     "serve-static": "^1.7.1",
     "sinon": "^1.12.1",
-    "uglify-js" : "^2.4.15",
+    "uglify-js": "^2.4.15",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.1.1"
   },
@@ -49,8 +51,21 @@
   },
   "browserify": {
     "transform": [
-      ["reactify", {"es6": true}],
-      ["browserify-istanbul", {"ignore": ["**/node_modules/**", "**/test/**"]}]
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ],
+      [
+        "browserify-istanbul",
+        {
+          "ignore": [
+            "**/node_modules/**",
+            "**/test/**"
+          ]
+        }
+      ]
     ],
     "ignore": "sinon"
   },
