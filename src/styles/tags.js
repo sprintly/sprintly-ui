@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var ButtonBase = require('./buttons');
+var ButtonBase = require('./base_styles/buttons');
 
 /*
  * Tags component styles.
