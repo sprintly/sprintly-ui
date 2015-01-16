@@ -22,7 +22,9 @@ var EstimatorStyles = {
   list: {
     listStyleType: 'none',
     width: '100%',
-    height: '28px'
+    height: '28px',
+    padding: '0',
+    margin: '0'
   },
   score: {
     wrapper: {

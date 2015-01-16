@@ -40,7 +40,7 @@
         $('#selector').after('<div class="message" style="color:burlywood;margin-top:100px;">' + "YOUR GAME OF CHOICE IS: " + selected + '</div>');
       };
 
-      React.renderComponent(
+      React.render(
         <SprintlyUI.SelectorMenu
           optionsList={options}
           defaultSelection='All'

@@ -22,7 +22,9 @@ var TagEditorStyles = {
   }),
   list: {
     listStyleType: 'none',
-    width: '100%'
+    width: '100%',
+    padding: '0',
+    margin: '0'
   },
   listItem: {
     width: '100%',

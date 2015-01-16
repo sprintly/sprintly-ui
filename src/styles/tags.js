@@ -16,7 +16,9 @@ var TagsStyles = {
   }),
   list: {
     listStyleType: 'none',
-    width: '100%'
+    width: '100%',
+    padding: '0',
+    margin: '0'
   },
   expanded: {
     display: 'inline-block',

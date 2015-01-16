@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var React = window.React || require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var assert = require('chai').assert;
 var sinon = require('sinon');
 var Estimator = require('../src/components/estimator');
 
@@ -47,24 +46,6 @@ describe('Estimator', function() {
     TestUtils.Simulate.click(score);
     assert.isFalse(this.estimator.state.menuOpen);
     assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(this.estimator, 'estimator-menu').length);
-  });
-
-  it('should close the menu if user clicks outside of menu', function() {
-    var scoreInDom = React.render(
-      <Estimator
-        modelId={[1,1]}
-        itemType='defect'
-        score='s'
-        estimateChanger={this.stub}
-      />, $('#testing').get(0)
-    );
-
-    $('button').click();
-    assert.ok($('.estimator-menu').length);
-
-    $('#testing').click();
-    assert.notOk($('.estimator-menu').length);
-    React.unmountComponentAtNode(scoreInDom.getDOMNode().parentNode);
   });
 
   it('should trigger a changeScore method on estimateChanger utility with score number value', function() {

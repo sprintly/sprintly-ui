@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var React = window.React || require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var assert = require('chai').assert;
 var sinon = require('sinon');
 var TagEditor = require('../src/components/tag_editor');
 
@@ -206,24 +205,5 @@ describe('TagEditor', function() {
 
     assert.isFalse(tagEditor.state.showMenu);
     assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
-  });
-
-  it('should close the menu if users clicks outside element', function() {
-    var style = {padding: '20px'};
-    var withOutside = React.render(
-      <div className="outside" style={style}>
-        <TagEditor
-          modelId= {[1,1]}
-          tags={[]}
-          tagChanger={{}}
-        />
-      </div>, $('#testing').get(0)
-    );
-    $('button').click();
-    assert.ok($('.tag-editor-menu').length);
-
-    $('#testing').click();
-    assert.notOk($('.tag-editor-menu').length);
-    React.unmountComponentAtNode(withOutside.getDOMNode().parentNode);
   });
 });

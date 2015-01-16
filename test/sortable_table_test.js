@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var React = window.React || require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var assert = require('chai').assert;
 var sinon = require('sinon');
 
 var SortableTable = require('../src/components/sortable_table/index');

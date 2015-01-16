@@ -1,4 +1,8 @@
+window._ = require('lodash');
 require('es5-shim');
+
+var chai = require('chai');
+window.assert = chai.assert;
 
 // Component tests
 require('./estimator_test.js');
