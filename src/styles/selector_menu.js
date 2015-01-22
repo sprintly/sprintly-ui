@@ -2,7 +2,6 @@ var _ = require('lodash');
 
 var SelectorStyles = {
   wrapper: {
-    position: 'absolute',
     width: '282px',
     color: '#2e2e2e',
     fontSize: 'inherit',
