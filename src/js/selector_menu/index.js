@@ -4,6 +4,7 @@ var Label = require('./label');
 var List = require('./list');
 var Search = require('./search');
 var SelectorStyles = require('../../styles/selector_menu');
+var ClickOff = require('react-onclickoutside');
 var fuzzy = require('fuzzy');
 
 /*
@@ -29,7 +30,7 @@ var SelectorMenu = React.createClass({
     onSelectionChange: React.PropTypes.func.isRequired
   },
 
-  mixins: [SelectorStyles],
+  mixins: [ClickOff, SelectorStyles],
 
   getDefaultProps: function() {
     return {
@@ -55,6 +56,13 @@ var SelectorMenu = React.createClass({
     });
 
     return _.unique(options);
+  },
+
+  handleClickOutside: function(ev) {
+    ev.stopPropagation();
+    this.setState({
+      expanded: false
+    });
   },
 
   onLabelClicked: function() {

@@ -2,7 +2,6 @@ var _ = require('lodash');
 var React = window.React || require('react/addons');
 var SelectorStyles = require('../../styles/selector_menu');
 
-
 var List = React.createClass({
 
   propTypes: {

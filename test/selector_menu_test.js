@@ -26,9 +26,6 @@ describe("SelectorMenu", function() {
 
     this.node = this.selector.getDOMNode();
   });
-  afterEach(function() {
-    React.unmountComponentAtNode(this.selector.getDOMNode().parent);
-  });
 
   describe("rendering", function() {
     it("should render a label that displays current state", function() {
