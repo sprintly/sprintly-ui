@@ -36,6 +36,7 @@ var SelectorStyles = {
   label: {
     display: 'block',
     width: '100%',
+    height: '34px',
     lineHeight: '34px'
   },
   innerLabel: {

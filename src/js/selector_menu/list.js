@@ -37,7 +37,7 @@ var List = React.createClass({
     var liStyle = SelectorStyles.listItem;
 
     var options = this.props.optionNames.map(function(optionName) {
-      return (
+      return optionName.length ? (
         <li key={optionName} className="option"
           style={liStyle}
           onMouseOver={this.onOptionHover}
@@ -45,7 +45,7 @@ var List = React.createClass({
           onClick={this.onOptionSelect}>
           <span style={SelectorStyles.innerListItem}>{optionName}</span>
         </li>
-      );
+      ) : null;
     }, this);
 
     return (
