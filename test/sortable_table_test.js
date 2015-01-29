@@ -182,7 +182,7 @@ describe('SortableTable', function() {
     });
 
     it('should pass table type, column type, and direction to callback', function() {
-      var createdByLabel = TestUtils.scryRenderedDOMComponentsWithClass(this.sortable, 'created by')[0];
+      var createdByLabel = TestUtils.scryRenderedDOMComponentsWithClass(this.sortable, 'created-by')[0];
       TestUtils.Simulate.click(createdByLabel);
       sinon.assert.calledWith(this.stub, 'someday', 'created by', 'descending');
     });
