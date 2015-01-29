@@ -194,7 +194,6 @@ var TableRow = React.createClass({
       <div style={_.extend({}, styles, SortableStyles.cell.title)}>
         <a href={href}
           className="js-item-link"
-          data-product-number={this.props.model.product.id}
           data-item-number={this.props.model.number}
           style={linkStyle}
           onMouseOver={this.onTitleLinkHover}
