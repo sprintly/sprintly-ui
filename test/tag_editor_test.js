@@ -81,7 +81,7 @@ describe('TagEditor', function() {
     TestUtils.Simulate.submit(form);
 
     sinon.assert.calledOnce(stub.addOrRemove);
-    sinon.assert.calledWith(stub.addOrRemove, [1,1], 'new tag', 'add');
+    sinon.assert.calledWith(stub.addOrRemove, [1,1], [], 'new tag', 'add');
   });
 
   it('should close the edit menu if adding the first tag on an item', function() {
@@ -126,11 +126,12 @@ describe('TagEditor', function() {
     var stub = {
       addOrRemove: sinon.stub()
     };
+    var currentTags = ["test", "test2"];
 
     var tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
-        tags={["test", "test2"]}
+        tags={currentTags}
         tagChanger={stub}
       />
     );
@@ -142,7 +143,7 @@ describe('TagEditor', function() {
     TestUtils.Simulate.click(deleteButton);
 
     sinon.assert.calledOnce(stub.addOrRemove);
-    sinon.assert.calledWith(stub.addOrRemove, [1,1], 'test', 'remove');
+    sinon.assert.calledWith(stub.addOrRemove, [1,1], currentTags, 'test', 'remove');
   });
 
   it('should close the edit menu automatically if the last item tag is deleted', function() {
