@@ -6,11 +6,13 @@ var TagEditorStyles = require('../styles/tag_editor');
 /*
  * TagEditor element provides interface for adding and removing item tags.
  * Used throughout app in tandem with Tags element.
+ * Model id prop is optional, though if you're editing tags on an item,
+ * you'll probably want to pass those in.
  */
 
 var TagEditor = React.createClass({
   propTypes: {
-    modelId: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
+    modelId: React.PropTypes.arrayOf(React.PropTypes.number),
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     tagChanger: React.PropTypes.object.isRequired
   },
@@ -18,7 +20,9 @@ var TagEditor = React.createClass({
   mixins: [ClickOff, TagEditorStyles],
 
   getDefaultProps: function() {
-    return {};
+    return {
+      modelId: null
+    };
   },
 
   getInitialState: function() {
@@ -34,8 +38,10 @@ var TagEditor = React.createClass({
     });
   },
 
-  onTagEditClick: function() {
+  onTagEditClick: function(ev) {
+    ev.stopPropagation();
     var showOrHide = this.state.showMenu ? false : true;
+
     this.setState({
       showMenu: showOrHide
     });
@@ -43,10 +49,11 @@ var TagEditor = React.createClass({
 
   onFormSubmit: function(ev) {
     ev.preventDefault();
+
     var input = ev.target.childNodes[0];
     var tag = input.value;
 
-    this.props.tagChanger.addOrRemove(this.props.modelId, tag, 'add');
+    this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'add');
     input.value = '';
 
     // Close popup if we've just added our first tag
@@ -58,8 +65,10 @@ var TagEditor = React.createClass({
   },
 
   onTagRemoveClick: function(ev) {
+    ev.stopPropagation();
     var tag = ev.target.parentNode.nextSibling.textContent;
-    this.props.tagChanger.addOrRemove(this.props.modelId, tag, 'remove');
+
+    this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'remove');
 
     // Close popup if we've just removed our last tag
     if (this.props.tags.length === 1) {

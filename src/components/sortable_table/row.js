@@ -213,7 +213,6 @@ var TableRow = React.createClass({
           tagChanger={this.props.modelChangerUtilities.tagChanger}
         />
         <Tags
-          modelId={mId}
           tags={this.props.model.tags}
           condensed={condense}
           tagChanger={this.props.modelChangerUtilities.tagChanger}

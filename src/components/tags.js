@@ -17,7 +17,6 @@ var TagsStyles = require('../styles/tags');
 var Tags = React.createClass({
 
   propTypes: {
-    modelId: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
     tags: React.PropTypes.arrayOf(React.PropTypes.string),
     condensed: React.PropTypes.bool,
     navigatorUtility: React.PropTypes.object,
@@ -64,7 +63,6 @@ var Tags = React.createClass({
     var tagListItems = [];
 
     var len = this.props.tags.length;
-    var mId = this.props.modelId[0] + ':' + this.props.modelId[1];
     var liStyle = this.props.condensed ? TagsStyles.listItem : TagsStyles.expanded;
 
     if (len === 1) {
@@ -82,23 +80,23 @@ var Tags = React.createClass({
         ) :
         (
           <ul style={TagsStyles.list}>
-            {this.buildTagList(mId)}
+            {this.buildTagList()}
           </ul>
         );
     }
 
     return (
-      <div key={mId} style={TagsStyles.wrapper}>
+      <div style={TagsStyles.wrapper}>
         {wrapped}
       </div>
     );
   },
 
-  buildTagList: function(modelId) {
+  buildTagList: function() {
     return _.map(this.props.tags, function(tag, i, arr) {
       var maybeComma = i === (arr.length - 1) ? null : ',';
       return (
-        <li key={modelId + ':' + tag} style={TagsStyles.expanded}>
+        <li key={'tag' + ':' + i} style={TagsStyles.expanded}>
           <button style={TagsStyles.tag} onClick={this.onTagClick}>
             {tag}
           </button>{maybeComma}
