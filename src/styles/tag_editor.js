@@ -57,7 +57,7 @@ var TagEditorStyles = {
     borderTop: '20px solid transparent',
     borderBottom: '20px solid transparent',
     marginLeft: '-10px',
-    marginTop: '6px'
+    marginTop: '6px',
     zIndex: '600'
   }
 };
