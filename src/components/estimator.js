@@ -99,7 +99,7 @@ var Estimator = React.createClass({
 
       scoreMenu = (
         <div>
-          <div className="left-arrow" styles={EstimatorStyles.leftArrow} />
+          <div className="left-arrow" style={EstimatorStyles.leftArrow} />
           <div className="estimator-menu" style={EstimatorStyles.menu}>
             <ul style={EstimatorStyles.list}>
               {scores}

@@ -58,7 +58,7 @@ var EstimatorStyles = {
     borderTop: '12px solid transparent',
     borderBottom: '12px solid transparent',
     marginLeft: '32px',
-    marginTop: '30px',
+    marginTop: '-30px',
     zIndex: '600'
   }
 };

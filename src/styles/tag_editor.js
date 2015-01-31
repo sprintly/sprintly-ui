@@ -42,7 +42,7 @@ var TagEditorStyles = {
     marginBottom: '2px'
   }),
   popup: _.extend({}, PopupBase.elementMenu, {
-    marginTop: '-40px',
+    marginTop: '-30px',
     marginLeft: '20px'
   }),
   popupInput: {
@@ -56,8 +56,8 @@ var TagEditorStyles = {
     borderRight: '20px solid #fff',
     borderTop: '20px solid transparent',
     borderBottom: '20px solid transparent',
-    marginLeft: '-10px',
-    marginTop: '6px',
+    marginLeft: '8px',
+    marginTop: '-30px',
     zIndex: '600'
   }
 };
