@@ -116,7 +116,7 @@ var SortableTableStyles = {
       width: '20px'
     },
     wide: {
-      width: '40px'
+      width: '50px'
     },
     wider: {
       width: '90px'
