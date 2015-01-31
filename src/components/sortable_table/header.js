@@ -101,7 +101,7 @@ var TableHeader = React.createClass({
     return _.map(columns, function(column) {
       var capitalizedLabel = column.charAt(0).toUpperCase() + column.slice(1);
       return (
-        <th key={column} style={SortableStyles.head.label}>
+        <th key={column} title="click to sort" style={SortableStyles.head.label}>
           <button className={column.replace(' ', '-')} style={SortableStyles.head.button} key={column}
             onClick={this.onLabelClick}>
             {capitalizedLabel}

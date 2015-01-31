@@ -16,7 +16,8 @@ var browserReset = {
   padding: '0',
   WebkitFontSmoothing: 'antialiased',
   textAlign: 'left',
-  whiteSpace: 'nowrap'
+  whiteSpace: 'nowrap',
+  cursor: 'pointer'
 };
 
 var ButtonBaseStyles = {
