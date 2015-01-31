@@ -3,12 +3,13 @@ var _ = require('lodash');
 
 /*
  * (WIP)
- * TODO(fw): finish for Reports
+ * TODO(fw)
  */
 
 var Status = React.createClass({
   propTypes: {
-    modelId: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
+    modelId: React.PropTypes.arrayOf(React.PropTypes.number),
+    readOnly: React.PropTypes.bool,
     status: React.PropTypes.number.isRequired,
     statusChanger: React.PropTypes.object.isRequired
   },
@@ -16,7 +17,10 @@ var Status = React.createClass({
   mixins: [],
 
   getDefaultProps: function() {
-    return {};
+    return {
+      modelId: null,
+      readOnly: false
+    };
   },
 
   getInitialState: function() {

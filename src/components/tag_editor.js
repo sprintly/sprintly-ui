@@ -13,6 +13,7 @@ var TagEditorStyles = require('../styles/tag_editor');
 var TagEditor = React.createClass({
   propTypes: {
     modelId: React.PropTypes.arrayOf(React.PropTypes.number),
+    readOnly: React.PropTypes.bool,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     tagChanger: React.PropTypes.object.isRequired
   },
@@ -21,7 +22,8 @@ var TagEditor = React.createClass({
 
   getDefaultProps: function() {
     return {
-      modelId: null
+      modelId: null,
+      readOnly: false
     };
   },
 
@@ -40,6 +42,10 @@ var TagEditor = React.createClass({
 
   onTagEditClick: function(ev) {
     ev.stopPropagation();
+    if (this.props.readOnly) {
+      return;
+    }
+
     var showOrHide = this.state.showMenu ? false : true;
 
     this.setState({
@@ -49,6 +55,9 @@ var TagEditor = React.createClass({
 
   onFormSubmit: function(ev) {
     ev.preventDefault();
+    if (this.props.readOnly) {
+      return;
+    }
 
     var input = ev.target.childNodes[0];
     var tag = input.value;
@@ -66,6 +75,10 @@ var TagEditor = React.createClass({
 
   onTagRemoveClick: function(ev) {
     ev.stopPropagation();
+    if (this.props.readOnly) {
+      return;
+    }
+
     var tag = ev.target.parentNode.nextSibling.textContent;
 
     this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'remove');
@@ -83,13 +96,16 @@ var TagEditor = React.createClass({
     var addTagText = tagsLength ? null : 'Add a tag.'
     var tagEditMenu = this.state.showMenu ?
       (
-        <div className="tag-editor-menu" style={TagEditorStyles.popup}>
-          <form onSubmit={this.onFormSubmit}>
-            <input type="text" placeholder="Add a tag" style={TagEditorStyles.popupInput} />
-          </form>
-          <ul style={TagEditorStyles.list}>
-            {this.buildTagList()}
-          </ul>
+        <div>
+          <div className="left-arrow" style={TagEditorStyles.leftArrow} />
+          <div className="tag-editor-menu" style={TagEditorStyles.popup}>
+            <form onSubmit={this.onFormSubmit}>
+              <input type="text" placeholder="Add a tag" style={TagEditorStyles.popupInput} />
+            </form>
+            <ul style={TagEditorStyles.list}>
+              {this.buildTagList()}
+            </ul>
+          </div>
         </div>
       ) : null;
 

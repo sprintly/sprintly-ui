@@ -22,7 +22,8 @@ var Estimator = React.createClass({
   },
 
   propTypes: {
-    modelId: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
+    modelId: React.PropTypes.arrayOf(React.PropTypes.number),
+    readOnly: React.PropTypes.bool,
     itemType: React.PropTypes.string.isRequired,
     score: React.PropTypes.string.isRequired,
     estimateChanger: React.PropTypes.object.isRequired
@@ -31,7 +32,10 @@ var Estimator = React.createClass({
   mixins: [ClickOff, EstimatorStyles],
 
   getDefaultProps: function() {
-    return {};
+    return {
+      modelId: null,
+      readOnly: false
+    };
   },
 
   getInitialState: function() {
@@ -42,19 +46,29 @@ var Estimator = React.createClass({
 
   handleClickOutside: function(ev) {
     ev.stopPropagation();
+
     this.setState({
       menuOpen: false
     });
   },
 
   onScoreClick: function() {
+    if (this.props.readOnly) {
+      return;
+    }
+
     var openOrClose = this.state.menuOpen === false ? true : false;
+
     this.setState({
       menuOpen: openOrClose
     });
   },
 
   onScoreChange: function(ev) {
+    if (this.props.readOnly) {
+      return;
+    }
+
     var newScore = parseInt(ev.target.getAttribute('data-score'), 10);
 
     if (this.props.score === this.ESTIMATE_HASH[newScore].toLowerCase()) {
@@ -84,10 +98,13 @@ var Estimator = React.createClass({
       }, this);
 
       scoreMenu = (
-        <div className="estimator-menu" style={EstimatorStyles.menu}>
-          <ul style={EstimatorStyles.list}>
-            {scores}
-          </ul>
+        <div>
+          <div className="left-arrow" styles={EstimatorStyles.leftArrow} />
+          <div className="estimator-menu" style={EstimatorStyles.menu}>
+            <ul style={EstimatorStyles.list}>
+              {scores}
+            </ul>
+          </div>
         </div>
       );
     }

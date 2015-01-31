@@ -112,19 +112,22 @@ var SortableTableStyles = {
     borderCorrection: {
       padding: '0 8px'
     },
-    icon: {
+    narrow: {
       width: '20px'
     },
-    tags: {
+    wide: {
+      width: '50px'
+    },
+    wider: {
       width: '90px'
     },
-    title: {
+    widest: {
       width: '375px'
     },
-    titleLink: {
+    link: {
       color: '#323232'
     },
-    titleLinkHover: {
+    linkHover: {
       color: '#323232',
       textDecoration: 'underline'
     },

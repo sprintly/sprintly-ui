@@ -48,9 +48,19 @@ var EstimatorStyles = {
   menu: _.extend({}, PopupBase.elementMenu, {
     display: 'inline-block',
     lineHeight: '19px',
-    marginTop: '-8px',
-    padding: '6px 10px 0px 7px'
-  })
+    padding: '6px 10px 0px 7px',
+    marginTop: '-30px',
+    marginLeft: '40px'
+  }),
+  leftArrow: {
+    position: 'absolute',
+    borderRight: '12px solid #fff',
+    borderTop: '12px solid transparent',
+    borderBottom: '12px solid transparent',
+    marginLeft: '32px',
+    marginTop: '30px',
+    zIndex: '600'
+  }
 };
 
 module.exports = EstimatorStyles;

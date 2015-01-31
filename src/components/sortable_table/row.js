@@ -110,8 +110,8 @@ var TableRow = React.createClass({
     // Left border on matched rows causes padding weirdness in checkboxes,
     // so we add corrective styles on matched rows.
     var controlStyles = this.props.model.isMatched ?
-      _.extend({}, styles, SortableStyles.cell.icon, SortableStyles.cell.borderCorrection) :
-      _.extend({}, styles, SortableStyles.cell.icon);
+      _.extend({}, styles, SortableStyles.cell.narrow, SortableStyles.cell.borderCorrection) :
+      _.extend({}, styles, SortableStyles.cell.narrow);
 
     return (
       <div style={controlStyles}>
@@ -133,7 +133,7 @@ var TableRow = React.createClass({
     }
 
     return (
-      <div style={styles}>
+      <div style={_.extend({}, styles, SortableStyles.cell.wider)}>
         {subitemArrow}
         {this.props.model.product.name}
       </div>
@@ -150,9 +150,10 @@ var TableRow = React.createClass({
 
   buildEstimateCell: function(mId, type, styles) {
     return (
-      <div style={_.extend({}, styles, SortableStyles.cell.icon)}>
+      <div style={_.extend({}, styles, SortableStyles.cell.narrow)}>
         <Estimator
           modelId={mId}
+          readOnly={!!this.props.model.isNonMatching}
           itemType={type}
           score={this.props.model.score}
           estimateChanger={this.props.modelChangerUtilities.estimateChanger}
@@ -163,9 +164,10 @@ var TableRow = React.createClass({
 
   buildStatusCell: function(mId, styles) {
     return (
-      <div style={_.extend({}, styles, SortableStyles.cell.icon)}>
+      <div style={_.extend({}, styles, SortableStyles.cell.narrow)}>
         <Status
           modelId={mId}
+          readOnly={!!this.props.model.isNonMatching}
           status={this.props.model.status}
           statusChanger={this.props.modelChangerUtilities.statusChanger}
         />
@@ -187,11 +189,11 @@ var TableRow = React.createClass({
 
   buildTitleCell: function(condense, styles) {
     var href = '/product/' + this.props.model.product.id + '/item/' + this.props.model.number;
-    var linkStyle = this.state.hover ? SortableStyles.cell.titleLinkHover :
-      SortableStyles.cell.titleLink;
+    var linkStyle = this.state.hover ? SortableStyles.cell.linkHover :
+      SortableStyles.cell.link;
 
     return (
-      <div style={_.extend({}, styles, SortableStyles.cell.title)}>
+      <div style={_.extend({}, styles, SortableStyles.cell.widest)}>
         <a href={href}
           className="js-item-link"
           data-item-number={this.props.model.number}
@@ -206,9 +208,10 @@ var TableRow = React.createClass({
 
   buildTagsCell: function(mId, condense, styles) {
     return (
-      <div style={_.extend({}, styles, SortableStyles.cell.tags)}>
+      <div style={_.extend({}, styles, SortableStyles.cell.wider)}>
         <TagEditor
           modelId={mId}
+          readOnly={!!this.props.model.isNonMatching}
           tags={this.props.model.tags}
           tagChanger={this.props.modelChangerUtilities.tagChanger}
         />
@@ -224,7 +227,7 @@ var TableRow = React.createClass({
 
   buildCreatedAtCell: function(styles) {
     return (
-      <div style={styles}>
+      <div style={_.extend({}, styles, SortableStyles.cell.wide)}>
         {moment(this.props.model.created_at).format('MM/DD/YY')}
       </div>
     );

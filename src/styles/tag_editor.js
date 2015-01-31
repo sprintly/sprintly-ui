@@ -41,12 +41,24 @@ var TagEditorStyles = {
     verticalAlign: 'middle',
     marginBottom: '2px'
   }),
-  popup: PopupBase.elementMenu,
+  popup: _.extend({}, PopupBase.elementMenu, {
+    marginTop: '-40px',
+    marginLeft: '20px'
+  }),
   popupInput: {
     border: '1px solid #c7c7c7',
     borderRadius: '4px',
     marginBottom: '4px',
     padding: '6px'
+  },
+  leftArrow: {
+    position: 'absolute',
+    borderRight: '20px solid #fff',
+    borderTop: '20px solid transparent',
+    borderBottom: '20px solid transparent',
+    marginLeft: '-10px',
+    marginTop: '6px'
+    zIndex: '600'
   }
 };
 
