@@ -1,6 +1,6 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var TagsStyles = require('../styles/tags');
+import React from 'react/addons';
+import _ from 'lodash';
+import Styles from '../styles/tags';
 
 /*
  * Tags element displays either a textual list of tags ("one, two, three")
@@ -23,7 +23,7 @@ var Tags = React.createClass({
     altOnTagClick: React.PropTypes.func
   },
 
-  mixins: [TagsStyles],
+  mixins: [Styles],
 
   getDefaultProps: function() {
     return {
@@ -63,30 +63,30 @@ var Tags = React.createClass({
     var tagListItems = [];
 
     var len = this.props.tags.length;
-    var liStyle = this.props.condensed ? TagsStyles.listItem : TagsStyles.expanded;
+    var liStyle = this.props.condensed ? Styles.listItem : Styles.expanded;
 
     if (len === 1) {
       wrapped = (
-        <button style={TagsStyles.tag} onClick={this.onTagClick}>
+        <button style={Styles.tag} onClick={this.onTagClick}>
           {this.props.tags}
         </button>
       );
     } else if (len > 1) {
       wrapped = this.props.condensed ?
         (
-          <button style={TagsStyles.tag}>
+          <button style={Styles.tag}>
             {len.toString() + ' tags'}
           </button>
         ) :
         (
-          <ul style={TagsStyles.list}>
+          <ul style={Styles.list}>
             {this.buildTagList()}
           </ul>
         );
     }
 
     return (
-      <div style={TagsStyles.wrapper}>
+      <div style={Styles.wrapper}>
         {wrapped}
       </div>
     );
@@ -96,8 +96,8 @@ var Tags = React.createClass({
     return _.map(this.props.tags, function(tag, i, arr) {
       var maybeComma = i === (arr.length - 1) ? null : ',';
       return (
-        <li key={'tag' + ':' + i} style={TagsStyles.expanded}>
-          <button style={TagsStyles.tag} onClick={this.onTagClick}>
+        <li key={'tag' + ':' + i} style={Styles.expanded}>
+          <button style={Styles.tag} onClick={this.onTagClick}>
             {tag}
           </button>{maybeComma}
         </li>
@@ -106,4 +106,4 @@ var Tags = React.createClass({
   }
 });
 
-module.exports = Tags;
+export default Tags;

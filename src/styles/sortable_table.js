@@ -1,7 +1,7 @@
-var _ = require('lodash');
-var ButtonBase = require('./base_styles/buttons');
-var IconBase = require('./base_styles/icons');
-var PopupBase = require('./base_styles/popups');
+import _ from 'lodash';
+import ButtonBase from './base_styles/buttons';
+import IconBase from './base_styles/icons';
+import PopupBase from './base_styles/popups';
 
 /*
  * Styles for SortableTable.
@@ -64,7 +64,9 @@ var SortableTableStyles = {
       paddingLeft: '10px',
       paddingRight: '10px'
     },
-    button: ButtonBase.base
+    button: _.extend({}, ButtonBase.base, {
+      textTransform: 'capitalize'
+    })
   },
   row: {
     story: _.extend({}, rowBase, {
@@ -142,4 +144,4 @@ var SortableTableStyles = {
   }
 };
 
-module.exports = SortableTableStyles;
+export default SortableTableStyles;

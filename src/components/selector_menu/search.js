@@ -1,4 +1,4 @@
-var React = window.React || require('react/addons');
+import React from 'react/addons';
 
 
 var Search = React.createClass({
@@ -24,4 +24,4 @@ var Search = React.createClass({
 });
 
 
-module.exports = Search;
+export default Search;

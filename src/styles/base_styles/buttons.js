@@ -24,4 +24,4 @@ var ButtonBaseStyles = {
   base: browserReset
 };
 
-module.exports = ButtonBaseStyles;
+export default ButtonBaseStyles;

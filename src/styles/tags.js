@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var ButtonBase = require('./base_styles/buttons');
+import _ from 'lodash';
+import ButtonBase from './base_styles/buttons';
 
 /*
  * Tags component styles.
@@ -26,4 +26,4 @@ var TagsStyles = {
   }
 };
 
-module.exports = TagsStyles;
+export default TagsStyles;

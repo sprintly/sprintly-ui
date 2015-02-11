@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "fuzzy": "^0.1.0",
-    "react": "^0.12.1"
+    "react": "^0.12.2"
   },
   "devDependencies": {
     "browserify": "^8.1.0",
@@ -52,10 +52,7 @@
   "browserify": {
     "transform": [
       [
-        "reactify",
-        {
-          "es6": true
-        }
+        "6to5ify"
       ],
       [
         "browserify-istanbul",

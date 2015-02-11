@@ -1,7 +1,7 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var ClickOff = require('react-onclickoutside');
-var EstimatorStyles = require('../styles/estimator');
+import React from 'react/addons';
+import _ from 'lodash';
+import ClickOff from 'react-onclickoutside';
+import Styles from '../styles/estimator';
 
 /*
  * Estimator element displays item score that, when clicked, opens a menu
@@ -29,7 +29,7 @@ var Estimator = React.createClass({
     estimateChanger: React.PropTypes.object.isRequired
   },
 
-  mixins: [ClickOff, EstimatorStyles],
+  mixins: [ClickOff, Styles],
 
   getDefaultProps: function() {
     return {
@@ -83,14 +83,14 @@ var Estimator = React.createClass({
 
   render: function() {
     var currentScore = this.props.score === '~' ? '?' : this.props.score;
-    var scoreStyle = EstimatorStyles.score[this.props.itemType];
+    var scoreStyle = Styles.score[this.props.itemType];
     var scoreMenu = null;
 
     if (this.state.menuOpen) {
       var scores = _.map(this.ALL_ESTIMATES, function(score) {
         return (
-          <li key={score} style={EstimatorStyles.score.wrapper}>
-            <button style={scoreStyle} data-score={score} onClick={_.bind(this.onScoreChange, this)}>
+          <li key={score} style={Styles.score.wrapper}>
+            <button style={scoreStyle} data-score={score} onClick={this.onScoreChange}>
               {this.ESTIMATE_HASH[score]}
             </button>
           </li>
@@ -99,9 +99,9 @@ var Estimator = React.createClass({
 
       scoreMenu = (
         <div>
-          <div className="left-arrow" style={EstimatorStyles.leftArrow} />
-          <div className="estimator-menu" style={EstimatorStyles.menu}>
-            <ul style={EstimatorStyles.list}>
+          <div className="left-arrow" style={Styles.leftArrow} />
+          <div className="estimator-menu" style={Styles.menu}>
+            <ul style={Styles.list}>
               {scores}
             </ul>
           </div>
@@ -120,4 +120,4 @@ var Estimator = React.createClass({
   }
 });
 
-module.exports = Estimator;
+export default Estimator;

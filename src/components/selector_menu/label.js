@@ -1,4 +1,4 @@
-var React = window.React || require('react/addons');
+import React from 'react/addons';
 
 
 var Label = React.createClass({
@@ -25,4 +25,4 @@ var Label = React.createClass({
 });
 
 
-module.exports = Label;
+export default Label;

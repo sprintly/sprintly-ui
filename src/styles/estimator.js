@@ -1,6 +1,6 @@
-var _ = require('lodash');
-var ButtonBase = require('./base_styles/buttons');
-var PopupBase = require('./base_styles/popups');
+import _ from 'lodash';
+import ButtonBase from './base_styles/buttons';
+import PopupBase from './base_styles/popups';
 
 /*
  * Estimator component styles.
@@ -63,4 +63,4 @@ var EstimatorStyles = {
   }
 };
 
-module.exports = EstimatorStyles;
+export default EstimatorStyles;

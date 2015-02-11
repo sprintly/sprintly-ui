@@ -1,7 +1,7 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var ClickOff = require('react-onclickoutside');
-var TagEditorStyles = require('../styles/tag_editor');
+import React from 'react/addons';
+import _ from 'lodash';
+import ClickOff from 'react-onclickoutside';
+import Styles from '../styles/tag_editor';
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -18,7 +18,7 @@ var TagEditor = React.createClass({
     tagChanger: React.PropTypes.object.isRequired
   },
 
-  mixins: [ClickOff, TagEditorStyles],
+  mixins: [ClickOff, Styles],
 
   getDefaultProps: function() {
     return {
@@ -97,12 +97,12 @@ var TagEditor = React.createClass({
     var tagEditMenu = this.state.showMenu ?
       (
         <div>
-          <div className="left-arrow" style={TagEditorStyles.leftArrow} />
-          <div className="tag-editor-menu" style={TagEditorStyles.popup}>
+          <div className="left-arrow" style={Styles.leftArrow} />
+          <div className="tag-editor-menu" style={Styles.popup}>
             <form onSubmit={this.onFormSubmit}>
-              <input type="text" placeholder="Add a tag" style={TagEditorStyles.popupInput} />
+              <input type="text" placeholder="Add a tag" style={Styles.popupInput} />
             </form>
-            <ul style={TagEditorStyles.list}>
+            <ul style={Styles.list}>
               {this.buildTagList()}
             </ul>
           </div>
@@ -110,9 +110,9 @@ var TagEditor = React.createClass({
       ) : null;
 
     return (
-      <div className="tag-editor" key={this.props.modelId} style={TagEditorStyles.wrapper}>
-        <button style={TagEditorStyles.tag} onClick={this.onTagEditClick}>
-          <i style={TagEditorStyles.editIcon} />
+      <div className="tag-editor" key={this.props.modelId} style={Styles.wrapper}>
+        <button style={Styles.tag} onClick={this.onTagEditClick}>
+          <i style={Styles.editIcon} />
           {addTagText}
         </button>
         {tagEditMenu}
@@ -123,9 +123,9 @@ var TagEditor = React.createClass({
   buildTagList: function() {
     return _.map(this.props.tags, function(tag) {
       return (
-        <li key={this.props.modelId + ':' + tag} style={TagEditorStyles.listItem}>
-          <button style={TagEditorStyles.menuTag} onClick={this.onTagRemoveClick}>
-            <i style={TagEditorStyles.deleteIcon} />
+        <li key={this.props.modelId + ':' + tag} style={Styles.listItem}>
+          <button style={Styles.menuTag} onClick={this.onTagRemoveClick}>
+            <i style={Styles.deleteIcon} />
           </button>
           {tag}
         </li>

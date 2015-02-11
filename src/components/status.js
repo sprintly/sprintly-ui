@@ -1,5 +1,5 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
+import React from 'react/addons';
+import _ from 'lodash';
 
 /*
  * (WIP)
@@ -34,4 +34,4 @@ var Status = React.createClass({
   }
 });
 
-module.exports = Status;
+export default Status;

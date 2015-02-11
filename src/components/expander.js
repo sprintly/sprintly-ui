@@ -1,6 +1,6 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var ExpanderStyles = require('../styles/expander');
+import React from 'react/addons';
+import _ from 'lodash';
+import Styles from '../styles/expander';
 
 /*
  * Buttons for toggling the expanded/condensed state of
@@ -14,7 +14,7 @@ var Expander = React.createClass({
     onClick: React.PropTypes.func.isRequired
   },
 
-  mixins: [ExpanderStyles],
+  mixins: [Styles],
 
   getDefaultProps: function() {
     return {
@@ -29,9 +29,8 @@ var Expander = React.createClass({
     };
   },
 
-  onExpanderClick: function(ev) {
+  onExpanderClick: function(expandOrCondense, ev) {
     ev.stopPropagation();
-    var expandOrCondense = ev.currentTarget.className;
 
     if (expandOrCondense === this.state.expandOrCondense) {
       return;
@@ -44,25 +43,25 @@ var Expander = React.createClass({
   render: function() {
     var className = "expander " + this.props.expanded;
 
-    var condenseButton = ExpanderStyles.condense;
-    var condenseIcon = ExpanderStyles.condenseIcon;
-    var expandButton = ExpanderStyles.expand;
-    var expandIcon = ExpanderStyles.expandIcon;
+    var condenseButton = Styles.condense;
+    var condenseIcon = Styles.condenseIcon;
+    var expandButton = Styles.expand;
+    var expandIcon = Styles.expandIcon;
 
     if (this.props.expanded === 'condensed') {
-      condenseButton = _.extend({}, condenseButton, ExpanderStyles.active);
-      condenseIcon = _.extend({}, condenseIcon, ExpanderStyles.condenseIconActive);
+      condenseButton = _.extend({}, condenseButton, Styles.active);
+      condenseIcon = _.extend({}, condenseIcon, Styles.condenseIconActive);
     } else {
-      expandButton = _.extend({}, expandButton, ExpanderStyles.active);
-      expandIcon = _.extend({}, expandIcon, ExpanderStyles.expandIconActive);
+      expandButton = _.extend({}, expandButton, Styles.active);
+      expandIcon = _.extend({}, expandIcon, Styles.expandIconActive);
     }
 
     return (
       <div className={className}>
-        <button className="expanded" style={expandButton} onClick={this.onExpanderClick}>
+        <button className="expanded" style={expandButton} onClick={_.partial(this.onExpanderClick, 'expanded')}>
           <i style={expandIcon}></i>
         </button>
-        <button className="condensed" style={condenseButton} onClick={this.onExpanderClick}>
+        <button className="condensed" style={condenseButton} onClick={_.partial(this.onExpanderClick, 'condensed')}>
           <i style={condenseIcon}></i>
         </button>
       </div>
@@ -70,4 +69,4 @@ var Expander = React.createClass({
   }
 });
 
-module.exports = Expander;
+export default Expander;

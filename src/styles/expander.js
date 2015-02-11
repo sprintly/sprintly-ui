@@ -1,6 +1,6 @@
-var _ = require('lodash');
-var ButtonBase = require('./base_styles/buttons');
-var IconBase = require('./base_styles/icons');
+import _ from 'lodash';
+import ButtonBase from './base_styles/buttons';
+import IconBase from './base_styles/icons';
 
 /*
  * Expander component (for tables and columns) styles.
@@ -42,4 +42,4 @@ var ExpanderStyles = {
   }
 };
 
-module.exports = ExpanderStyles;
+export default ExpanderStyles;

@@ -1,8 +1,9 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var TableHeader = require('./header');
-var TableRow = require('./row');
-var SortableStyles = require('../../styles/sortable_table');
+import React from 'react/addons';
+import _ from 'lodash';
+import TableHeader from './header';
+import TableRow from './row';
+import Styles from '../../styles/sortable_table';
+
 
 /*
  * Takes an array of json objects (for example, a Backbone.Collection.toJSON())
@@ -13,6 +14,7 @@ var SortableStyles = require('../../styles/sortable_table');
  * Responsible for managing the expanded/condensed state of rows and for proxying sort
  * events up to parent view for processing.
  */
+
 
 var SortableTable = React.createClass({
 
@@ -28,7 +30,7 @@ var SortableTable = React.createClass({
     navigatorUtility: React.PropTypes.object
   },
 
-  mixins: [SortableStyles],
+  mixins: [Styles],
 
   getDefaultProps: function() {
     return {
@@ -58,40 +60,44 @@ var SortableTable = React.createClass({
 
     _.each(this.props.collection, function(model) {
       var modelId = [model.product.id, model.number];
+      var rowProps = {
+        key: modelId,
+        model: model,
+        columns: this.props.columnNames,
+        expanded: this.state.expanded,
+        modelChangerUtilities: this.props.modelChangerUtilities,
+        navigatorUtility: this.props.navigatorUtility,
+        isBulkEditable: this.props.isBulkEditable,
+        onBulkSelect: this.props.onBulkSelect
+      };
+
       if (model.isMatched && !model.parent) {
         // Add a spacer row above matched parents.
         rows.push(
-          <tr key={modelId+':spacer'} className="spacer" style={SortableStyles.row.spacer} />
+          <tr key={modelId+':spacer'} className="spacer" style={Styles.row.spacer} />
         );
       }
       rows.push(
-        <TableRow
-          key={modelId}
-          model={model}
-          columns={this.props.columnNames}
-          expanded={this.state.expanded}
-          modelChangerUtilities={this.props.modelChangerUtilities}
-          navigatorUtility={this.props.navigatorUtility}
-          isBulkEditable={this.props.isBulkEditable}
-          onBulkSelect={this.props.onBulkSelect}
-        />
+        <TableRow {...rowProps} />
       );
     }, this);
 
+    var headerProps = {
+      tableType: this.props.tableType,
+      columns: this.props.columnNames,
+      sortedBy: this.state.sortBy,
+      expanded: this.state.expanded,
+      isBulkEditable: this.props.isBulkEditable,
+      onExpanderClick: this.onExpandClicked,
+      onLabelClick: this.props.onSortCollection
+    };
+
     return (
-      <div className={tableClass} style={SortableStyles.table.wrapper}>
-        <h2 className="sortable-title" style={SortableStyles.table.title}>{tableName}</h2>
-        <table style={SortableStyles.table.table}>
-          <thead style={SortableStyles.table.thead}>
-            <TableHeader
-              tableType={this.props.tableType}
-              columns={this.props.columnNames}
-              sortedBy={this.state.sortBy}
-              expanded={this.state.expanded}
-              isBulkEditable={this.props.isBulkEditable}
-              onExpanderClick={this.onExpandClicked}
-              onLabelClick={this.props.onSortCollection}
-            />
+      <div className={tableClass} style={Styles.table.wrapper}>
+        <h2 className="sortable-title" style={Styles.table.title}>{tableName}</h2>
+        <table style={Styles.table.table}>
+          <thead style={Styles.table.thead}>
+            <TableHeader {...headerProps} />
           </thead>
           <tbody>
             {rows}
@@ -102,4 +108,4 @@ var SortableTable = React.createClass({
   }
 });
 
-module.exports = SortableTable;
+export default SortableTable;

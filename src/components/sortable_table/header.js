@@ -1,7 +1,7 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var Expander = require('../expander');
-var SortableStyles = require('../../styles/sortable_table');
+import React from 'react/addons';
+import _ from 'lodash';
+import Expander from '../expander';
+import Styles from '../../styles/sortable_table';
 
 /*
  * Renders header bar where cells are clickable elements that trigger a
@@ -24,7 +24,7 @@ var TableHeader = React.createClass({
     onLabelClick: React.PropTypes.func.isRequired
   },
 
-  mixins: [SortableStyles],
+  mixins: [Styles],
 
   getDefaultProps: function() {
     return {
@@ -36,9 +36,9 @@ var TableHeader = React.createClass({
     /*
      * Keeps track of sort direction on each column.
      */
-    var directionHash = _.object(_.map(this.props.columns, function(column) {
+    var directionHash = _.zipObject(this.props.columns, function(column) {
       return [column, 'ascending'];
-    }));
+    });
 
     return {
       directionHash: directionHash
@@ -71,13 +71,13 @@ var TableHeader = React.createClass({
 
     var control = this.props.isBulkEditable ?
       (
-        <th key="control" className="control" style={SortableStyles.head.label}></th>
+        <th key="control" className="control" style={Styles.head.label}></th>
       ) : null;
 
     var expander = null;
     var expander = hasProductColumn ?
       (
-        <th key="expander" style={SortableStyles.head.label}>
+        <th key="expander" style={Styles.head.label}>
           <Expander
             expanded={this.props.expanded}
             onClick={this.props.onExpanderClick}
@@ -86,7 +86,7 @@ var TableHeader = React.createClass({
       ) : null;
 
     return (
-      <tr style={SortableStyles.head.row}>
+      <tr style={Styles.head.row}>
         {control}
         {expander}
         {this.buildColumnLabels()}
@@ -99,12 +99,11 @@ var TableHeader = React.createClass({
     var columns = _.without(this.props.columns, 'product');
 
     return _.map(columns, function(column) {
-      var capitalizedLabel = column.charAt(0).toUpperCase() + column.slice(1);
       return (
-        <th key={column} title="click to sort" style={SortableStyles.head.label}>
-          <button className={column.replace(' ', '-')} style={SortableStyles.head.button} key={column}
+        <th key={column} title="click to sort" style={Styles.head.label}>
+          <button className={column.replace(' ', '-')} style={Styles.head.button} key={column}
             onClick={this.onLabelClick}>
-            {capitalizedLabel}
+            {column}
           </button>
         </th>
       );
@@ -112,4 +111,4 @@ var TableHeader = React.createClass({
   }
 });
 
-module.exports = TableHeader;
+export default TableHeader;
