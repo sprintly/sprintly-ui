@@ -1,9 +1,9 @@
-var _ = require('lodash');
-var React = window.React || require('react/addons');
-var TestUtils = React.addons.TestUtils;
-var sinon = require('sinon');
-var Expander = require('../src/components/expander');
+import _ from 'lodash';
+import React from 'react/addons';
+import sinon from 'sinon';
+import Expander from '../src/components/expander';
 
+var TestUtils = React.addons.TestUtils;
 
 describe('Expander', function() {
   beforeEach(function() {

@@ -8,8 +8,8 @@ import Styles from '../../styles/sortable_table';
 /*
  * Takes an array of json objects (for example, a Backbone.Collection.toJSON())
  * and an array of attributes to serve as column header labels and creates a sortable table from the data.
- * Column header labels are clickable and will trigger sort either in
- * ascending or descending order based on which option is currently active.
+ * Column header labels are clickable and will call an external sort method, passing
+ * 'ascending' or 'descending' based on which option is currently active.
  *
  * Responsible for managing the expanded/condensed state of rows and for proxying sort
  * events up to parent view for processing.
@@ -54,7 +54,6 @@ var SortableTable = React.createClass({
   },
 
   render: function() {
-    var tableName = this.props.label.charAt(0).toUpperCase() + this.props.label.slice(1);
     var tableClass = "sortable-table " + this.props.label;
     var rows = [];
 
@@ -74,7 +73,7 @@ var SortableTable = React.createClass({
       if (model.isMatched && !model.parent) {
         // Add a spacer row above matched parents.
         rows.push(
-          <tr key={modelId+':spacer'} className="spacer" style={Styles.row.spacer} />
+          <tr key={modelId + ':spacer'} className="spacer" style={Styles.row.spacer} />
         );
       }
       rows.push(
@@ -94,7 +93,7 @@ var SortableTable = React.createClass({
 
     return (
       <div className={tableClass} style={Styles.table.wrapper}>
-        <h2 className="sortable-title" style={Styles.table.title}>{tableName}</h2>
+        <h2 className="sortable-title" style={Styles.table.title}>{this.props.label}</h2>
         <table style={Styles.table.table}>
           <thead style={Styles.table.thead}>
             <TableHeader {...headerProps} />

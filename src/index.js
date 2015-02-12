@@ -6,8 +6,8 @@ import Status from './components/status';
 import TagEditor from './components/tag_editor';
 import Tags from './components/tags';
 
-// TODO (fw) not sure how to export this?
-module.exports = {
+
+export default {
   Estimator: Estimator,
   Expander: Expander,
   SelectorMenu: SelectorMenu,

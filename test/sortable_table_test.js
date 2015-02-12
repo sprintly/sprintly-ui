@@ -1,17 +1,17 @@
-var _ = require('lodash');
-var React = window.React || require('react/addons');
+import _ from 'lodash';
+import React from 'react/addons';
+import sinon from 'sinon';
+
+import SortableTable from '../src/components/sortable_table/index';
+import Header from '../src/components/sortable_table/header';
+import Row from '../src/components/sortable_table/row';
+import Expander from '../src/components/expander';
+import Estimator from '../src/components/estimator';
+import Status from '../src/components/status';
+import Tags from '../src/components/tags';
+import TagEditor from '../src/components/tag_editor';
+
 var TestUtils = React.addons.TestUtils;
-var sinon = require('sinon');
-
-var SortableTable = require('../src/components/sortable_table/index');
-var Header = require('../src/components/sortable_table/header');
-var Row = require('../src/components/sortable_table/row');
-var Expander = require('../src/components/expander');
-var Estimator = require('../src/components/estimator');
-var Status = require('../src/components/status');
-var Tags = require('../src/components/tags');
-var TagEditor = require('../src/components/tag_editor');
-
 
 var genItem = function(num, productNum, userName, parentNum) {
   return {
@@ -47,11 +47,6 @@ describe('SortableTable', function() {
       React.unmountComponentAtNode(this.sortable.getDOMNode().parent);
     });
 
-    it('should render a table with a capitalized label prop as a title', function() {
-      var title = TestUtils.findRenderedDOMComponentWithClass(this.sortable, 'sortable-title');
-      assert.equal(title.getDOMNode().textContent, "Backlog");
-    });
-
     it('should render a table header', function() {
       assert.ok(TestUtils.findRenderedComponentWithType(this.sortable, Header));
     });
@@ -65,12 +60,6 @@ describe('SortableTable', function() {
       _.each([this.sortable.props.columnNames, headerCols, rowCols], function(cols) {
         assert.equal(cols.length, 8);
       });
-    });
-
-    it('should capitalize column labels', function() {
-      var columns = TestUtils.scryRenderedDOMComponentsWithTag(this.sortable, 'th');
-      assert.strictEqual(this.sortable.props.columnNames[1], 'number');
-      assert.strictEqual(columns[1].getDOMNode().textContent, 'Number');
     });
 
     it('should render a table row for each collection item', function() {

@@ -29,7 +29,8 @@ var SortableTableStyles = {
       fontWeight: 'bold',
       color: '#323232',
       paddingTop: '30px',
-      paddingBottom: '0'
+      paddingBottom: '0',
+      textTransform: 'capitalize'
     },
     wrapper: {
       width: '1000px',

@@ -1,13 +1,13 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
+import React from 'react/addons';
+import _ from 'lodash';
+import sinon from 'sinon';
+
+import SelectorMenu from '../src/components/selector_menu/index';
+import Label from '../src/components/selector_menu/label';
+import List from '../src/components/selector_menu/list';
+import Search from '../src/components/selector_menu/search';
+
 var TestUtils = React.addons.TestUtils;
-var sinon = require('sinon');
-
-var SelectorMenu = require('../src/components/selector_menu/index');
-var Label = require('../src/components/selector_menu/label');
-var List = require('../src/components/selector_menu/list');
-var Search = require('../src/components/selector_menu/search');
-
 
 describe("SelectorMenu", function() {
   beforeEach(function() {

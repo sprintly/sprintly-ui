@@ -36,9 +36,8 @@ var TableHeader = React.createClass({
     /*
      * Keeps track of sort direction on each column.
      */
-    var directionHash = _.zipObject(this.props.columns, function(column) {
-      return [column, 'ascending'];
-    });
+    var directionHash = _.zipObject(this.props.columns,
+      _.times(this.props.columns.length, function() { return 'ascending'; }));
 
     return {
       directionHash: directionHash

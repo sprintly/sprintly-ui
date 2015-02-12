@@ -1,9 +1,9 @@
-var _ = require('lodash');
-var React = window.React || require('react/addons');
-var TestUtils = React.addons.TestUtils;
-var sinon = require('sinon');
-var Estimator = require('../src/components/estimator');
+import _ from 'lodash';
+import React from 'react/addons';
+import sinon from 'sinon';
+import Estimator from '../src/components/estimator';
 
+var TestUtils = React.addons.TestUtils;
 /*
  * Estimator component tests.
  */

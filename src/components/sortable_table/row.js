@@ -68,29 +68,6 @@ var TableRow = React.createClass({
         this.props.model.isNonMatching ? Styles.row.nonMatching : null);
     }
 
-
-
-    // Lookup hash for easy column-type inclusion checking.
-    // TODO(fw): find a better way to do this.
-    // var columns = _.object(this.props.columns, this.props.columns);
-    // var possibleCells = {
-    //   control: this.props.isBulkEditable ? this.buildControlCell(wrapperStyles) : null,
-    //   product: columns.product ? this.buildProductCell(wrapperStyles) : null,
-    //   number: columns.number ? this.buildNumberCell(wrapperStyles) : null,
-    //   estimate: columns.size ? this.buildEstimateCell(modelId, itemType, wrapperStyles) : null,
-    //   status: columns.status ? this.buildStatusCell(modelId, wrapperStyles) : null,
-    //   title: columns.title ? this.buildTitleCell(condensed, wrapperStyles) : null,
-    //   tags: columns.tags ? this.buildTagsCell(modelId, condensed, wrapperStyles) : null,
-    //   createdBy: columns['created by'] ? this.buildCreatedByCell(wrapperStyles) : null,
-    //   assignedTo: columns['assigned to'] ? this.buildAssigneeCell(modelId, wrapperStyles) : null,
-    //   createdAt: columns.created ? this.buildCreatedAtCell(wrapperStyles) : null
-    // };
-
-    // var cells = _.compact(_.map(possibleCells, function(cell, k) {
-    //   return cell ? (
-    //     <td key={k + ':' + modelId} style={Styles.cell.base}>{cell}</td>
-    //     ) : null;
-    // }, this));
     var columnMap = {
       product: this.buildProductCell,
       number: this.buildNumberCell,
@@ -107,7 +84,7 @@ var TableRow = React.createClass({
 
     if (this.props.isBulkEditable) {
       cells.push(
-        <td key={column + ':' + modelId} style={Styles.cell.base}>
+        <td key={'control' + ':' + modelId} style={Styles.cell.base}>
           {this.buildControlCell(wrapperStyles)}
         </td>
       );
