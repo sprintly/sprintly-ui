@@ -1,17 +1,17 @@
-import _ from 'lodash';
-import React from 'react/addons';
-import sinon from 'sinon';
-
-import SortableTable from '../src/components/sortable_table/index';
-import Header from '../src/components/sortable_table/header';
-import Row from '../src/components/sortable_table/row';
-import Expander from '../src/components/expander';
-import Estimator from '../src/components/estimator';
-import Status from '../src/components/status';
-import Tags from '../src/components/tags';
-import TagEditor from '../src/components/tag_editor';
-
+var _ = require('lodash');
+var React = window.React || require('react/addons');
 var TestUtils = React.addons.TestUtils;
+var sinon = require('sinon');
+
+var SortableTable = require('../src/components/sortable_table/index');
+var Header = require('../src/components/sortable_table/header');
+var Row = require('../src/components/sortable_table/row');
+var Expander = require('../src/components/expander');
+var Estimator = require('../src/components/estimator');
+var Status = require('../src/components/status');
+var Tags = require('../src/components/tags');
+var TagEditor = require('../src/components/tag_editor');
+
 
 var genItem = function(num, productNum, userName, parentNum) {
   return {

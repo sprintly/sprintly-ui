@@ -1,6 +1,6 @@
-import React from 'react/addons';
-import _ from 'lodash';
-import Styles from '../styles/expander';
+var React = window.React || require('react/addons');
+var _ = require('lodash');
+var Styles = require('../styles/expander');
 
 /*
  * Buttons for toggling the expanded/condensed state of
@@ -69,4 +69,4 @@ var Expander = React.createClass({
   }
 });
 
-export default Expander;
+module.exports = Expander;

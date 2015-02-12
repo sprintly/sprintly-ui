@@ -1,5 +1,5 @@
-import $ from 'jquery';
-import React from 'react/addons';
+var $ = require('jquery');
+var React = window.React || require('react/addons');
 
 
 var List = React.createClass({
@@ -37,5 +37,4 @@ var List = React.createClass({
   }
 });
 
-
-export default List;
+module.exports = List;

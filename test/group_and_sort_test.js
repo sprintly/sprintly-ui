@@ -1,5 +1,5 @@
-import GroupSort from '../src/utils/group_and_sort';
-import sinon from 'sinon';
+var GroupSort = require('../src/utils/group_and_sort');
+var sinon = require('sinon');
 
 var productMap = ['sprintly', 'mystery wagon', 'star wars', 'blues clues'];
 

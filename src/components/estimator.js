@@ -1,7 +1,7 @@
-import React from 'react/addons';
-import _ from 'lodash';
-import ClickOff from 'react-onclickoutside';
-import Styles from '../styles/estimator';
+var React = window.React || require('react/addons');
+var _ = require('lodash');
+var ClickOff = require('react-onclickoutside');
+var Styles = require('../styles/estimator');
 
 /*
  * Estimator element displays item score that, when clicked, opens a menu
@@ -120,4 +120,4 @@ var Estimator = React.createClass({
   }
 });
 
-export default Estimator;
+module.exports = Estimator;

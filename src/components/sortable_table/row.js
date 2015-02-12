@@ -1,11 +1,11 @@
-import React from 'react/addons';
-import _ from 'lodash';
-import Estimator from '../estimator';
-import Status from '../status';
-import Tags from '../tags';
-import TagEditor from '../tag_editor';
-import Styles from '../../styles/sortable_table';
-import moment from 'moment';
+var React = window.React || require('react/addons');
+var _ = require('lodash');
+var Estimator = require('../estimator');
+var Status = require('../status');
+var Tags = require('../tags');
+var TagEditor = require('../tag_editor');
+var Styles = require('../../styles/sortable_table');
+var moment = require('moment');
 
 /*
  * Renders a single table row for displaying item data.
@@ -253,4 +253,4 @@ var TableRow = React.createClass({
   }
 });
 
-export default TableRow;
+module.exports = TableRow;

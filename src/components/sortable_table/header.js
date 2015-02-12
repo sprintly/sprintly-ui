@@ -1,7 +1,7 @@
-import React from 'react/addons';
-import _ from 'lodash';
-import Expander from '../expander';
-import Styles from '../../styles/sortable_table';
+var React = window.React || require('react/addons');
+var _ = require('lodash');
+var Expander = require('../expander');
+var Styles = require('../../styles/sortable_table');
 
 /*
  * Renders header bar where cells are clickable elements that trigger a
@@ -110,4 +110,4 @@ var TableHeader = React.createClass({
   }
 });
 
-export default TableHeader;
+module.exports = TableHeader;

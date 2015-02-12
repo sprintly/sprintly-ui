@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import React from 'react/addons';
-import sinon from 'sinon';
-import Status from '../src/components/status';
-
+var _ = require('lodash');
+var React = window.React || require('react/addons');
 var TestUtils = React.addons.TestUtils;
+var sinon = require('sinon');
+var Status = require('../src/components/status');
+
 /*
  * Status element tests.(WIP)
  */

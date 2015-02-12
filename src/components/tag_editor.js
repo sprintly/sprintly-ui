@@ -1,7 +1,7 @@
-import React from 'react/addons';
-import _ from 'lodash';
-import ClickOff from 'react-onclickoutside';
-import Styles from '../styles/tag_editor';
+var React = window.React || require('react/addons');
+var _ = require('lodash');
+var ClickOff = require('react-onclickoutside');
+var Styles = require('../styles/tag_editor');
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -11,6 +11,7 @@ import Styles from '../styles/tag_editor';
  */
 
 var TagEditor = React.createClass({
+
   propTypes: {
     modelId: React.PropTypes.arrayOf(React.PropTypes.number),
     readOnly: React.PropTypes.bool,

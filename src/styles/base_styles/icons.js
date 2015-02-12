@@ -23,4 +23,4 @@ var IconBaseStyles = {
   }
 };
 
-export default IconBaseStyles;
+module.exports = IconBaseStyles;

@@ -1,9 +1,9 @@
-import React from 'react/addons';
-import _ from 'lodash';
-import Label from './label';
-import List from './list';
-import Search from './search';
-import fuzzy from 'fuzzy';
+var React = window.React || require('react/addons');
+var _ = require('lodash');
+var Label = require('./label');
+var List = require('./list');
+var Search = require('./search');
+var fuzzy = require('fuzzy');
 
 /*
  * Renders dropdown showing currently selected options,
@@ -151,4 +151,4 @@ var SelectorMenu = React.createClass({
   }
 });
 
-export default SelectorMenu;
+module.exports = SelectorMenu;

@@ -1,6 +1,6 @@
-import React from 'react/addons';
-import _ from 'lodash';
-import Styles from '../styles/tags';
+var React = window.React || require('react/addons');
+var _ = require('lodash');
+var Styles = require('../styles/tags');
 
 /*
  * Tags element displays either a textual list of tags ("one, two, three")
@@ -106,4 +106,4 @@ var Tags = React.createClass({
   }
 });
 
-export default Tags;
+module.exports = Tags;

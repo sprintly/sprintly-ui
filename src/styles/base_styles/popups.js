@@ -15,4 +15,4 @@ var PopupBaseStyles = {
   }
 };
 
-export default PopupBaseStyles;
+module.exports = PopupBaseStyles;

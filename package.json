@@ -13,12 +13,10 @@
     "url": "https://github.com/sprintly/sprintly-ui/issues"
   },
   "dependencies": {
-    "6to5": "3.5.3",
     "fuzzy": "^0.1.0",
     "react": "^0.12.2"
   },
   "devDependencies": {
-    "6to5ify": "^4.1.0",
     "browserify": "^8.1.0",
     "browserify-istanbul": "^0.1.4",
     "chai": "^1.10.0",
@@ -55,7 +53,10 @@
   "browserify": {
     "transform": [
       [
-        "6to5ify"
+        "reactify",
+        {
+          "es6": true
+        }
       ],
       [
         "browserify-istanbul",

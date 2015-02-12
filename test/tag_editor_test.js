@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import React from 'react/addons';
-import sinon from 'sinon';
-import TagEditor from '../src/components/tag_editor';
-
+var _ = require('lodash');
+var React = window.React || require('react/addons');
 var TestUtils = React.addons.TestUtils;
+var sinon = require('sinon');
+var TagEditor = require('../src/components/tag_editor');
+
 /*
  * TagEditor element tests.
  */

@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import React from 'react/addons';
-import sinon from 'sinon';
-import Tags from '../src/components/tags';
-
+var _ = require('lodash');
+var React = window.React || require('react/addons');
 var TestUtils = React.addons.TestUtils;
+var sinon = require('sinon');
+var Tags = require('../src/components/tags');
+
 /*
  * Tags element tests.
  */

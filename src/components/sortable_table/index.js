@@ -1,8 +1,8 @@
-import React from 'react/addons';
-import _ from 'lodash';
-import TableHeader from './header';
-import TableRow from './row';
-import Styles from '../../styles/sortable_table';
+var React = window.React || require('react/addons');
+var _ = require('lodash');
+var TableHeader = require('./header');
+var TableRow = require('./row');
+var Styles = require('../../styles/sortable_table');
 
 
 /*
@@ -107,4 +107,4 @@ var SortableTable = React.createClass({
   }
 });
 
-export default SortableTable;
+module.exports = SortableTable;

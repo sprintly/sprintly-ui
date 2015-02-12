@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import lookup from 'object-path';
+var _ = require('lodash');
+var lookup = require('object-path');
 
 /*
  * Takes a array of items json data (such as a sprintly-data or sprintly-search-backed
@@ -194,4 +194,4 @@ GroupSort.reverseSort = function(sortedArray) {
   return temp.length ? _.union(reverseSorted, temp) : reverseSorted;
 }
 
-export default GroupSort;
+module.exports = GroupSort;
