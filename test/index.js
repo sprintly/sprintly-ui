@@ -1,6 +1,7 @@
 import _ from 'lodash';
 window._ = _;
 import 'es5-shim';
+import '6to5/register';
 
 import chai from 'chai';
 window.assert = chai.assert;
