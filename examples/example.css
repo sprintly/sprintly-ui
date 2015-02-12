@@ -1,4 +1,9 @@
 
+/** Buttons **/
+button:focus {
+  outline: 0;
+}
+
 /** Menus  **/
 .message {
   color: cadetblue;
