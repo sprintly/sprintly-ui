@@ -25,6 +25,7 @@ var TableRow = React.createClass({
     model: React.PropTypes.object.isRequired,
     columns: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     expanded: React.PropTypes.string,
+    baseUrl: React.PropTypes.string,
     modelChangerUtilities: React.PropTypes.object,
     navigatorUtility: React.PropTypes.object,
     isBulkEditable: React.PropTypes.bool,
@@ -36,6 +37,7 @@ var TableRow = React.createClass({
   getDefaultProps: function() {
     return {
       expanded: 'condensed',
+      baseUrl: '',
       modelChangerUtilities: {},
       onBulkSelect: _.noop()
     };
@@ -193,8 +195,8 @@ var TableRow = React.createClass({
 
   buildTitleCell: function(styles) {
     var props = {
-      href: '/product/' + this.props.model.product.id + '/item/' + this.props.model.number,
-      className: 'js-item-link',
+      href: this.props.baseUrl + '/product/' + this.props.model.product.id + '/item/' + this.props.model.number,
+      className: 'js-item-link title-cell',
       'data-item-number': this.props.model.number,
       style: this.state.hover ? Styles.cell.linkHover : Styles.cell.link,
       onMouseOver: this.onTitleLinkHover,
