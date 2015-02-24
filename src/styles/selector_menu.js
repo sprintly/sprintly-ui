@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var IconBase = require('./base_styles/icons');
 
 /*
  * Selector menu styles.
@@ -50,10 +51,13 @@ var SelectorStyles = {
     display: 'block',
     padding: '5px 0'
   },
-  icon: {
+  icon: _.extend({}, IconBase.small, {
     position: 'absolute',
+    backgroundPosition: '0 -400px',
+    width: '12px',
+    height: '9px',
     top: '12px'
-  },
+  }),
   list: {
     width: '100%',
     listStyleType: 'none',
