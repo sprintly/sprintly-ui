@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./example.css" />
+    <link rel="stylesheet" href="../src/styles/selector.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../node_modules/react/dist/react-with-addons.js"></script>
+    <script src="../node_modules/react/dist/JSXTransformer.js"></script>
+    <script src="../dist/sprintly-ui.js"></script>
+  </head>
+  <body>
+    <style>
+    </style>
+
+    <div id="main">
+      <h2>Table Components</h2>
+        <h3>Sortable Table</h3>
+        <div id="sortable"></div>
+    </div>
+
+    <script type="text/jsx">
+      // YOUR COMPONENT/S HERE FOR TESTING
+      (function(){
+      var genItem = function(prodId, prodName, num, size, type, user) {
+        return {
+          product: {
+            id: prodId,
+            name: prodName
+          },
+          number: num,
+          score: size,
+          type: type,
+          title: "Test item #" + num,
+          tags: ['test', 'feature', 'release-candidate', 'sprint33'],
+          created_by: {first_name: user},
+          created: new Date()
+        };
+      };
+
+      var collection = [
+        (genItem(1, 'Foo', 1, 'L', 'story', 'Amy A.')),
+        (genItem(2, 'Bar', 2, '~', 'defect', 'Beth B.')),
+        (genItem(3, 'Foo', 3, 'S', 'task', 'Cara C.')),
+        (genItem(4, 'Foo', 3, 'M', 'test', 'Darah D.'))
+      ];
+
+      React.render(
+        <SprintlyUI.SortableTable
+          key="foo"
+          tableType='backlog'
+          label='backlog'
+          collection={collection}
+          columnNames={['product', 'number', 'size', 'title', 'tags', 'created by', 'created']}
+          onSortCollection={function() {}}
+          rowsExpand={true}
+          modelChangerUtilities={{}}
+          navigatorUtility={{}}
+        />,
+        document.getElementById("sortable")
+      );
+    })()
+    </script>
+
+  </body>
+</html>

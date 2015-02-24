@@ -55,5 +55,4 @@ var List = React.createClass({
   }
 });
 
-
 module.exports = List;

@@ -16,7 +16,7 @@ var source = require('vinyl-source-stream');
  */
 
 gulp.task('build', function() {
-  var bundler = browserify('./src/js/index.js', {
+  var bundler = browserify('./src/index.js', {
     exclude: 'react',
     standalone: 'SprintlyUI',
     debug: true,
@@ -29,7 +29,7 @@ gulp.task('build', function() {
 });
 
 gulp.task('watch', ['build'], function() {
-  var bundler = watchify('./src/js/index.js', watchify.args);
+  var bundler = watchify('./src/index.js', watchify.args);
   bundler.transform('reactify');
   bundler.on('update', rebundle);
 

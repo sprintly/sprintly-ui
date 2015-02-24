@@ -1,15 +1,20 @@
 var _ = require('lodash');
 
+/*
+ * Selector menu styles.
+ * You'll probably want to set widths and icon left-position via css.
+ */
+
 var SelectorStyles = {
   wrapper: {
-    width: '282px',
+    position: 'absolute',
     color: '#2e2e2e',
     fontSize: 'inherit',
     fontFamily: 'inherit',
     backgroundColor: '#fff',
     border: '1px solid #d3d3d3',
     borderRadius: '4px',
-    overflow: 'auto',
+    overflow: 'hidden',
     zIndex: '1000'
   },
   expanded: {
@@ -23,10 +28,9 @@ var SelectorStyles = {
     display: 'block'
   },
   input: {
-    width: '268px',
     height: '30px',
     padding: '4px',
-    margin: '5px',
+    margin: '6px',
     border: '1px solid #d3d3d3',
     borderRadius: '4px',
     boxSizing: 'border-box',
@@ -48,8 +52,7 @@ var SelectorStyles = {
   },
   icon: {
     position: 'absolute',
-    top: '13px',
-    left: '290px'
+    top: '12px'
   },
   list: {
     width: '100%',
