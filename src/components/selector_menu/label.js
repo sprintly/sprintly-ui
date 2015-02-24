@@ -1,4 +1,5 @@
 var React = window.React || require('react/addons');
+var SelectorStyles = require('../../styles/selector_menu');
 
 
 var Label = React.createClass({
@@ -8,6 +9,8 @@ var Label = React.createClass({
     onClick: React.PropTypes.func.isRequired
   },
 
+  mixins: [SelectorStyles],
+
   getDefaultProps: function() {
     return {
       selected: "All"
@@ -16,9 +19,9 @@ var Label = React.createClass({
 
   render: function() {
     return (
-      <div className="label" onClick={this.props.onClick}>
-        <span>{this.props.selected}</span>
-        <i className="icon icon-arrow-down"></i>
+      <div className="label" style={SelectorStyles.label} onClick={this.props.onClick}>
+        <span style={SelectorStyles.innerLabel}>{this.props.selected}</span>
+        <i className="icon icon-arrow-down" style={SelectorStyles.icon}></i>
       </div>
     );
   }

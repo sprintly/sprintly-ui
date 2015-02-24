@@ -3,6 +3,8 @@ var _ = require('lodash');
 var Label = require('./label');
 var List = require('./list');
 var Search = require('./search');
+var SelectorStyles = require('../../styles/selector_menu');
+var ClickOff = require('react-onclickoutside');
 var fuzzy = require('fuzzy');
 
 /*
@@ -28,6 +30,8 @@ var SelectorMenu = React.createClass({
     onSelectionChange: React.PropTypes.func.isRequired
   },
 
+  mixins: [ClickOff, SelectorStyles],
+
   getDefaultProps: function() {
     return {
       defaultSelection: "All",
@@ -38,7 +42,8 @@ var SelectorMenu = React.createClass({
   getInitialState: function() {
     return {
       selected: this.props.defaultSelection,
-      visible: this.getOptionNames()
+      visible: this.getOptionNames(),
+      expanded: false
     };
   },
 
@@ -53,10 +58,18 @@ var SelectorMenu = React.createClass({
     return _.unique(options);
   },
 
+  handleClickOutside: function(ev) {
+    ev.stopPropagation();
+    this.setState({
+      expanded: false
+    });
+  },
+
   onLabelClicked: function() {
-    var domNode = this.getDOMNode();
-    _.contains(domNode.classList, "expanded") ?
-      domNode.classList.remove("expanded") : domNode.classList.add("expanded");
+    var expandOrContract = this.state.expanded ? false : true;
+    this.setState({
+      expanded: expandOrContract
+    });
 
     this.refs.searchInput.getDOMNode().focus();
   },
@@ -128,13 +141,18 @@ var SelectorMenu = React.createClass({
   },
 
   render: function() {
+    var wrapperStyles = this.state.expanded ?
+      _.extend({},SelectorStyles.wrapper, SelectorStyles.expanded) : SelectorStyles.wrapper;
+    var innerStyles = this.state.expanded ?
+      _.extend({},SelectorStyles.inner, SelectorStyles.innerExpanded) : SelectorStyles.inner;
+
     return (
-      <div className="selector-menu-wrapper">
+      <div className="selector-menu-wrapper" style={wrapperStyles}>
         <Label
           selected={this.state.selected}
           onClick={this.onLabelClicked}
         />
-        <div className="inner-menu-wrapper">
+        <div className="inner-menu-wrapper" style={innerStyles}>
           <Search
             ref="searchInput"
             onKeyDown={this.checkIfSubmit}
