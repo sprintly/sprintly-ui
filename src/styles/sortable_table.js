@@ -128,7 +128,8 @@ var SortableTableStyles = {
       width: '375px'
     },
     link: {
-      color: '#323232'
+      color: '#323232',
+      textDecoration: 'none'
     },
     linkHover: {
       color: '#323232',
