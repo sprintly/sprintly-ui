@@ -142,9 +142,17 @@ var TableRow = React.createClass({
   },
 
   buildNumberCell: function(styles) {
+    var props = {
+      href: this.props.baseUrl + '/product/' + this.props.model.product.id + '/item/' + this.props.model.number,
+      className: 'js-item-link title-cell',
+      'data-item-number': this.props.model.number,
+      style: this.state.hover ? Styles.cell.linkHover : Styles.cell.link,
+      onMouseOver: this.onTitleLinkHover,
+      onMouseOut: this.onTitleLinkOut
+    };
     return (
       <div style={styles}>
-        #{this.props.model.number}
+        <a {...props}>#{this.props.model.number}</a>
       </div>
     );
   },
