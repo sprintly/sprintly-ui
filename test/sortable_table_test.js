@@ -16,7 +16,7 @@ var TagEditor = require('../src/components/tag_editor');
 var genItem = function(num, productNum, userName, parentNum) {
   return {
     number: num,
-    product: {id: productNum},
+    product: {id: productNum, name: 'foo'},
     type: 'defect',
     title: "Test item",
     status: 'backlog',
@@ -65,6 +65,17 @@ describe('SortableTable', function() {
       _.each([this.sortable.props.columnNames, headerCols, rowCols], function(cols) {
         assert.equal(cols.length, 8);
       });
+    });
+
+    it('should render the product name as a permalink', function() {
+      var row = TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0];
+      var rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
+      var anchors = TestUtils.scryRenderedDOMComponentsWithTag(rowCols[0], 'a')
+      var item = this.items[0];
+      var node = anchors[0].getDOMNode();
+
+      assert.equal(node.text, item.product.name);
+      assert.include(node.href, item.product.id);
     });
 
     it('should render the item number be a permalink', function() {
