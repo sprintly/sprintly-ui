@@ -31,11 +31,16 @@ var genItem = function(num, productNum, userName, parentNum) {
 describe('SortableTable', function() {
   describe('rendering', function() {
     beforeEach(function() {
+      this.items = [
+        genItem(1,1,'amy',5),
+        genItem(2,2,'bob',5),
+        genItem(5,2,'amy')
+      ];
       this.sortable = TestUtils.renderIntoDocument(
         <SortableTable
           tableType="backlog"
           label="backlog"
-          collection={[genItem(1,1,'amy',5), genItem(2,2,'bob',5), genItem(5,2,'amy')]}
+          collection={this.items}
           columnNames={['product','number','size','title','assigned to','created by','tags','created']}
           onSortCollection={_.noop()}
         />
@@ -60,6 +65,17 @@ describe('SortableTable', function() {
       _.each([this.sortable.props.columnNames, headerCols, rowCols], function(cols) {
         assert.equal(cols.length, 8);
       });
+    });
+
+    it('should render the item number be a permalink', function() {
+      var row = TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0];
+      var rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
+      var anchors = TestUtils.scryRenderedDOMComponentsWithTag(rowCols[1], 'a')
+      var item = this.items[0];
+      var node = anchors[0].getDOMNode();
+
+      assert.equal(node.text, '#' + item.number);
+      assert.include(node.href, item.product.id + '/item/' + item.number);
     });
 
     it('should render a table row for each collection item', function() {
