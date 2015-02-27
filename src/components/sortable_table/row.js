@@ -122,6 +122,11 @@ var TableRow = React.createClass({
   },
 
   buildProductCell: function(styles) {
+    var linkProps = {
+      href: this.props.baseUrl + '/product/' + this.props.model.product.id,
+      className: 'js-item-link title-cell',
+      style: Styles.cell.link
+    };
     var subitemArrow = null;
     var subitemArrowStyles = this.props.expanded === 'expanded' ?
       _.extend({}, Styles.cell.subitemArrow, Styles.cell.subitemArrowExpanded) :
@@ -136,7 +141,7 @@ var TableRow = React.createClass({
     return (
       <div style={_.extend({}, styles, Styles.cell.wider)}>
         {subitemArrow}
-        {this.props.model.product.name}
+        <a {...linkProps}>{this.props.model.product.name}</a>
       </div>
     );
   },
