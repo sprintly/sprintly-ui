@@ -8,8 +8,6 @@ var Label = React.createClass({
     onClick: React.PropTypes.func.isRequired
   },
 
-  mixins: [SelectorStyles],
-
   getDefaultProps: function() {
     return {
       selected: 'All'

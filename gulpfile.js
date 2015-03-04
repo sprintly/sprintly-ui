@@ -10,6 +10,8 @@ var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream');
+var less = require('gulp-less');
+var sourcemaps = require('gulp-sourcemaps');
 
 /*
  * Dev
@@ -50,7 +52,7 @@ gulp.task('less', function() {
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist/css'));
+    .pipe(gulp.dest('./dist/'));
 });
 
 
