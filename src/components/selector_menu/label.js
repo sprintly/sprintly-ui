@@ -1,5 +1,4 @@
 var React = window.React || require('react/addons');
-var SelectorStyles = require('../../styles/selector_menu');
 
 
 var Label = React.createClass({
@@ -13,15 +12,15 @@ var Label = React.createClass({
 
   getDefaultProps: function() {
     return {
-      selected: "All"
+      selected: 'All'
     };
   },
 
   render: function() {
     return (
-      <div className="label" style={SelectorStyles.label} onClick={this.props.onClick}>
-        <span style={SelectorStyles.innerLabel}>{this.props.selected}</span>
-        <i className="icon icon-arrow-down" style={SelectorStyles.icon}></i>
+      <div className='selector__label' onClick={this.props.onClick}>
+        <span className='inner'>{this.props.selected}</span>
+        <i className='selector__icon'></i>
       </div>
     );
   }

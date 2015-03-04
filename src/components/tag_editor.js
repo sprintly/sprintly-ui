@@ -1,7 +1,6 @@
 var React = window.React || require('react/addons');
 var _ = require('lodash');
 var ClickOff = require('react-onclickoutside');
-var Styles = require('../styles/tag_editor');
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -19,7 +18,7 @@ var TagEditor = React.createClass({
     tagChanger: React.PropTypes.object.isRequired
   },
 
-  mixins: [ClickOff, Styles],
+  mixins: [ClickOff],
 
   getDefaultProps: function() {
     return {
@@ -98,12 +97,11 @@ var TagEditor = React.createClass({
     var tagEditMenu = this.state.showMenu ?
       (
         <div>
-          <div className="left-arrow" style={Styles.leftArrow} />
-          <div className="tag-editor-menu" style={Styles.popup}>
+          <div className="tag_editor__menu">
             <form onSubmit={this.onFormSubmit}>
-              <input type="text" placeholder="Add a tag" style={Styles.popupInput} />
+              <input type="text" className="add-tag" placeholder="Add a tag" />
             </form>
-            <ul style={Styles.list}>
+            <ul className="tag_editor__list">
               {this.buildTagList()}
             </ul>
           </div>
@@ -111,9 +109,9 @@ var TagEditor = React.createClass({
       ) : null;
 
     return (
-      <div className="tag-editor" key={this.props.modelId} style={Styles.wrapper}>
-        <button style={Styles.tag} onClick={this.onTagEditClick}>
-          <i style={Styles.editIcon} />
+      <div className="tag_editor__wrapper" key={this.props.modelId}>
+        <button className="tag_editor__tag" onClick={this.onTagEditClick}>
+          <i className="tag_editor__edit_icon" />
           {addTagText}
         </button>
         {tagEditMenu}
@@ -124,9 +122,9 @@ var TagEditor = React.createClass({
   buildTagList: function() {
     return _.map(this.props.tags, function(tag) {
       return (
-        <li key={this.props.modelId + ':' + tag} style={Styles.listItem}>
-          <button style={Styles.menuTag} onClick={this.onTagRemoveClick}>
-            <i style={Styles.deleteIcon} />
+        <li className="tag-wrapper" key={this.props.modelId + ':' + tag}>
+          <button className="tag" onClick={this.onTagRemoveClick}>
+            <i className="tag_editor__delete_icon" />
           </button>
           {tag}
         </li>

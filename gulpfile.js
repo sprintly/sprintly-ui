@@ -45,6 +45,14 @@ gulp.task('dev-server', function() {
   openPage('http://localhost:8090/examples/index.html');
 });
 
+gulp.task('less', function() {
+  gulp.src('./src/less/sprintly-ui.less')
+    .pipe(sourcemaps.init())
+    .pipe(less())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./dist/css'));
+});
+
 
 /*
  * Test

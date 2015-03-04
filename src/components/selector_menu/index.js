@@ -3,7 +3,6 @@ var _ = require('lodash');
 var Label = require('./label');
 var List = require('./list');
 var Search = require('./search');
-var SelectorStyles = require('../../styles/selector_menu');
 var ClickOff = require('react-onclickoutside');
 var fuzzy = require('fuzzy');
 
@@ -17,8 +16,6 @@ var fuzzy = require('fuzzy');
  *
  * NOTE:
  * Options in optionsList must have either a 'title' or a 'name' property.
- * 'onSelectionChange' callback must be bound to parent context when passing
- * to SelectorMenu (ie, onSelectionChange = _.bind(this.onSelectionChangeCallback, this)).
  *
  */
 
@@ -30,11 +27,11 @@ var SelectorMenu = React.createClass({
     onSelectionChange: React.PropTypes.func.isRequired
   },
 
-  mixins: [ClickOff, SelectorStyles],
+  mixins: [ClickOff],
 
   getDefaultProps: function() {
     return {
-      defaultSelection: "All",
+      defaultSelection: 'All',
       optionsList: []
     };
   },
@@ -75,7 +72,7 @@ var SelectorMenu = React.createClass({
   },
 
   cleanSearchState: function() {
-    this.refs.searchInput.getDOMNode().value = "";
+    this.refs.searchInput.getDOMNode().value = '';
 
     this.setState({
       visible: this.getOptionNames()
@@ -113,7 +110,7 @@ var SelectorMenu = React.createClass({
   checkIfSubmit: function(ev) {
     // If user presses ENTER in input box, submit choice.
     var value = ev.target.value;
-    var option = "";
+    var option = '';
 
     if (ev.which === 13 && value) {
       option = this.normalizeInputValue(value);
@@ -141,20 +138,18 @@ var SelectorMenu = React.createClass({
   },
 
   render: function() {
-    var wrapperStyles = this.state.expanded ?
-      _.extend({},SelectorStyles.wrapper, SelectorStyles.expanded) : SelectorStyles.wrapper;
-    var innerStyles = this.state.expanded ?
-      _.extend({},SelectorStyles.inner, SelectorStyles.innerExpanded) : SelectorStyles.inner;
+    var wrapperClass = this.state.expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
+    var innerClass = this.state.expanded ? 'inner expanded' : 'inner';
 
     return (
-      <div className="selector-menu-wrapper" style={wrapperStyles}>
+      <div className={wrapperClass}>
         <Label
           selected={this.state.selected}
           onClick={this.onLabelClicked}
         />
-        <div className="inner-menu-wrapper" style={innerStyles}>
+        <div className={innerClass}>
           <Search
-            ref="searchInput"
+            ref='searchInput'
             onKeyDown={this.checkIfSubmit}
             filterList={this.filterList}
           />

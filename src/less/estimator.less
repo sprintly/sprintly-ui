@@ -1,0 +1,62 @@
+// extends button__base
+.estimator__button {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    color: #fff;
+    line-height: 19px;
+    text-align: center;
+    border: none;
+    border-radius: 11px;
+    margin-left: 3px;
+}
+
+.estimator__score {
+    display: inline-block;
+    margin-left: 4px;
+    margin-bottom: 2px;
+
+    // extends button__base
+    .story {
+      background-color: #84b431;
+    }
+
+    .task {
+      background-color: #454545;
+    }
+
+    .test {
+      background-color: #5a96ab;
+    }
+
+    .defect {
+      background-color: #d94949;
+    }
+}
+
+// extends popup__base
+.estimator__menu {
+    display: inline-block;
+    line-height: 19px;
+    padding: 6px 10px 0px 7px;
+    margin-top: -30px;
+    margin-left: 40px;
+
+    &:before {
+        position: absolute;
+        border-right: 12px solid #fff;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        margin-left: 32px;
+        margin-top: -30px;
+        z-index: 600; // this should be in Sprintly
+  }
+}
+
+.estimator__list {
+    list-style-type: none;
+    width: 100%;
+    height: 28px;
+    padding: 0;
+    margin: 0;
+}

@@ -1,0 +1,42 @@
+.button__base {
+  background: none repeat scroll 0 0 transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  font-weight: normal;
+  overflow: visible;
+  text-transform: none;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.icon__base {
+  display: block;
+  background-image: url("https://s3.amazonaws.com/sprintly-ui-icons/icons-sprite.png");
+  background-repeat: no-repeat;
+
+  .small {
+    height: 8px;
+    width: 8px;
+  }
+
+  .medium {
+    height: 16px;
+    width: 16px;
+  }
+}
+
+.popup__base {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  box-shadow: 1 2px 7px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 551; // this should be in Sprintly.css
+}
