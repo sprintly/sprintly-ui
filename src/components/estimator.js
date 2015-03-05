@@ -88,7 +88,9 @@ var Estimator = React.createClass({
       var scores = _.map(this.ALL_ESTIMATES, function(score) {
         return (
           <li key={score} className='estimator__score'>
-            <button className={'button__base estimator__button ' + this.props.itemType} data-score={score} onClick={this.onScoreChange}>
+            <button className={'estimator__button ' + this.props.itemType}
+              data-score={score}
+              onClick={this.onScoreChange}>
               {this.ESTIMATE_HASH[score]}
             </button>
           </li>
@@ -96,7 +98,7 @@ var Estimator = React.createClass({
       }, this);
 
       scoreMenu = (
-        <div className='popup__base estimator__menu'>
+        <div className='estimator__menu'>
           <ul className='estimator__list'>
             {scores}
           </ul>
@@ -106,7 +108,8 @@ var Estimator = React.createClass({
 
     return (
       <div className='estimator__score'>
-        <button className={'button__base estimator__button ' + this.props.itemType} onClick={this.onScoreClick}>
+        <button className={'estimator__button ' + this.props.itemType}
+          onClick={this.onScoreClick}>
           {currentScore}
         </button>
         {scoreMenu}

@@ -1,5 +1,6 @@
-// extends button__base
-.estimator__button {
+@import './base';
+
+.estimator__button:extend(.button__base) {
     width: 22px;
     height: 22px;
     font-size: 11px;
@@ -16,26 +17,24 @@
     margin-left: 4px;
     margin-bottom: 2px;
 
-    // extends button__base
-    .story {
+    .story:extend(.button__base) {
       background-color: #84b431;
     }
 
-    .task {
+    .task:extend(.button__base) {
       background-color: #454545;
     }
 
-    .test {
+    .test:extend(.button__base) {
       background-color: #5a96ab;
     }
 
-    .defect {
+    .defect:extend(.button__base) {
       background-color: #d94949;
     }
 }
 
-// extends popup__base
-.estimator__menu {
+.estimator__menu:extend(.popup__base) {
     display: inline-block;
     line-height: 19px;
     padding: 6px 10px 0px 7px;
@@ -49,7 +48,6 @@
         border-top: 12px solid transparent;
         border-bottom: 12px solid transparent;
         left: -8px;
-        z-index: 600; // this should be in Sprintly
   }
 }
 

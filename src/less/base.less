@@ -19,16 +19,16 @@
   display: block;
   background-image: url("https://s3.amazonaws.com/sprintly-ui-icons/icons-sprite.png");
   background-repeat: no-repeat;
+}
 
-  &.small {
-    height: 8px;
-    width: 8px;
-  }
+.icon__base_small:extend(.icon__base) {
+  height: 8px;
+  width: 8px;
+}
 
-  &.medium {
-    height: 16px;
-    width: 16px;
-  }
+.icon__base_medium:extend(.icon__base) {
+  height: 16px;
+  width: 16px;
 }
 
 .popup__base {
@@ -38,5 +38,4 @@
   border-radius: 4px;
   box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.2);
   padding: 10px;
-  z-index: 551; // this should be in Sprintly.css
 }

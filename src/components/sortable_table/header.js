@@ -97,7 +97,7 @@ var TableHeader = React.createClass({
     return _.map(columns, function(column) {
       return (
         <th key={column} title='click to sort' className='sortable__label'>
-          <button className={'button__base sortable__button ' + column.replace(' ', '-')} key={column}
+          <button className={'sortable__button ' + column.replace(' ', '-')} key={column}
             onClick={this.onLabelClick}>
             {column}
           </button>

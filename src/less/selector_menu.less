@@ -1,3 +1,5 @@
+@import './base';
+
 .selector__wrapper {
     position: absolute;
     color: #2e2e2e;
@@ -7,7 +9,6 @@
     border: 1px solid #d3d3d3;
     border-radius: 4px;
     overflow: hidden;
-    z-index: 1000;
 
     &.expanded {
         border: 1px solid #5a96ab;
@@ -70,8 +71,7 @@
     }
 }
 
-// extends icon__base.small
-.selector__icon {
+.selector__icon:extend(.icon__base_small) {
     position: absolute;
     background-position: 0 -400px;
     width: 12px;

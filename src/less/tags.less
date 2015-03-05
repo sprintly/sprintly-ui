@@ -1,9 +1,10 @@
+@import './base';
+
 .tags__wrapper {
     display: inline-block;
 }
 
-// extends button__base
-.tags__tag {
+.tags__tag:extend(.button__base) {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

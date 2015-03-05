@@ -63,14 +63,14 @@ var Tags = React.createClass({
 
     if (len === 1) {
       wrapped = (
-        <button className='button__base tags__tag' onClick={this.onTagClick}>
+        <button className='tags__tag' onClick={this.onTagClick}>
           {this.props.tags}
         </button>
       );
     } else if (len > 1) {
       wrapped = this.props.condensed ?
         (
-          <button className='button__base tags__tag'>
+          <button className='tags__tag'>
             {len.toString() + ' tags'}
           </button>
         ) :
@@ -93,7 +93,7 @@ var Tags = React.createClass({
       var maybeComma = i === (arr.length - 1) ? null : ',';
       return (
         <li key={'tag' + ':' + i} className='tags__list expanded'>
-          <button className='button__base tags__tag' onClick={this.onTagClick}>
+          <button className='tags__tag' onClick={this.onTagClick}>
             {tag}
           </button>{maybeComma}
         </li>

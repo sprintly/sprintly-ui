@@ -1,3 +1,5 @@
+@import './base';
+
 .sortable__wrapper {
     width: 1000px;
     margin-bottom: 40px;
@@ -19,7 +21,6 @@
     border-left: none;
     border-collapse: collapse;
     border-spacing: 0;
-    z-index: 550;
 
     .head {
         background-color: #fff;
@@ -40,8 +41,7 @@
     padding-right: 10px;
 }
 
-// extends button__base
-.sortable__button {
+.sortable__button:extend(.button__base) {
     text-transform: capitalize;
 }
 
@@ -136,8 +136,7 @@
         }
     }
 
-    // extends icon__base.medium
-    .subitem {
+    .subitem:extend(.icon__base_medium) {
         float: left;
         background-position: 0 -335px;
         margin-top: 6px;

@@ -117,12 +117,8 @@ var TableRow = React.createClass({
       className: 'js-item-link link product-cell',
     };
 
-    var subitemClass = 'icon__base medium subitem';
-    if (this.props.expanded === 'expanded') {
-      subitemClass += ' expanded';
-    }
-
-    var subitemArrow = this.props.model.parent ? (<i className={subitemClass}></i>) : null;
+    var subitemClass = this.props.expanded ? 'subitem expanded' : 'subitem';
+    var subitemArrow = this.props.model.parent ? ( <i className={subitemClass}></i> ) : null;
 
     return (
       <div className={classes + ' wider'}>

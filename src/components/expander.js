@@ -40,15 +40,17 @@ var Expander = React.createClass({
   render: function() {
     var expanded = this.props.expanded === 'expanded';
 
-    var buttonClass = 'button__base expander__button';
-    var iconClass = 'icon__base medium expander__icon';
+    var buttonClass = 'expander__button';
+    var iconClass = 'expander__icon';
 
     return (
       <div className={'expander ' + this.props.expanded}>
-        <button className={buttonClass + (expanded ? ' expand active' : ' expand')} onClick={_.partial(this.onExpanderClick, 'expanded')}>
+        <button className={buttonClass + (expanded ? ' expand active' : ' expand')}
+          onClick={_.partial(this.onExpanderClick, 'expanded')}>
           <i className={iconClass + (expanded ? ' expand active' : ' expand')}></i>
         </button>
-        <button className={buttonClass + (!expanded ? ' condense active' : ' condense')} onClick={_.partial(this.onExpanderClick, 'condensed')}>
+        <button className={buttonClass + (!expanded ? ' condense active' : ' condense')}
+          onClick={_.partial(this.onExpanderClick, 'condensed')}>
           <i className={iconClass + (!expanded ? ' condense active' : ' condense')}></i>
         </button>
       </div>

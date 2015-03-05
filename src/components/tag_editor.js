@@ -97,7 +97,7 @@ var TagEditor = React.createClass({
     var tagEditMenu = this.state.showMenu ?
       (
         <div>
-          <div className='popup__base tag_editor__menu'>
+          <div className='tag_editor__menu'>
             <form onSubmit={this.onFormSubmit}>
               <input type='text' className='add-tag' placeholder='Add a tag' />
             </form>
@@ -110,8 +110,8 @@ var TagEditor = React.createClass({
 
     return (
       <div className='tag_editor__wrapper' key={this.props.modelId}>
-        <button className='button__base tag_editor__tag' onClick={this.onTagEditClick}>
-          <i className='icon__base small tag_editor__edit_icon' />
+        <button className='tag_editor__tag' onClick={this.onTagEditClick}>
+          <i className='tag_editor__edit_icon' />
           {addTagText}
         </button>
         {tagEditMenu}
@@ -123,8 +123,8 @@ var TagEditor = React.createClass({
     return _.map(this.props.tags, function(tag) {
       return (
         <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
-          <button className='button__base tag_editor__tag' onClick={this.onTagRemoveClick}>
-            <i className='icon__base medium tag_editor__delete_icon' />
+          <button className='tag_editor__tag' onClick={this.onTagRemoveClick}>
+            <i className='tag_editor__delete_icon' />
           </button>
           {tag}
         </li>
