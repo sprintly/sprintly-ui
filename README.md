@@ -44,13 +44,12 @@ React.renderComponent(
 To generate a UMD bundle containing unminified and minified versions, run ```npm package-distro```.
 For unminified only, run the gulp ```build``` task.
 
-
-## Development
-
 Note: While there are a handful of npm convenience scripts available for your use,
 you'll find more incremental tasks in the gulpfile.
 
-To run a dev server and Browserfy watch tasks, run ```npm run dev```. For browser viewing/debugging, you'll need to include your new component/s in the example/index.html template.
+
+## Development
+To run a dev server and Browserfy watch tasks, run ```npm run dev```. This will open examples/index.html file  For browser viewing/debugging, you'll need to include your new component/s in the example/index.html template.
 
 
 ## Testing

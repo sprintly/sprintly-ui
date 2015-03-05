@@ -42,7 +42,7 @@ gulp.task('dev-server', function() {
   var tests = connect();
   tests.use(serveStatic('./'));
   http.createServer(tests).listen(8090);
-  openPage('http://localhost:8090/examples/index.html');
+  openPage('http://localhost:8090/examples/');
 });
 
 

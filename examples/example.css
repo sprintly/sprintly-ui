@@ -1,25 +1,69 @@
+/** Examples main page **/
+/*.example__body {
+    background-color: rgb(173, 216, 230);
+}*/
 
-/** Buttons **/
+.example__wrapper {
+    background-color: #fff;
+    margin: 20px 40px;
+    padding: 40px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.example__header {
+    color: rgb(95, 158, 160);
+    margin-bottom: 10px;
+}
+
+.example__title {
+    margin-top: 60px;
+}
+
+.example__description {
+    color: #444;
+    font-size: 14px;
+    line-height: 19px;
+    margin-top: 0;
+}
+
+.example__list {
+    list-style-type: square;
+    margin-top: 20px;
+}
+
+.example__item a {
+    color: #000;
+    font-size: 18px;
+    line-height: 40px;
+    text-decoration: none;
+}
+
+.example__item a:hover {
+    text-decoration: underline;
+}
+
 button:focus {
-  outline: 0;
+    outline: 0;
 }
 
 /** Menus  **/
 .message {
-  color: cadetblue;
-  margin-top: 80px;
-  margin-left: 2px;
+    color: rgb(95, 158, 160);
+    margin-top: 80px;
+    margin-left: 2px;
 }
 
 .selector-menu-wrapper {
-  width: 280px;
+    position: static;
+    width: 280px;
 }
 
 .selector-menu-wrapper input {
-  width: 268px;
-  margin-left: 6px;
+    width: 268px;
+    margin-left: 6px;
 }
 
 .selector-menu-wrapper i {
-  left: 262px;
+    left: 262px;
 }
