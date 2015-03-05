@@ -49,7 +49,7 @@ var Expander = React.createClass({
           <i className={iconClass + (expanded ? ' expand active' : 'expand')}></i>
         </button>
         <button className={buttonClass + (!expanded ? ' condense active' : ' condense')} onClick={_.partial(this.onExpanderClick, 'condensed')}>
-          <i style={iconClass + (!expanded ? ' condense active' : ' condense')}></i>
+          <i className={iconClass + (!expanded ? ' condense active' : ' condense')}></i>
         </button>
       </div>
     );

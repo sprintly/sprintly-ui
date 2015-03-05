@@ -48,25 +48,24 @@ describe("SelectorMenu", function() {
   });
   describe("toggling menu open/close", function() {
     beforeEach(function() {
-      this.optionLabel = TestUtils.findRenderedDOMComponentWithClass(this.selector, "label");
+      this.optionLabel = TestUtils.findRenderedDOMComponentWithClass(this.selector, "selector__label");
       TestUtils.Simulate.click(this.optionLabel);
     });
     it("should open on click if closed", function() {
-      var dropdown = TestUtils.findRenderedDOMComponentWithClass(this.selector, "inner-menu-wrapper");
+      var dropdown = TestUtils.findRenderedDOMComponentWithClass(this.selector, "inner expanded");
       assert.isTrue(this.selector.state.expanded);
-      assert.equal(dropdown.getDOMNode().style.display, 'block');
     });
     it("should close on click if open", function() {
-      var dropdown = TestUtils.findRenderedDOMComponentWithClass(this.selector, "inner-menu-wrapper");
+      var dropdown = TestUtils.findRenderedDOMComponentWithClass(this.selector, "inner expanded");
       TestUtils.Simulate.click(this.optionLabel);
 
       assert.isFalse(this.selector.state.expanded);
-      assert.equal(dropdown.getDOMNode().style.display, 'none');
+      assert.equal(TestUtils.scryRenderedDOMComponentsWithClass(this.selector, "inner expanded").length, 0);
     });
   });
   describe("search and selection", function() {
     beforeEach(function() {
-      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, "label");
+      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, "selector__label");
       TestUtils.Simulate.click(label);
     });
     it("should render a list of options (including default)", function() {

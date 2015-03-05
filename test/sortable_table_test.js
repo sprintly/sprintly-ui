@@ -106,7 +106,7 @@ describe('SortableTable', function() {
     });
 
     it('should update expander state and render an expanded row on expand button click', function() {
-      var expandButton = TestUtils.findRenderedDOMComponentWithClass(this.sortable, 'expanded');
+      var expandButton = TestUtils.findRenderedDOMComponentWithClass(this.sortable, 'expander__button expand');
       TestUtils.Simulate.click(expandButton);
       assert.equal(TestUtils.findRenderedComponentWithType(this.sortable, Expander).props.expanded, 'expanded');
       assert.equal(TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0].props.expanded, 'expanded');
@@ -164,7 +164,7 @@ describe('SortableTable', function() {
       var columns = TestUtils.scryRenderedDOMComponentsWithTag(this.sortable, 'th');
 
       assert.equal(columns.length, columnsLength + 1);
-      assert.equal(columns[0].getDOMNode().className, 'control');
+      assert.equal(columns[0].getDOMNode().className, 'sortable__label control');
     });
 
     it('should trigger the onBulkSelect callback on edit checkbox select', function() {
