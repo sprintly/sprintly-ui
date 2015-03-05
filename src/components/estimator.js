@@ -88,7 +88,7 @@ var Estimator = React.createClass({
       var scores = _.map(this.ALL_ESTIMATES, function(score) {
         return (
           <li key={score} className='estimator__score'>
-            <button className={'.' + this.props.itemType} data-score={score} onClick={this.onScoreChange}>
+            <button className={this.props.itemType} data-score={score} onClick={this.onScoreChange}>
               {this.ESTIMATE_HASH[score]}
             </button>
           </li>
@@ -106,7 +106,7 @@ var Estimator = React.createClass({
 
     return (
       <div className="estimator-component">
-        <button className={'.' + this.props.itemType} onClick={this.onScoreClick}>
+        <button className={this.props.itemType} onClick={this.onScoreClick}>
           {currentScore}
         </button>
         {scoreMenu}

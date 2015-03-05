@@ -45,11 +45,11 @@ var Expander = React.createClass({
 
     return (
       <div className={'expander ' + this.props.expanded}>
-        <button className={buttonClass.join(expanded ? ' expand active' : ' expand')} onClick={_.partial(this.onExpanderClick, 'expanded')}>
-          <i className={iconClass.join(expanded ? ' expand active' : 'expand')}></i>
+        <button className={buttonClass + (expanded ? ' expand active' : ' expand')} onClick={_.partial(this.onExpanderClick, 'expanded')}>
+          <i className={iconClass + (expanded ? ' expand active' : 'expand')}></i>
         </button>
-        <button className={buttonClass.join(!expanded ? ' condense active' : ' condense')} onClick={_.partial(this.onExpanderClick, 'condensed')}>
-          <i style={iconClass.join(!expanded ? ' condense active' : ' condense')}></i>
+        <button className={buttonClass + (!expanded ? ' condense active' : ' condense')} onClick={_.partial(this.onExpanderClick, 'condensed')}>
+          <i style={iconClass + (!expanded ? ' condense active' : ' condense')}></i>
         </button>
       </div>
     );
