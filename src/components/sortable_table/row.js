@@ -59,7 +59,7 @@ var TableRow = React.createClass({
     // "matched": item is grouped with parent/subitems.
     // "nonMatching": item doesn't fit collection filters, but is included to match w/subitems that do.
     if (this.props.model.isMatched) {
-      rowClass += this.props.model.isNonMatching ? ' matched non-matching' : 'matched';
+      rowClass += this.props.model.isNonMatching ? ' matched non-matching' : ' matched';
     }
 
     var columnMap = {
@@ -116,15 +116,13 @@ var TableRow = React.createClass({
       href: this.props.baseUrl + '/product/' + this.props.model.product.id,
       className: 'js-item-link link product-cell',
     };
-    var subitemArrow = null;
 
-    var subitemClass = this.props.expanded === 'expanded' ? 'subitem expanded' : 'subitem';
-
-    if (this.props.model.parent) {
-      subitemArrow = (
-        <i className="subitem-arrow" className={subitemClass}></i>
-      );
+    var subitemClass = 'icon__base medium subitem';
+    if (this.props.expanded === 'expanded') {
+      subitemClass += ' expanded';
     }
+
+    var subitemArrow = this.props.model.parent ? (<i className={subitemClass}></i>) : null;
 
     return (
       <div className={classes + ' wider'}>

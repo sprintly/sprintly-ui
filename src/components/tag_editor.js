@@ -97,11 +97,11 @@ var TagEditor = React.createClass({
     var tagEditMenu = this.state.showMenu ?
       (
         <div>
-          <div className="tag_editor__menu">
+          <div className='popup__base tag_editor__menu'>
             <form onSubmit={this.onFormSubmit}>
-              <input type="text" className="add-tag" placeholder="Add a tag" />
+              <input type='text' className='add-tag' placeholder='Add a tag' />
             </form>
-            <ul className="tag_editor__list">
+            <ul className='tag_editor__list'>
               {this.buildTagList()}
             </ul>
           </div>
@@ -109,9 +109,9 @@ var TagEditor = React.createClass({
       ) : null;
 
     return (
-      <div className="tag_editor__wrapper" key={this.props.modelId}>
-        <button className="tag_editor__tag" onClick={this.onTagEditClick}>
-          <i className="tag_editor__edit_icon" />
+      <div className='tag_editor__wrapper' key={this.props.modelId}>
+        <button className='button__base tag_editor__tag' onClick={this.onTagEditClick}>
+          <i className='icon__base small tag_editor__edit_icon' />
           {addTagText}
         </button>
         {tagEditMenu}
@@ -122,9 +122,9 @@ var TagEditor = React.createClass({
   buildTagList: function() {
     return _.map(this.props.tags, function(tag) {
       return (
-        <li className="tag-wrapper" key={this.props.modelId + ':' + tag}>
-          <button className="tag" onClick={this.onTagRemoveClick}>
-            <i className="tag_editor__delete_icon" />
+        <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
+          <button className='button__base tag_editor__tag' onClick={this.onTagRemoveClick}>
+            <i className='icon__base medium tag_editor__delete_icon' />
           </button>
           {tag}
         </li>
