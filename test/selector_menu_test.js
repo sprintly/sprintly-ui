@@ -52,15 +52,15 @@ describe("SelectorMenu", function() {
       TestUtils.Simulate.click(this.optionLabel);
     });
     it("should open on click if closed", function() {
-      var dropdown = TestUtils.findRenderedDOMComponentWithClass(this.selector, "inner expanded");
+      var dropdown = TestUtils.findRenderedDOMComponentWithClass(this.selector, "inner-wrapper expanded");
       assert.isTrue(this.selector.state.expanded);
     });
     it("should close on click if open", function() {
-      var dropdown = TestUtils.findRenderedDOMComponentWithClass(this.selector, "inner expanded");
+      var dropdown = TestUtils.findRenderedDOMComponentWithClass(this.selector, "inner-wrapper expanded");
       TestUtils.Simulate.click(this.optionLabel);
 
       assert.isFalse(this.selector.state.expanded);
-      assert.equal(TestUtils.scryRenderedDOMComponentsWithClass(this.selector, "inner expanded").length, 0);
+      assert.equal(TestUtils.scryRenderedDOMComponentsWithClass(this.selector, "inner-wrapper expanded").length, 0);
     });
   });
   describe("search and selection", function() {
