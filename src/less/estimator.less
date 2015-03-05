@@ -1,5 +1,11 @@
 @import './base';
 
+.estimator__score {
+    display: inline-block;
+    margin-left: 4px;
+    margin-bottom: 2px;
+}
+
 .estimator__button:extend(.button__base) {
     width: 22px;
     height: 22px;
@@ -9,27 +15,20 @@
     text-align: center;
     border: none;
     border-radius: 11px;
-    margin-left: 3px;
-}
 
-.estimator__score {
-    display: inline-block;
-    margin-left: 4px;
-    margin-bottom: 2px;
-
-    .story:extend(.button__base) {
+    &.story {
       background-color: #84b431;
     }
 
-    .task:extend(.button__base) {
+    &.task {
       background-color: #454545;
     }
 
-    .test:extend(.button__base) {
+    &.test {
       background-color: #5a96ab;
     }
 
-    .defect:extend(.button__base) {
+    &.defect {
       background-color: #d94949;
     }
 }

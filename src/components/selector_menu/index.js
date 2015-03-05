@@ -139,7 +139,7 @@ var SelectorMenu = React.createClass({
 
   render: function() {
     var wrapperClass = this.state.expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
-    var innerClass = this.state.expanded ? 'inner expanded' : 'inner';
+    var innerClass = this.state.expanded ? 'inner-wrapper expanded' : 'inner-wrapper';
 
     return (
       <div className={wrapperClass}>
