@@ -1,6 +1,6 @@
 ## Welcome!
 
-### We're excited that you're thinking about contributing to the Sprintly UI kit.
+### We're excited that you're thinking about contributing to Sprintly-UI.
 In order to make contributing as friction-free as possible, please read through and consider the following guidelines.
 
 #### Roadmap and issues
