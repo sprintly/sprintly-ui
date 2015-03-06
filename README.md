@@ -43,36 +43,36 @@ React.renderComponent(
 );
 ```
 
-To generate a UMD bundle containing unminified and minified versions, run ```npm package-distro```. This will save these files in /dist/js. For unminified only, run the gulp ```build``` task.
+To generate a UMD bundle containing unminified and minified versions, run ```$ npm package-distro```. This will save these files in /dist/js. For unminified only, run the gulp ```build``` task.
 
 Note: While there are a handful of npm convenience scripts available for your use,
 you'll find more incremental tasks in the gulpfile.
 
 ## Styles
 
-We're using LESS to generate styles and have a build task for compiling minified and unminified versions: ```npm run build-css```. This will save these files in /dist/css.
+We're using LESS to generate styles and have a build task for compiling minified and unminified versions: ```$ npm run build-css```. Compiled styles will be saved to /dist/css.
 
 
 ## Development
 
-To run a dev server and Browserfy watch tasks, run ```npm run dev```. This will open the examples homepage where you'll find links to component examples. These files require CSS to be built via the ```npm run build-css```.
+To run a dev server and Browserfy watch tasks, run ```$ npm run dev```. This will open the examples homepage where you'll find links to component examples. These files require CSS to be built via the ```$ npm run build-css``` command.
 
 If you are building new components to add to this repo, you may add them to the appropriate example file or create a new example file to help you develop. There's a template.html file that you can copy over if creating a new example file. Please include your example file as part of any PRs for adding new components.
 
-Please read the (contributing documentation)[CONTRIBUTING.md] before starting work and make use of the (PR template)[PR_TEMPLATE.md] when submitting pull requests.
+Please read the [contributing doc](CONTRIBUTING.md) before starting work and make use of the [PR template](PR_TEMPLATE.md) when submitting pull requests.
 
 
-## Utils and Mixins
+## Utils and mixins
 
 We hope to provide utility classes and mixins wherever possible for controlling things like making item changes via component menus, sorting item data in tables, extending component functionality, etc. Please look for these in [utils](src/utils/) and [mixins](src/mixins/).
 
 
-## Testing
+## Tests and code coverage
 
-Running ```npm test``` will run tests in the cli and then in the browser (a test server will open localhost:8080/test/ automatically). To run tests in the terminal only run ```npm run test-cli```, or to run tests the browser only run ```npm run test-browser```.
+Running ```$ npm test``` will run tests in the cli and then in the browser (a test server will open localhost:8080/test/ automatically). To run tests in the terminal only run ```$ npm run test-cli```, or to run tests the browser only run ```$ npm run test-browser```.
 
-To see Istanbul coverage information, run ```npm test``` to build tests and start the server,
-and, in a new tab, run ```npm run coverage```. To view html coverage info, visit localhost:8080/test/coverage/lcov. If you are unfamiliar with lcov html reports, these allow you to drill down through code files to view per-file coverage data as well as line-by-line coverage.
+To see Istanbul coverage information, run ```$ npm test``` to build tests and start the server,
+and, in a new tab, run ```$ npm run coverage```. To view html coverage info, visit localhost:8080/test/coverage/lcov. If you are unfamiliar with lcov html reports, these allow you to drill down through code files to view per-file coverage data as well as line-by-line coverage.
 
 
 ## Examples
