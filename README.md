@@ -64,7 +64,7 @@ Please read the [contributing doc](CONTRIBUTING.md) before starting work and mak
 
 ## Utils and mixins
 
-We hope to provide utility classes and mixins wherever possible for controlling things like making item changes via component menus, sorting item data in tables, extending component functionality, etc. Please look for these in [utils](src/utils/) and [mixins](src/mixins/).
+We hope to provide utility classes and mixins wherever possible for controlling things like making item changes via component menus, sorting item data in tables, extending component functionality, etc. Please look for these in [utils](src/utils/) [docs [here](docs/utils.md)] and [mixins](src/mixins/) [docs [here](docs/mixins.md)].
 
 
 ## Tests and code coverage
@@ -79,6 +79,6 @@ and, in a new tab, run ```$ npm run coverage```. To view html coverage info, vis
 
 [Selector menu example code][1]
 
-![](http://g.recordit.co/iVmXZP8gLh.gif)
+![](http://g.recordit.co/6Q0ZAafcx0.gif)
 
 [1]: https://github.com/sprintly/sprintly-ui/blob/master/examples/menus.html

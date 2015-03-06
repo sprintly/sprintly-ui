@@ -25,7 +25,7 @@ var Estimator = React.createClass({
     readOnly: React.PropTypes.bool,
     itemType: React.PropTypes.string.isRequired,
     score: React.PropTypes.string.isRequired,
-    estimateChanger: React.PropTypes.object.isRequired
+    estimateChanger: React.PropTypes.object
   },
 
   mixins: [ClickOff],
