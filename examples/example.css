@@ -2,6 +2,14 @@
 /*.example__body {
     background-color: rgb(173, 216, 230);
 }*/
+h1,
+a {
+    color: rgb(95, 158, 160);
+}
+
+p {
+    color: #444;
+}
 
 .example__wrapper {
     background-color: #fff;
@@ -12,7 +20,6 @@
 }
 
 .example__header {
-    color: rgb(95, 158, 160);
     margin-bottom: 10px;
 }
 
@@ -33,14 +40,8 @@
 }
 
 .example__item a {
-    color: #000;
     font-size: 18px;
     line-height: 40px;
-    text-decoration: none;
-}
-
-.example__item a:hover {
-    text-decoration: underline;
 }
 
 button:focus {
@@ -54,16 +55,16 @@ button:focus {
     margin-left: 2px;
 }
 
-.selector-menu-wrapper {
-    position: static;
+.selector__wrapper {
+    position: relative;
     width: 280px;
 }
 
-.selector-menu-wrapper input {
+.selector__searchbox {
     width: 268px;
     margin-left: 6px;
 }
 
-.selector-menu-wrapper i {
+.selector__icon {
     left: 262px;
 }

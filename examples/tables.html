@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../dist/sprintly-ui.css" />
     <link rel="stylesheet" href="./example.css" />
-    <link rel="stylesheet" href="../src/styles/selector.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../node_modules/react/dist/react-with-addons.js"></script>
     <script src="../node_modules/react/dist/JSXTransformer.js"></script>
     <script src="../dist/sprintly-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.3.1/lodash.min.js"></script>
   </head>
   <body>
     <style>
@@ -19,12 +20,12 @@
         <h1>Table Components</h1>
           <p><a href="./index.html">Home</a></p>
           <h2 class="example__title">Sortable Table</h2>
+          <p>* sorting in this example is implemented via utils/group_and_sort.js.</p>
           <div id="sortable"></div>
       </div>
     </div>
 
     <script type="text/jsx">
-      // YOUR COMPONENT/S HERE FOR TESTING
       (function(){
       var genItem = function(prodId, prodName, num, size, type, user) {
         return {
@@ -42,27 +43,36 @@
         };
       };
 
-      var collection = [
-        (genItem(1, 'Foo', 1, 'L', 'story', 'Amy A.')),
-        (genItem(2, 'Bar', 2, '~', 'defect', 'Beth B.')),
-        (genItem(3, 'Foo', 3, 'S', 'task', 'Cara C.')),
-        (genItem(4, 'Foo', 3, 'M', 'test', 'Darah D.'))
+      this.collection = [
+        (genItem(1, 'Foo', 4, 'L', 'story', 'Amy A.')),
+        (genItem(2, 'Bar', 3, '~', 'defect', 'Beth B.')),
+        (genItem(3, 'Foo', 2, 'S', 'task', 'Cara C.')),
+        (genItem(4, 'Foo', 1, 'M', 'test', 'Darah D.'))
       ];
 
-      React.render(
-        <SprintlyUI.SortableTable
-          key="foo"
-          tableType='backlog'
-          label='backlog'
-          collection={collection}
-          columnNames={['product', 'number', 'size', 'title', 'tags', 'created by', 'created']}
-          onSortCollection={function() {}}
-          rowsExpand={true}
-          modelChangerUtilities={{}}
-          navigatorUtility={{}}
-        />,
-        document.getElementById("sortable")
-      );
+      var sort = function(tableType, prop, dir) {
+        var coll = this.collection;
+        this.collection = SprintlyUI.GroupSort.groupSort(coll, prop, dir);
+        render();
+      }
+
+      var render = function () {
+        React.render(
+          <SprintlyUI.SortableTable
+            key='backlog-table'
+            tableType='backlog'
+            label='backlog'
+            collection={this.collection}
+            columnNames={['product', 'number', 'size', 'title', 'tags', 'created by', 'created']}
+            onSortCollection={_.bind(sort, this)}
+            rowsExpand={true}
+            modelChangerUtilities={{}}
+            navigatorUtility={{}}
+          />,
+          document.getElementById("sortable")
+        );
+      };
+      render();
     })()
     </script>
 

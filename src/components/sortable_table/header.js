@@ -1,7 +1,6 @@
 var React = window.React || require('react/addons');
 var _ = require('lodash');
 var Expander = require('../expander');
-var Styles = require('../../styles/sortable_table');
 
 /*
  * Renders header bar where cells are clickable elements that trigger a
@@ -23,8 +22,6 @@ var TableHeader = React.createClass({
     onExpanderClick: React.PropTypes.func,
     onLabelClick: React.PropTypes.func.isRequired
   },
-
-  mixins: [Styles],
 
   getDefaultProps: function() {
     return {
@@ -70,13 +67,13 @@ var TableHeader = React.createClass({
 
     var control = this.props.isBulkEditable ?
       (
-        <th key="control" className="control" style={Styles.head.label}></th>
+        <th key='control' className='sortable__label control'></th>
       ) : null;
 
     var expander = null;
     var expander = hasProductColumn ?
       (
-        <th key="expander" style={Styles.head.label}>
+        <th key='expander' className='sortable__label'>
           <Expander
             expanded={this.props.expanded}
             onClick={this.props.onExpanderClick}
@@ -85,7 +82,7 @@ var TableHeader = React.createClass({
       ) : null;
 
     return (
-      <tr style={Styles.head.row}>
+      <tr className='sortable__row'>
         {control}
         {expander}
         {this.buildColumnLabels()}
@@ -99,8 +96,8 @@ var TableHeader = React.createClass({
 
     return _.map(columns, function(column) {
       return (
-        <th key={column} title="click to sort" style={Styles.head.label}>
-          <button className={column.replace(' ', '-')} style={Styles.head.button} key={column}
+        <th key={column} title='click to sort' className='sortable__label'>
+          <button className={'sortable__button ' + column.replace(' ', '-')} key={column}
             onClick={this.onLabelClick}>
             {column}
           </button>

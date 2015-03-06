@@ -1,5 +1,4 @@
 var React = window.React || require('react/addons');
-var SelectorStyles = require('../../styles/selector_menu');
 
 
 var Search = React.createClass({
@@ -9,8 +8,6 @@ var Search = React.createClass({
     onKeyDown: React.PropTypes.func.isRequired
   },
 
-  mixins: [SelectorStyles],
-
   getFilter: function() {
     var userInput = this.getDOMNode().value;
     this.props.filterList(userInput);
@@ -18,7 +15,7 @@ var Search = React.createClass({
 
   render: function() {
     return (
-      <input style={SelectorStyles.input} type="text"
+      <input className='selector__searchbox' type='text'
         onKeyDown={this.props.onKeyDown}
         onChange={this.getFilter}
       />

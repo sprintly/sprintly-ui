@@ -10,6 +10,8 @@ var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream');
+var less = require('gulp-less');
+var sourcemaps = require('gulp-sourcemaps');
 
 /*
  * Dev
@@ -43,6 +45,14 @@ gulp.task('dev-server', function() {
   tests.use(serveStatic('./'));
   http.createServer(tests).listen(8090);
   openPage('http://localhost:8090/examples/');
+});
+
+gulp.task('less', function() {
+  gulp.src('./src/less/sprintly-ui.less')
+    .pipe(sourcemaps.init())
+    .pipe(less())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./dist/'));
 });
 
 

@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../dist/sprintly-ui.css" />
     <link rel="stylesheet" href="./example.css" />
-    <link rel="stylesheet" href="../src/styles/selector_menu.js" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../node_modules/react/dist/react-with-addons.js"></script>
     <script src="../node_modules/react/dist/JSXTransformer.js"></script>
@@ -28,19 +28,22 @@
 
     (function(){
       var options = [
-        {"title": "Metroid"},
-        {"title": "1942"},
-        {"title": "Legend of Zelda"},
-        {"title": "Super Mario Brothers"},
-        {"title": "Donkey Kong"}
+        {"title": "Feature X"},
+        {"title": "New product A"},
+        {"title": "Marketing"},
+        {"title": "Release #123"},
+        {"title": "Feature Y redesign"}
       ];
 
       showChoice = function(selected) {
         if ($('.message')) {
           $('.message').remove();
+          if (selected === 'All') {
+            return;
+          }
         }
 
-        $('#selector').after('<div class="message">' + "YOUR GAME OF CHOICE IS: " + selected + '</div>');
+        $('#selector').after('<div class="message">' + "You chose to work on: " + selected + '</div>');
       };
 
       React.render(
