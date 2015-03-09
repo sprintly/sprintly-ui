@@ -41,7 +41,7 @@ React.renderComponent(
 );
 ```
 
-To generate a UMD bundle containing unminified and minified versions, run ```npm package-distro```.
+To generate a UMD bundle containing unminified and minified versions, run the prepublish script: ```$ npm run prepublish```.
 For unminified only, run the gulp ```build``` task.
 
 
