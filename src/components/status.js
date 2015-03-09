@@ -11,7 +11,7 @@ var Status = React.createClass({
     modelId: React.PropTypes.arrayOf(React.PropTypes.number),
     readOnly: React.PropTypes.bool,
     status: React.PropTypes.number.isRequired,
-    statusChanger: React.PropTypes.object.isRequired
+    statusChanger: React.PropTypes.object
   },
 
   mixins: [],

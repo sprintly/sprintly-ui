@@ -15,7 +15,7 @@ var TagEditor = React.createClass({
     modelId: React.PropTypes.arrayOf(React.PropTypes.number),
     readOnly: React.PropTypes.bool,
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    tagChanger: React.PropTypes.object.isRequired
+    tagChanger: React.PropTypes.object
   },
 
   mixins: [clickOff],
