@@ -52,7 +52,7 @@ var Estimator = React.createClass({
   },
 
   onScoreClick: function() {
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
 
@@ -64,7 +64,7 @@ var Estimator = React.createClass({
   },
 
   onScoreChange: function(ev) {
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
 

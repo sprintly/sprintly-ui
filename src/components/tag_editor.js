@@ -42,7 +42,7 @@ var TagEditor = React.createClass({
 
   onTagEditClick: function(ev) {
     ev.stopPropagation();
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
 
@@ -55,7 +55,7 @@ var TagEditor = React.createClass({
 
   onFormSubmit: function(ev) {
     ev.preventDefault();
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
 
@@ -75,7 +75,7 @@ var TagEditor = React.createClass({
 
   onTagRemoveClick: function(ev) {
     ev.stopPropagation();
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
 
