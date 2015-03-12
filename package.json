@@ -50,8 +50,8 @@
     "test-browser": "gulp test-server",
     "coverage": "gulp test-coverage && istanbul report --root coverage lcov && mv coverage/ test/",
     "coveralls": "cat test/coverage/lcov.info | coveralls",
-    "build-css": "gulp less && cat dist/sprintly-ui.css | cleancss > dist/sprintly-ui.min.css",
-    "prepublish": "gulp build && cat dist/sprintly-ui.js | uglifyjs -cm > dist/sprintly-ui.min.js",
+    "build-css": "gulp less && cat dist/css/sprintly-ui.css | cleancss > dist/css/sprintly-ui.min.css",
+    "prepublish": "gulp build && cat dist/js/sprintly-ui.js | uglifyjs -cm > dist/js/sprintly-ui.min.js",
     "clean": "rm test/build.js && rm -rf test/coverage/"
   },
   "browserify": {

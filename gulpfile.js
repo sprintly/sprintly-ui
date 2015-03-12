@@ -27,7 +27,7 @@ gulp.task('build', function() {
 
   return bundler.bundle()
     .pipe(source('sprintly-ui.js'))
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest('./dist/js/'));
 });
 
 gulp.task('watch', ['build'], function() {
