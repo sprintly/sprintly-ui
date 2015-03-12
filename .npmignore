@@ -5,3 +5,4 @@
 wercker.yml
 release-notes.md
 /docs
+upload-assets-to-s3.sh
