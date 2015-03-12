@@ -31,14 +31,14 @@ describe('Estimator', function() {
   });
 
   it('should not render the score selector menu by default', function() {
-    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(this.estimator, 'estimator-menu').length);
+    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(this.estimator, 'estimator__menu').length);
   });
 
   it('should change menu state to "open" and render the selector menu on click', function() {
     var score = TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button');
     TestUtils.Simulate.click(score);
     assert.isTrue(this.estimator.state.menuOpen);
-    assert.ok(TestUtils.findRenderedDOMComponentWithClass(this.estimator, 'estimator-menu'));
+    assert.ok(TestUtils.findRenderedDOMComponentWithClass(this.estimator, 'estimator__menu'));
   });
 
   it('should close the menu and reset state if clicked a second time after opening', function() {

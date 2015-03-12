@@ -1,6 +1,5 @@
 var React = window.React || require('react/addons');
 var _ = require('lodash');
-var Styles = require('../styles/tags');
 
 /*
  * Tags element displays either a textual list of tags ("one, two, three")
@@ -22,8 +21,6 @@ var Tags = React.createClass({
     navigatorUtility: React.PropTypes.object,
     altOnTagClick: React.PropTypes.func
   },
-
-  mixins: [Styles],
 
   getDefaultProps: function() {
     return {
@@ -63,30 +60,29 @@ var Tags = React.createClass({
     var tagListItems = [];
 
     var len = this.props.tags.length;
-    var liStyle = this.props.condensed ? Styles.listItem : Styles.expanded;
 
     if (len === 1) {
       wrapped = (
-        <button style={Styles.tag} onClick={this.onTagClick}>
+        <button className='tags__tag' onClick={this.onTagClick}>
           {this.props.tags}
         </button>
       );
     } else if (len > 1) {
       wrapped = this.props.condensed ?
         (
-          <button style={Styles.tag}>
+          <button className='tags__tag'>
             {len.toString() + ' tags'}
           </button>
         ) :
         (
-          <ul style={Styles.list}>
+          <ul className='tags__list'>
             {this.buildTagList()}
           </ul>
         );
     }
 
     return (
-      <div style={Styles.wrapper}>
+      <div className='tags__wrapper'>
         {wrapped}
       </div>
     );
@@ -96,8 +92,8 @@ var Tags = React.createClass({
     return _.map(this.props.tags, function(tag, i, arr) {
       var maybeComma = i === (arr.length - 1) ? null : ',';
       return (
-        <li key={'tag' + ':' + i} style={Styles.expanded}>
-          <button style={Styles.tag} onClick={this.onTagClick}>
+        <li key={'tag' + ':' + i} className='tags__list expanded'>
+          <button className='tags__tag' onClick={this.onTagClick}>
             {tag}
           </button>{maybeComma}
         </li>

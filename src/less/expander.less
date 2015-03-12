@@ -1,0 +1,44 @@
+@import './base';
+
+.expander__button:extend(.button__base) {
+    display: inline-block;
+    background-color: #fff;
+    border: 1px solid #c7c7c7;
+    padding: 2px 2px 1px 3px;
+
+    &.expand {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        border-right: none;
+    }
+
+    &.condense {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-left: none;
+    }
+
+    &.active {
+        background-color: #175574;
+        border: 1px solid #175574;
+    }
+}
+
+.expander__icon:extend(.icon__base_medium) {
+
+    &.expand {
+        background-position: 0 -272px;
+
+        &.active {
+            background-position: -16px -272px;
+        }
+    }
+
+    &.condense {
+        background-position: 0 -288px;
+
+        &.active {
+            background-position: -16px -288px;
+        }
+    }
+}

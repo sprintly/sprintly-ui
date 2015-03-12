@@ -1,7 +1,6 @@
 var React = window.React || require('react/addons');
 var _ = require('lodash');
-var ClickOff = require('react-onclickoutside');
-var Styles = require('../styles/estimator');
+var clickOff = require('react-onclickoutside');
 
 /*
  * Estimator element displays item score that, when clicked, opens a menu
@@ -26,10 +25,10 @@ var Estimator = React.createClass({
     readOnly: React.PropTypes.bool,
     itemType: React.PropTypes.string.isRequired,
     score: React.PropTypes.string.isRequired,
-    estimateChanger: React.PropTypes.object.isRequired
+    estimateChanger: React.PropTypes.object
   },
 
-  mixins: [ClickOff, Styles],
+  mixins: [clickOff],
 
   getDefaultProps: function() {
     return {
@@ -53,7 +52,7 @@ var Estimator = React.createClass({
   },
 
   onScoreClick: function() {
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
 
@@ -65,7 +64,7 @@ var Estimator = React.createClass({
   },
 
   onScoreChange: function(ev) {
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
 
@@ -83,14 +82,15 @@ var Estimator = React.createClass({
 
   render: function() {
     var currentScore = this.props.score === '~' ? '?' : this.props.score;
-    var scoreStyle = Styles.score[this.props.itemType];
     var scoreMenu = null;
 
     if (this.state.menuOpen) {
       var scores = _.map(this.ALL_ESTIMATES, function(score) {
         return (
-          <li key={score} style={Styles.score.wrapper}>
-            <button style={scoreStyle} data-score={score} onClick={this.onScoreChange}>
+          <li key={score} className='estimator__score'>
+            <button className={'estimator__button ' + this.props.itemType}
+              data-score={score}
+              onClick={this.onScoreChange}>
               {this.ESTIMATE_HASH[score]}
             </button>
           </li>
@@ -98,20 +98,18 @@ var Estimator = React.createClass({
       }, this);
 
       scoreMenu = (
-        <div>
-          <div className="left-arrow" style={Styles.leftArrow} />
-          <div className="estimator-menu" style={Styles.menu}>
-            <ul style={Styles.list}>
-              {scores}
-            </ul>
-          </div>
+        <div className='estimator__menu'>
+          <ul className='estimator__list'>
+            {scores}
+          </ul>
         </div>
       );
     }
 
     return (
-      <div className="estimator-component">
-        <button style={scoreStyle} onClick={this.onScoreClick}>
+      <div className='estimator__score'>
+        <button className={'estimator__button ' + this.props.itemType}
+          onClick={this.onScoreClick}>
           {currentScore}
         </button>
         {scoreMenu}

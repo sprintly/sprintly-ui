@@ -11,15 +11,15 @@ button:focus {
   margin-left: 2px;
 }
 
-.selector-menu-wrapper {
+.selector__wrapper {
   width: 280px;
 }
 
-.selector-menu-wrapper input {
+.selector__searchbox {
   width: 268px;
   margin-left: 6px;
 }
 
-.selector-menu-wrapper i {
+.selector__icon {
   left: 262px;
 }

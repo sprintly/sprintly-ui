@@ -1,0 +1,148 @@
+@import './base';
+
+.sortable__wrapper {
+    width: 1000px;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.sortable__title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #323232;
+    padding-top: 30px;
+    padding-bottom: 0;
+    text-transform: capitalize;
+}
+
+.sortable__table {
+    width: 100%;
+    border: 1px solid #d3d3d3;
+    border-left: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    .head {
+        background-color: #fff;
+        border: 1px solid #c7c7c7;
+    }
+}
+
+.sortable__label {
+    -webkit-user-select: none;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 35px;
+    color: #323232;
+    border-left: 1px solid #d3d3d3;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.sortable__button:extend(.button__base) {
+    text-transform: capitalize;
+}
+
+.sortable__row {
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    box-sizing: border-box;
+
+    &.story {
+        background-color: #e4efcf;
+    }
+    &.task {
+        background-color: #f0f0ec;
+    }
+    &.test {
+        background-color: #ebf7fa;
+    }
+    &.defect {
+        background-color: #f8e6e6;
+    }
+
+    &.spacer {
+        width: 100%;
+        height: 4px;
+    }
+
+    &.expanded {
+        min-height: 30px;
+    }
+
+    &.matched {
+        border-left: 6px solid #84b431;
+    }
+
+    &.non-matching {
+        border-left: 6px solid #84b431;
+        opacity: 0.6;
+    }
+}
+
+.sortable__cell {
+    border-left: 1px solid #d3d3d3;
+    box-sizing: border-box;
+
+    .wrapper {
+        width: 60px;
+        font-size: 12px;
+        vertical-align: middle;
+        padding: 0 10px;
+
+        &.expanded {
+            line-height: 19px;
+            padding: 8px 10px;
+        }
+
+        &.condensed {
+            line-height: 32px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        &.narrow {
+            width: 20px;
+
+            &.matched {
+                padding: 0 8px;
+            }
+        }
+
+        &.wide {
+            width: 50px;
+        }
+
+        &.wider {
+            width: 90px;
+        }
+
+        &.widest {
+            width: 375px;
+        }
+    }
+
+    .link {
+        color: #323232;
+        text-decoration: none;
+
+        &.title-cell:hover,
+        &.number-cell:hover,
+        &.product-cell:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .subitem:extend(.icon__base_medium) {
+        float: left;
+        background-position: 0 -335px;
+        margin-top: 6px;
+
+        .expanded {
+            margin-top: 0;
+        }
+    }
+}

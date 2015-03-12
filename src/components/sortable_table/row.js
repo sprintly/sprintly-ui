@@ -4,7 +4,6 @@ var Estimator = require('../estimator');
 var Status = require('../status');
 var Tags = require('../tags');
 var TagEditor = require('../tag_editor');
-var Styles = require('../../styles/sortable_table');
 var moment = require('moment');
 
 /*
@@ -32,20 +31,12 @@ var TableRow = React.createClass({
     onBulkSelect: React.PropTypes.func
   },
 
-  mixins: [Styles],
-
   getDefaultProps: function() {
     return {
       expanded: 'condensed',
       baseUrl: '',
       modelChangerUtilities: {},
       onBulkSelect: _.noop()
-    };
-  },
-
-  getInitialState: function() {
-    return {
-      hover: false
     };
   },
 
@@ -57,17 +48,18 @@ var TableRow = React.createClass({
 
   render: function() {
     var modelId = [this.props.model.product.id, this.props.model.number];
-
     var condensed = this.props.expanded === 'condensed' ? true : false;
-    var wrapperStyles = condensed ? Styles.cell.condensed : Styles.cell.expanded;
+
+    var wrapperClass = condensed ? 'wrapper condensed' : 'wrapper expanded';
+    var rowClass = 'sortable__row ' + this.props.model.type;
+    if (!condensed) {
+      rowClass += ' expanded';
+    }
 
     // "matched": item is grouped with parent/subitems.
     // "nonMatching": item doesn't fit collection filters, but is included to match w/subitems that do.
-    var rowStyles = _.extend({}, Styles.row[this.props.model.type],
-      !condensed ? Styles.row.expanded : null);
     if (this.props.model.isMatched) {
-      rowStyles = _.extend({}, rowStyles, Styles.row.matched,
-        this.props.model.isNonMatching ? Styles.row.nonMatching : null);
+      rowClass += this.props.model.isNonMatching ? ' matched non-matching' : ' matched';
     }
 
     var columnMap = {
@@ -86,83 +78,70 @@ var TableRow = React.createClass({
 
     if (this.props.isBulkEditable) {
       cells.push(
-        <td key={'control' + ':' + modelId} style={Styles.cell.base}>
-          {this.buildControlCell(wrapperStyles)}
+        <td key={'control' + ':' + modelId} className='sortable__cell'>
+          {this.buildControlCell(wrapperClass)}
         </td>
       );
     }
 
     _.each(this.props.columns, function(column) {
       cells.push(
-        <td key={column + ':' + modelId} style={Styles.cell.base}>
-          {columnMap[column](wrapperStyles, modelId)}
+        <td key={column + ':' + modelId} className='sortable__cell'>
+          {columnMap[column](wrapperClass, modelId)}
         </td>
       );
     }, this);
 
     return (
-      <tr className={'table-row' + this.props.expanded} style={rowStyles}>
+      <tr className={rowClass}>
         {cells}
       </tr>
     );
   },
 
-  buildControlCell: function(styles) {
+  buildControlCell: function(classes) {
     // Left border on matched rows causes padding weirdness in checkboxes,
     // so we add corrective styles on matched rows.
-    var controlStyles = this.props.model.isMatched ?
-      _.extend({}, styles, Styles.cell.narrow, Styles.cell.borderCorrection) :
-      _.extend({}, styles, Styles.cell.narrow);
+    classes += this.props.model.isMatched ? ' narrow matched' : ' narrow';
 
     return (
-      <div style={controlStyles}>
-        <input type="checkbox" onClick={this.bulkSelectClicked} />
+      <div className={classes}>
+        <input type='checkbox' onClick={this.bulkSelectClicked} />
       </div>
     );
   },
 
-  buildProductCell: function(styles) {
+  buildProductCell: function(classes) {
     var linkProps = {
       href: this.props.baseUrl + '/product/' + this.props.model.product.id,
-      className: 'js-item-link title-cell',
-      style: Styles.cell.link
+      className: 'js-item-link link product-cell',
     };
-    var subitemArrow = null;
-    var subitemArrowStyles = this.props.expanded === 'expanded' ?
-      _.extend({}, Styles.cell.subitemArrow, Styles.cell.subitemArrowExpanded) :
-      Styles.cell.subitemArrow;
 
-    if (this.props.model.parent) {
-      subitemArrow = (
-        <i className="subitem-arrow" style={subitemArrowStyles}></i>
-      );
-    }
+    var subitemClass = this.props.expanded ? 'subitem expanded' : 'subitem';
+    var subitemArrow = this.props.model.parent ? ( <i className={subitemClass}></i> ) : null;
 
     return (
-      <div style={_.extend({}, styles, Styles.cell.wider)}>
+      <div className={classes + ' wider'}>
         {subitemArrow}
         <a {...linkProps}>{this.props.model.product.name}</a>
       </div>
     );
   },
 
-  buildNumberCell: function(styles) {
+  buildNumberCell: function(classes) {
     var props = {
       href: this.props.baseUrl + '/product/' + this.props.model.product.id + '/item/' + this.props.model.number,
-      className: 'js-item-link title-cell',
-      'data-item-number': this.props.model.number,
-      style: this.state.hover ? Styles.cell.linkHover : Styles.cell.link,
-      onMouseOver: this.onTitleLinkHover,
-      onMouseOut: this.onTitleLinkOut
+      className: 'js-item-link link number-cell',
+      'data-item-number': this.props.model.number
     };
     return (
-      <div style={styles}>
+      <div className={classes}>
         <a {...props}>#{this.props.model.number}</a>
       </div>
     );
   },
 
-  buildEstimateCell: function(styles, mId) {
+  buildEstimateCell: function(classes, mId) {
     var props = {
       modelId: mId,
       readOnly: !!this.props.model.isNonMatching,
@@ -172,13 +151,13 @@ var TableRow = React.createClass({
     };
 
     return (
-      <div style={_.extend({}, styles, Styles.cell.narrow)}>
+      <div className={classes + ' narrow'}>
         <Estimator {...props} />
       </div>
     );
   },
 
-  buildStatusCell: function(styles, mId) {
+  buildStatusCell: function(classes, mId) {
     var props = {
       modelId: mId,
       readOnly: !!this.props.model.isNonMatching,
@@ -187,37 +166,34 @@ var TableRow = React.createClass({
     };
 
     return (
-      <div style={_.extend({}, styles, Styles.cell.narrow)}>
+      <div className={classes + ' narrow'}>
         <Status {...props} />
       </div>
     );
   },
 
-  buildAssigneeCell: function(styles, mId) {
+  buildAssigneeCell: function(classes, mId) {
     // TODO(fw): implement
     return (<div></div>);
   },
 
-  buildCreatedByCell: function(styles) {
+  buildCreatedByCell: function(classes) {
     return (
-      <div style={styles}>
+      <div className={classes}>
         {abbreviateUsername(this.props.model.created_by)}
       </div>
     );
   },
 
-  buildTitleCell: function(styles) {
+  buildTitleCell: function(classes) {
     var props = {
       href: this.props.baseUrl + '/product/' + this.props.model.product.id + '/item/' + this.props.model.number,
-      className: 'js-item-link title-cell',
-      'data-item-number': this.props.model.number,
-      style: this.state.hover ? Styles.cell.linkHover : Styles.cell.link,
-      onMouseOver: this.onTitleLinkHover,
-      onMouseOut: this.onTitleLinkOut
+      className: 'js-item-link link title-cell',
+      'data-item-number': this.props.model.number
     };
 
     return (
-      <div style={_.extend({}, styles, Styles.cell.widest)}>
+      <div className={classes + ' widest'}>
         <a {...props}>
           {this.props.model.title}
         </a>
@@ -225,7 +201,7 @@ var TableRow = React.createClass({
     );
   },
 
-  buildTagsCell: function(styles, mId) {
+  buildTagsCell: function(classes, mId) {
     var editorProps = {
       modelId: mId,
       readOnly: !!this.props.model.isNonMatching,
@@ -235,36 +211,24 @@ var TableRow = React.createClass({
 
     var tagsProps = {
       tags: this.props.model.tags,
-      condensed: this.props.expanded === "condensed" ? true : false,
+      condensed: this.props.expanded === 'condensed' ? true : false,
       navigatorUtility: this.props.navigatorUtility
     };
 
     return (
-      <div style={_.extend({}, styles, Styles.cell.wider)}>
+      <div className={classes + ' wider'}>
         <TagEditor {...editorProps} />
         <Tags {...tagsProps} />
       </div>
     );
   },
 
-  buildCreatedAtCell: function(styles) {
+  buildCreatedAtCell: function(classes) {
     return (
-      <div style={_.extend({}, styles, Styles.cell.wide)}>
+      <div className={classes + ' wide'}>
         {moment(this.props.model.created_at).format('MM/DD/YY')}
       </div>
     );
-  },
-
-  onTitleLinkHover: function() {
-    this.setState({
-      hover: true
-    });
-  },
-
-  onTitleLinkOut: function() {
-    this.setState({
-      hover: false
-    });
   }
 });
 

@@ -1,0 +1,23 @@
+@import './base';
+
+.tags__wrapper {
+    display: inline-block;
+}
+
+.tags__tag:extend(.button__base) {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.tags__list {
+    width: 100%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    &.expanded {
+        display: inline-block;
+        margin-right: 4px;
+    }
+}

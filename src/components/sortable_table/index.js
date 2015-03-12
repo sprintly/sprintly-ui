@@ -2,8 +2,6 @@ var React = window.React || require('react/addons');
 var _ = require('lodash');
 var TableHeader = require('./header');
 var TableRow = require('./row');
-var Styles = require('../../styles/sortable_table');
-
 
 /*
  * Takes an array of json objects (for example, a Backbone.Collection.toJSON())
@@ -31,8 +29,6 @@ var SortableTable = React.createClass({
     navigatorUtility: React.PropTypes.object
   },
 
-  mixins: [Styles],
-
   getDefaultProps: function() {
     return {
       isBulkEditable: false,
@@ -55,7 +51,6 @@ var SortableTable = React.createClass({
   },
 
   render: function() {
-    var tableClass = "sortable-table " + this.props.label;
     var rows = [];
 
     _.each(this.props.collection, function(model) {
@@ -75,7 +70,7 @@ var SortableTable = React.createClass({
       if (model.isMatched && !model.parent) {
         // Add a spacer row above matched parents.
         rows.push(
-          <tr key={modelId + ':spacer'} className="spacer" style={Styles.row.spacer} />
+          <tr key={modelId + ':spacer'} className='sortable__row spacer' />
         );
       }
       rows.push(
@@ -94,10 +89,10 @@ var SortableTable = React.createClass({
     };
 
     return (
-      <div className={tableClass} style={Styles.table.wrapper}>
-        <h2 className="sortable-title" style={Styles.table.title}>{this.props.label}</h2>
-        <table style={Styles.table.table}>
-          <thead style={Styles.table.thead}>
+      <div className={'sortable__wrapper ' + this.props.label}>
+        <h2 className='sortable__title'>{this.props.label}</h2>
+        <table className='sortable__table'>
+          <thead className='head'>
             <TableHeader {...headerProps} />
           </thead>
           <tbody>

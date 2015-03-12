@@ -42,7 +42,7 @@ describe('TagEditor', function() {
     );
 
     assert.isFalse(tagEditor.state.showMenu);
-    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
+    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
   });
 
   it('should render the edit menu containing an input if "Add a tag." clicked', function() {
@@ -56,7 +56,7 @@ describe('TagEditor', function() {
     var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
-    assert.ok(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
+    assert.ok(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
     assert.ok(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'input'));
   });
 
@@ -105,7 +105,7 @@ describe('TagEditor', function() {
     TestUtils.Simulate.submit(form);
 
     assert.isFalse(tagEditor.state.showMenu);
-    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
+    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor__menu').length);
   });
 
   it('should render the current item tags in the edit menu if item has tags', function() {
@@ -189,7 +189,7 @@ describe('TagEditor', function() {
     TestUtils.Simulate.click(deleteButton);
 
     assert.isTrue(tagEditor.state.showMenu);
-    assert.ok(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
+    assert.ok(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
   });
 
   it('should close the menu if the tag edit button is clicked a second time', function() {
