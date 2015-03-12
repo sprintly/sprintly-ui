@@ -25,6 +25,7 @@
   "devDependencies": {
     "browserify": "^8.1.0",
     "chai": "^1.10.0",
+    "clean-css": "^3.1.6",
     "connect": "^3.3.3",
     "coveralls": "^2.11.2",
     "es5-shim": "^4.0.5",
