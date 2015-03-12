@@ -1,6 +1,6 @@
 var React = window.React || require('react/addons');
 var _ = require('lodash');
-var ClickOff = require('react-onclickoutside');
+var clickOff = require('react-onclickoutside');
 
 /*
  * Estimator element displays item score that, when clicked, opens a menu
@@ -28,7 +28,7 @@ var Estimator = React.createClass({
     estimateChanger: React.PropTypes.object
   },
 
-  mixins: [ClickOff],
+  mixins: [clickOff],
 
   getDefaultProps: function() {
     return {
@@ -52,7 +52,7 @@ var Estimator = React.createClass({
   },
 
   onScoreClick: function() {
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
 
@@ -64,7 +64,7 @@ var Estimator = React.createClass({
   },
 
   onScoreChange: function(ev) {
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
 

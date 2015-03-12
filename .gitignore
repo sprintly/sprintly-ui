@@ -4,4 +4,6 @@ npm-debug.log
 test/build.js
 test/coverage/
 coverage/
-dist/sprintly-ui*
+dist/css/
+dist/js/
+upload-assets-to-s3.sh

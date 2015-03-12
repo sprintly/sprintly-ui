@@ -3,6 +3,5 @@
 .npmignore
 .coveralls.yml
 wercker.yml
-release-notes.md
 /docs
-/examples
+upload-assets-to-s3.sh

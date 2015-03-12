@@ -43,7 +43,8 @@ React.renderComponent(
 );
 ```
 
-To generate a UMD bundle containing unminified and minified versions, run ```$ npm package-distro```. This will save these files in /dist/js. For unminified only, run the gulp ```build``` task.
+To generate a UMD bundle containing unminified and minified versions, run the prepublish script: ```$ npm run prepublish```.
+For unminified only, run the gulp ```build``` task.
 
 Note: While there are a handful of npm convenience scripts available for your use,
 you'll find more incremental tasks in the gulpfile.

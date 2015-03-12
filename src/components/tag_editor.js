@@ -1,6 +1,6 @@
 var React = window.React || require('react/addons');
 var _ = require('lodash');
-var ClickOff = require('react-onclickoutside');
+var clickOff = require('react-onclickoutside');
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -18,7 +18,7 @@ var TagEditor = React.createClass({
     tagChanger: React.PropTypes.object
   },
 
-  mixins: [ClickOff],
+  mixins: [clickOff],
 
   getDefaultProps: function() {
     return {
@@ -42,7 +42,7 @@ var TagEditor = React.createClass({
 
   onTagEditClick: function(ev) {
     ev.stopPropagation();
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
 
@@ -55,7 +55,7 @@ var TagEditor = React.createClass({
 
   onFormSubmit: function(ev) {
     ev.preventDefault();
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
 
@@ -75,7 +75,7 @@ var TagEditor = React.createClass({
 
   onTagRemoveClick: function(ev) {
     ev.stopPropagation();
-    if (this.props.readOnly) {
+    if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
 
