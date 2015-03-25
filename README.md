@@ -11,7 +11,7 @@ The goal of this repository is to make it easier for developers (those who work 
 
 
 ## Usage
-To use Sprintly-ui in your project, simply ```npm install sprintly-ui```. Or, generate a UMD bundle containing unminified and minified versions, run the prepublish script: ```$ npm run prepublish```. [Note: For unminified only, run the gulp ```build``` task.]
+To use Sprintly-ui in your project: ```$ npm install sprintly-ui```. Or, generate a UMD bundle containing unminified and minified versions, run the prepublish script: ```$ npm run prepublish```. [Note: For unminified only, run the gulp ```build``` task.]
 
 Then add a component to your project by requiring it at the top of your file:
 ```
@@ -37,7 +37,7 @@ To make it easier to modify component styles, we've decided against the React re
 Alternatively, you may choose to store and serve the unminified or minified stylesheet in ```/dist/css```. You'll need to build those files via ```$ npm run build-css```.
 
 
-#### Working with components and fetching data
+## Working with components and fetching data
 Sprintly-ui is a component library that is built using Facebook's React library. If you aren't familiar with React, you can think about it as the "V" (for "view") in MVC, though you can also build components that have controller-like functionality.
 
 Since we want to be non-deterministic about how these components will be used, the assumption we make is that components in this library will be owned and managed by parent views that you, the user, will create. Just remember that you need to create a root node (typically an element with an 'id' property on it) in a template or html file to render your component into.
@@ -67,6 +67,7 @@ and, in a new tab, run ```$ npm run coverage```. To view html coverage info, vis
 
 
 ## Examples
-You can view examples locally by running ```$ npm run build-css && npm run dev```, or take a look at some example code using the links below.
-[Selector menu example code][1]
-[SortableTable example code][2]
+You can view examples locally in the browser by running ```$ npm run build-css && npm run dev```, or take a look at some example code using the links below.
+* [Selector menu example code](examples/menus.html)
+* [SortableTable example code](examples/tables.html)
+* [Misc. components example code](examples/misc.html)

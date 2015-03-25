@@ -1,12 +1,13 @@
 ## Roadmap
 
-### Work in Progress (Current)
+#### Work in Progress (Current)
 * Status menu
 * Item card component
 * Item column component
 
-### Planned work (Backlog)
+#### Planned work (Backlog)
 * Assigner menu
 * Add-item component
 
-### Someday
+#### Someday
+* GH pages for displaying examples code

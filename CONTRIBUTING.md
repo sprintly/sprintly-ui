@@ -1,6 +1,6 @@
 ## Welcome!
 
-#### We're excited that you're thinking about contributing to Sprintly-UI.
+We're excited that you're thinking about contributing to Sprintly-UI.
 In order to make contributing as friction-free as possible, please read through and consider the following guidelines.
 
 #### Roadmap and issues
@@ -11,7 +11,7 @@ If there's a feature that you'd like to see as a component that _isn't_ on the r
 #### Component structure
 Since we would like to be as non-deterministic as we can about how these components will be used, the assumption that we make is that users of this library will be plugging these componenets into apps that contain parent (or "controller") views that will manage data fetching and syncing themselves.
 
-Designing components for maximum reusability isn't always easy, especially when writing multiple components with the intention of combining them to form a composite component, like our Sortable Table. A good rule of thumb is that if you think there could be another use for one of the components within your composite component, see if you can reasonably break it out (ie, make it functional for your situation while making its imputs as generic as possible). That's not always possible for very domain-specific components, so just use your best judgement.
+Designing components for maximum reusability isn't always easy, especially when writing multiple components with the intention of combining them to form a composite component, like our [SortableTable](src/components/sortable_table). A good rule of thumb is that if you think there could be another use for one of the components within your composite component, see if you can reasonably break it out (ie, make it functional for your situation while making its imputs as generic as possible). That's not always possible for very domain-specific components, so just use your best judgement.
 
 #### Props vs state
 To support React's one-way data flow pattern, we ask that you try to avoid state wherever possible when developing components for inclusion in Sprintly-ui, and instead favor passing data and callback functions through as props. The React [getting started](http://facebook.github.io/react/docs/thinking-in-react.html) docs are great and go over one-way data flow and the difference between props and state in detail.
