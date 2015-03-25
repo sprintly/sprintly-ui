@@ -12,7 +12,7 @@
 
 #### What gif best describes this PR or how it makes you feel?
 
-#### Definition of Done:
+#### Definition of Done (check if you've addressed item or if item doesn't apply):
 - [ ] Does this contain breaking changes? If so, did you update release-notes.md?
 - [ ] Did you bump the version number?
     - [ ] Major

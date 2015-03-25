@@ -1,8 +1,12 @@
 # Tables
 
-## Sortable Table
+### Sortable Table
 
-Renders a table for displaying Sprintly item data delivered as (nested) model json. Sortable table was built to be sortable via the use of an external sort utility (such as [this group-and-sort utility](../src/utils/group_and_sort.js)), but will be static if no sort utility is used. If the former, when a user clicks one of the column labels, the onSortCollection handler will call an external function to handle sorting (see the [example file](../examples/tables.html) for example using the utils/group_and_sort.js sorter).
+Renders a table for displaying Sprintly item data delivered as (nested) model json. Sortable table was built to be sortable via the use of an external sort utility (such as [this group-and-sort utility](../src/utils/group_and_sort.js)), and will be static if no sort utility is used.
+
+See the [example file](../examples/tables.html) for example implementation using the utils/group_and_sort.js sorter.
+
+If made sortable, clicking any label in the column header will sort the table data by that field in alternating directions (ie, in ascending/descending order).
 
 
 ```
@@ -16,15 +20,12 @@ Renders a table for displaying Sprintly item data delivered as (nested) model js
 />
 ```
 
-
-### SortableTable(props)
-
 #### props.tableType (string)
 Identifier that becomes useful if you're creating multiple tables from one of several collections and want to track which table is triggering callbacks in your parent view. For example, we use this identifier to track which status-based table in Sprintly's Mine view should be sorted and rerendered on a user sort event.
 
 
 #### props.label (string)
-Table title that will appear above the table.
+Table title header that will appear above the table.
 
 
 #### props.collection (array of objects; required)
@@ -55,7 +56,7 @@ Options include:
 Base url for table row linkable elements, such as item titles, item numbers, and product names.
 
 
-#### props.onSortCollection (function; required)
+#### props.onSortCollection (function)
 Function to call on parent view that will handle sorting. See the [example file](../examples/tables.html) for example using the utils/group_and_sort.js sorter.
 
 Use __.noop() or similar if rendering a static table.

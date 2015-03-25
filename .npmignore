@@ -4,4 +4,3 @@
 .coveralls.yml
 wercker.yml
 /docs
-upload-assets-to-s3.sh

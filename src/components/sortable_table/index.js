@@ -22,7 +22,7 @@ var SortableTable = React.createClass({
     collection: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
     columnNames: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     baseUrl: React.PropTypes.string,
-    onSortCollection: React.PropTypes.func.isRequired,
+    onSortCollection: React.PropTypes.func,
     isBulkEditable: React.PropTypes.bool,
     onBulkSelect: React.PropTypes.func,
     modelChangerUtilities: React.PropTypes.object,

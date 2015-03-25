@@ -1,20 +1,14 @@
 # Misc Components
 
 
-## Assigner
+### Assigner
 WIP
+Can use SelectorMenu for simple assigner with typeahead.
 
 
-### Assigner(props)
-WIP
+### Estimator
 
-
-## Estimator
-
-The Estimator component renders an item score that, when clicked, opens a score-editing menu. If readOnly is passed true, the rendered score will not produce an editing menu on click.
-
-
-### Estimator(props)
+The Estimator component renders an item score that, when clicked, opens a score-editing menu. Score is editable via an edit menu that will open on score click unless props.readOnly is passed true.
 
 #### props.modelId (array of numbers)
 Representing product id and model id: [productId, modelId]. Supports usage in multi-product environments where we may need to identify and act on single items but where items from different products can have the same item number.
@@ -26,8 +20,7 @@ Read only items will render a score that is not editable and won't render a menu
 Item type, ie: 'story', 'task', 'test', or 'defect'.
 
 #### props.score (string; required)
-Item score, ie: 'S', 'M', 'L', 'XL'.
-
+Item score, ie: '~', S', 'M', 'L', 'XL'. The '~' signifies an unscored item.
 
 #### props.estimateChanger (object)
 ```
@@ -47,11 +40,9 @@ var estimateChanger = {
 If readOnly is false, then score is editable and this object can be used to provide a utility for changing item score externally. Must include a ```changeScore``` method.
 
 
-## Expander
+### Expander
 
 Renders buttons for toggling between expanded and condensed modes in various views. Used in Sprintly in columns and tables.
-
-### Expander(props)
 
 #### props.expanded (string)
 Set the default state, either 'expanded' or 'condensed'.
@@ -60,18 +51,13 @@ Set the default state, either 'expanded' or 'condensed'.
 Handler for triggering change in parent state based on whether 'expanded' or 'condensed' are currently active.
 
 
-## Status
-WIP
-
-### Status(props)
+### Status
 WIP
 
 
-## TagEditor
+### TagEditor
 
 Interface for adding and removing item tags. Renders an edit icon that, when clicked, opens a menu with an add item input and list of item's tags that may be deleted/removed. If an item has no tags, renders the add item input alone.
-
-### TagEditor(props)
 
 #### props.modelId (array of numbers)
 An array representing item product's id and item number. Supports identification of single items in a multi-product environment where items from different products may share the same item number.
@@ -96,11 +82,10 @@ var tagChanger = {
 };
 ```
 
-## Tags
+
+### Tags
 
 Renders either a textual list of tags ('tag1, tag2, tag3') or a tag count ('4 tags') button that, when clicked, opens a popup showing the item's tags. If passing a click handler through via navigatorUtility prop or altOnTagClick, clicking a tag will trigger the respective handler.
-
-### Tags(props)
 
 #### props.tags (array of strings)
 List of tags, for example: ['tag1', 'tag2'].

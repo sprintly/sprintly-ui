@@ -6,4 +6,3 @@ test/coverage/
 coverage/
 dist/css/
 dist/js/
-upload-assets-to-s3.sh
