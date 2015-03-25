@@ -1,10 +1,10 @@
 # Utils
 
-### [GroupSort utility](../src/utils/group_and_sort.js)
+### [GroupSort utility]
 
-A utility that exposes methods for intelligently sorting Sprintly items by property in either ascending or descending order, while also maintaining groupings of parents with their subitems.
+A [sorting utility](../src/utils/group_and_sort.js) that exposes methods for intelligently sorting Sprintly items by property in either ascending or descending order, while also maintaining groupings of parents with their subitems.
 
-#### To use:
+#### Use
 ```
 var GroupSort = require('sprintly-ui').GroupSort;
 

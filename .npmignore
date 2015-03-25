@@ -4,3 +4,5 @@
 .coveralls.yml
 wercker.yml
 /docs
+/examples
+/test
