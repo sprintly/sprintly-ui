@@ -59,7 +59,7 @@ Base url for table row linkable elements, such as item titles, item numbers, and
 #### props.onSortCollection (function)
 Function to call on parent view that will handle sorting. See the [example file](../examples/tables.html) for example using the utils/group_and_sort.js sorter.
 
-Use __.noop() or similar if rendering a static table.
+Use _.noop() or similar if rendering a static table.
 
 
 #### props.isBulkEditable (boolean)

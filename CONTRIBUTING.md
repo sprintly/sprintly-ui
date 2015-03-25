@@ -4,7 +4,7 @@ We're excited that you're thinking about contributing to Sprintly-UI.
 In order to make contributing as friction-free as possible, please read through and consider the following guidelines.
 
 #### Roadmap and issues
-Please refer to [the roadmap](roadmap.md) before starting work on new components that you plan for inclusion in this repo. This will help us avoid duplicate efforts. If there's something that we're already planning via the roadmap that you would nevertheless like to work on, let us know and we'll see if we can make that work with our dev schedule.
+Please refer to [the roadmap](roadmap.md) before starting work on new components that you plan for inclusion in this repo. This will help us avoid duplicate efforts. If there's something that we're already planning via the roadmap that you would nevertheless like to work on, we'd be excited to collaborate with you on it.
 
 If there's a feature that you'd like to see as a component that _isn't_ on the roadmap, have at it! We'd prefer if you filed an issue before starting work so that we can check in and see if there's anything we can help with, but it's really up to you.
 
@@ -29,7 +29,7 @@ You can find examples for existing components in ```/examples```. If an appropri
 
 All component documentation is located in the [docs folder](docs/). Please update the docs, adding a new doc file if one covering the category your new component belongs to isn't already represented.
 
-When you are ready to submit your request, please copy over the [PR template](PR_TEMPLATE.md) into the body of your pull request and fill it out. This gives us a common format for reading and reviewing pull requests.
+When you are ready to submit your request, please copy over the [PR template](PR_TEMPLATE.md) into the body of your pull request and fill it out. This gives us a common format for reading and reviewing pull requests. For more info on how PR templates have enhanced our workflow at Quick Left, see [this blog post by Justin Abrahms](https://quickleft.com/blog/pull-request-templates-make-code-review-easier/).
 
 #### Publishing to NPM & pushing out new CSS
 If you're on the Sprintly/Quick Left team and you're merging code, be sure to bump versions in ```package.json``` before publishing to npm via ```$ npm publish```. Also be sure to tag the commit ```$ git tag <new-version-number>``` (or just use the GH tagging interface in the 'releases' tab) before running the script to install the latest CSS in our S3 bucket via ```$ ./upload-assets-to-s3.sh```.

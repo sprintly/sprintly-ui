@@ -56,7 +56,7 @@ Please read the [contributing doc](CONTRIBUTING.md) before starting work and mak
 
 
 ## Utils and mixins
-We hope to provide utility classes and mixins wherever possible for controlling things like making item changes via component menus, sorting item data in tables, extending component functionality, etc. Please look for these in [utils](src/utils/) [docs [here](docs/utils.md)] and [mixins](src/mixins/) [docs [here](docs/mixins.md)].
+We hope to provide utility classes and mixins wherever possible for controlling things like making item changes via component menus, sorting item data in tables, extending component functionality, etc. Please look for these in [utils](src/utils/) (docs [here](docs/utils.md)) and [mixins](src/mixins/) (docs [here](docs/mixins.md)).
 
 
 ## Tests and code coverage
