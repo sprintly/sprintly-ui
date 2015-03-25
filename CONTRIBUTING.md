@@ -30,3 +30,6 @@ You can find examples for existing components in ```/examples```. If an appropri
 All component documentation is located in the [docs folder](docs/). Please update the docs, adding a new doc file if one covering the category your new component belongs to isn't already represented.
 
 When you are ready to submit your request, please copy over the [PR template](PR_TEMPLATE.md) into the body of your pull request and fill it out. This gives us a common format for reading and reviewing pull requests.
+
+#### Publishing to NPM & pushing out new CSS
+If you're on the Sprintly/Quick Left team and you're merging code, be sure to bump versions in ```package.json``` before publishing to npm via ```$ npm publish```. Also be sure to tag the commit ```$ git tag <new-version-number>``` (or just use the GH tagging interface in the 'releases' tab) before running the script to install the latest CSS in our S3 bucket via ```$ ./upload-assets-to-s3.sh```.
