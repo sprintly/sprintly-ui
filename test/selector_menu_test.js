@@ -121,4 +121,26 @@ describe("SelectorMenu", function() {
       });
     });
   });
+
+  describe('recieving incoming props ', function() {
+    beforeEach(function() {
+      this.selector.setProps({
+        defaultSelection: 'Sam B.',
+        optionsList: [{ title: 'Sam B.' }, { title: 'Flora W.' }, { title: 'Justin A.' }, { title: 'Nick S.' }]
+      });
+    });
+    it('renders the label correctly', function() {
+      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
+      assert.equal('Sam B.', label.getDOMNode().textContent);
+    });
+    it('renders the list correctly', function() {
+      var list = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options')
+      assert.lengthOf(list.getDOMNode().children, 4);
+    });
+    it('renders the default label', function() {
+      this.selector.setProps({ defaultSelection: '' });
+      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
+      assert.equal('All', label.getDOMNode().textContent);
+    });
+  });
 });

@@ -31,15 +31,13 @@ var SelectorMenu = React.createClass({
 
   getDefaultProps: function() {
     return {
-      defaultSelection: 'All',
       optionsList: []
     };
   },
 
   getInitialState: function() {
     return {
-      selected: this.props.defaultSelection,
-      visible: this.getOptionNames(),
+      visible: [],
       expanded: false
     };
   },
@@ -75,7 +73,7 @@ var SelectorMenu = React.createClass({
     this.refs.searchInput.getDOMNode().value = '';
 
     this.setState({
-      visible: this.getOptionNames()
+      visible: []
     });
   },
 
@@ -128,23 +126,30 @@ var SelectorMenu = React.createClass({
       return;
     }
 
-    var visible = _.map(fuzzy.filter(filterBy, this.state.visible), function(result) {
-      return result.string;
-    });
+    var visible = _.pluck(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
 
     this.setState({
       visible: visible
     });
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.optionsList.length !== this.props.optionsList.length) {
+      this.setState({ visible: [] });
+    }
+  },
+
   render: function() {
     var wrapperClass = this.state.expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
     var innerClass = this.state.expanded ? 'inner-wrapper expanded' : 'inner-wrapper';
+    var visible = this.state.visible.length > 0 ? this.state.visible : this.getOptionNames();
+    var selected = this.state.selected && this.props.defaultSelection === undefined ?
+      this.state.selected : this.props.defaultSelection || 'All';
 
     return (
       <div className={wrapperClass}>
         <Label
-          selected={this.state.selected}
+          selected={selected}
           onClick={this.onLabelClicked}
         />
         <div className={innerClass}>
@@ -154,8 +159,8 @@ var SelectorMenu = React.createClass({
             filterList={this.filterList}
           />
           <List
-            defaultSelection={this.props.defaultSelection}
-            optionNames={this.state.visible}
+            defaultSelection={selected}
+            optionNames={visible}
             onOptionSelect={this.selectOption}
           />
         </div>
