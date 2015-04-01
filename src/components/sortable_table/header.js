@@ -20,7 +20,7 @@ var TableHeader = React.createClass({
     expanded: React.PropTypes.string,
     isBulkEditable: React.PropTypes.bool,
     onExpanderClick: React.PropTypes.func,
-    onLabelClick: React.PropTypes.func.isRequired
+    onLabelClick: React.PropTypes.func
   },
 
   getDefaultProps: function() {

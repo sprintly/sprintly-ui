@@ -1,6 +1,6 @@
 # Menu Components
 
-## Selector Menu
+### Selector Menu
 
 Renders dropdown that shows a currently selected option, and when clicked opens to show a list of options and fuzzy-search input for finding from among the options list.
 
@@ -9,20 +9,16 @@ Matching user-entered text in search is case insensitive and partial-aware (ie, 
 
 ```
 <SelectMenu
-    optionsList={this.products.toJSON()}
+    optionsList={myProducts.toJSON()}
     onSelectionChange={_.bind(this.doSomething, this)}
 />
 ```
 
+#### props.optionsList (array of objects)
+An array of options (for example, myBackboneCollection.toJSON()). Each option in the list needs to have either a 'name' or a 'title' field to show in the menu.
 
-### SelectorMenu(props)
-
-#### props.optionsList
-An array of options (for example, myBackboneCollection.toJSON()). Each option in the list needs
-to have either a 'name' or a 'title' field to show in the menu.
-
-#### props.defaultSelection
+#### props.defaultSelection (string)
 If you'd like the default selection to be something other than 'All', specify an alternative string.
 
-#### props.onSelectionChange (required)
-Callback function that will be triggered when a user selects an item via the menu. You might use this, for example, to show the user different information via the parent view when selection changes. NOTE: The passed in method must be bound to the parent context, (ie, ```<SelectorMenu....onSelectionChange = _.bind(this.onSelectionChanged, this) />```).
+#### props.onSelectionChange (function; required)
+Callback function that will be triggered when a user selects an item via the menu. You might use this, for example, to show the user different information via the parent view when selection changes.

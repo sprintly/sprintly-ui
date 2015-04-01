@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../dist/css/sprintly-ui.css" />
+    <link rel="stylesheet" href="./example.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../node_modules/react/dist/react-with-addons.js"></script>
+    <script src="../node_modules/react/dist/JSXTransformer.js"></script>
+    <script src="../dist/js/sprintly-ui.js"></script>
+  </head>
+  <body class="example__body">
+    <style>
+    </style>
+
+    <div id="main">
+      <!--DIV TO ATTACH COMPONENT/s TO-->
+      <div class="example__wrapper">
+        <h1>Misc. Components</h1>
+        <p><a href="./index.html">Home</a></p>
+        <h2 class="example__title">Estimator</h2>
+        <div id="estimator_example"></div>
+        <h2 class="example__title">Expander</h2>
+        <div id="expander_example"></div>
+        <h2 class="example__title">Tags</h2>
+        <div id="tags_example"></div>
+        <h2 class="example__title">TagEditor</h2>
+        <div id="tag_editor_example"></div>
+      </div>
+    </div>
+
+    <script type="text/jsx">
+      // YOUR COMPONENT/S HERE FOR TESTING
+      (function(){
+
+      var scoreChanger = {
+        0: '?',
+        1: 'S',
+        3: 'M',
+        5: 'L',
+        8: 'XL'
+      };
+
+      var renderEstimator = function () {
+        React.render(
+          <SprintlyUI.Estimator
+            itemType='defect'
+            score='~'
+            estimateChanger={{changeScore: function(mid, newScore) {alert('You requested to change to ' + scoreChanger[newScore])}}}
+          />,
+          document.getElementById('estimator_example')
+        );
+      };
+
+      var renderExpander = function() {
+        React.render(
+          <SprintlyUI.Expander
+            expanded='condensed'
+            onClick={function(expandedState) {alert(expandedState)}}
+          />,
+          document.getElementById('expander_example')
+        );
+      };
+
+      var renderTags = function() {
+        React.render(
+          <SprintlyUI.Tags
+            tags={['tag-one', 'tag-two', 'tag-three']}
+            altOnTagClick={function() {alert('tag clicked!')}}
+          />,
+          document.getElementById('tags_example')
+        );
+      };
+
+      var renderTagEditor= function() {
+        React.render(
+          <SprintlyUI.TagEditor
+            tags={['foo', 'bar', 'baz']}
+            tagChanger={{addOrRemove: function(mid, currentTags, tagClicked, actionRequested) {alert('You asked to ' + actionRequested + ' ' + tag)}}}
+          />,
+          document.getElementById('tag_editor_example')
+        );
+      };
+
+      renderEstimator();
+      renderExpander();
+      renderTags();
+      renderTagEditor();
+    })()
+    </script>
+
+  </body>
+</html>

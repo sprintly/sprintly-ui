@@ -8,16 +8,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../node_modules/react/dist/react-with-addons.js"></script>
     <script src="../node_modules/react/dist/JSXTransformer.js"></script>
-    <script src="../dist/sprintly-ui.js"></script>
+    <script src="../dist/js/sprintly-ui.js"></script>
   </head>
   <body>
     <style>
     </style>
 
     <div id="main">
-      <h2>Menu Components</h2>
-        <h3>Selector Menu</h3>
-        <div id="selector"></div>
+      <div class="example__wrapper">
+        <h1>Menu Components</h1>
+          <p><a href="./index.html">Home</a></p>
+          <h2 class="example__title">Selector Menu</h2>
+          <div id="selector"></div>
+      </div>
     </div>
 
     <script type="text/jsx">
@@ -25,19 +28,22 @@
 
     (function(){
       var options = [
-        {"title": "Metroid"},
-        {"title": "1942"},
-        {"title": "Legend of Zelda"},
-        {"title": "Super Mario Brothers"},
-        {"title": "Donkey Kong"}
+        {"title": "Feature X"},
+        {"title": "New product A"},
+        {"title": "Marketing"},
+        {"title": "Release #123"},
+        {"title": "Feature Y redesign"}
       ];
 
       showChoice = function(selected) {
         if ($('.message')) {
           $('.message').remove();
+          if (selected === 'All') {
+            return;
+          }
         }
 
-        $('#selector').after('<div class="message" style="color:burlywood;margin-top:100px;">' + "YOUR GAME OF CHOICE IS: " + selected + '</div>');
+        $('#selector').after('<div class="message">' + "You chose to work on: " + selected + '</div>');
       };
 
       React.render(
