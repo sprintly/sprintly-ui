@@ -121,4 +121,44 @@ describe("SelectorMenu", function() {
       });
     });
   });
+
+  describe('controlled component with selection', function() {
+    beforeEach(function() {
+      this.selector.setProps({
+        selection: 'Sam B.',
+        optionsList: [{ title: 'Sam B.' }, { title: 'Flora W.' }, { title: 'Justin A.' }, { title: 'Nick S.' }]
+      });
+    });
+    it('renders the label correctly', function() {
+      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
+      assert.equal('Sam B.', label.getDOMNode().textContent);
+    });
+    it('renders the list correctly', function() {
+      var list = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options')
+      assert.lengthOf(list.getDOMNode().children, 4);
+    });
+    it('adds an unexpected value to the rendered options list', function() {
+      this.selector.setProps({ selection: 'Unassigned' })
+      var list = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options')
+      assert.lengthOf(list.getDOMNode().children, 5);
+    });
+    it('renders the default label when selection is empty', function() {
+      this.selector.setProps({ selection: '', defaultSelection: 'Foo' });
+      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
+      assert.equal('Foo', label.getDOMNode().textContent);
+    });
+    it('overrides selection when new options are passed in', function() {
+      this.selector.setProps({ selection: '' });
+      // Mock the internal state as if the input changed
+      this.selector.setState({ selected: 'Flora W.' });
+      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
+      assert.equal('Flora W.', label.getDOMNode().textContent, 'renders when state set');
+      // Update the optionsList, which should clear out previous state
+      this.selector.setProps({ optionsList: [{ title: 'Foo B.' }] });
+      label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
+      assert.equal('All', label.getDOMNode().textContent, 'renders the default label');
+      var list = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options')
+      assert.lengthOf(list.getDOMNode().children, 2, 'renders the new options list');
+    });
+  });
 });

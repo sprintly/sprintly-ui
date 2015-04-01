@@ -38,15 +38,14 @@ var SelectorMenu = React.createClass({
 
   getInitialState: function() {
     return {
-      selected: this.props.defaultSelection,
-      visible: this.getOptionNames(),
+      visible: [],
       expanded: false
     };
   },
 
   getOptionNames: function() {
     // Returns a list of option names, plus the default value.
-    var options = [this.props.defaultSelection];
+    var options = [this.props.selection || this.state.selected || this.props.defaultSelection];
 
     _.each(this.props.optionsList, function(option) {
       return option.title ? options.push(option.title) : options.push(option.name);
@@ -75,7 +74,7 @@ var SelectorMenu = React.createClass({
     this.refs.searchInput.getDOMNode().value = '';
 
     this.setState({
-      visible: this.getOptionNames()
+      visible: []
     });
   },
 
@@ -128,23 +127,40 @@ var SelectorMenu = React.createClass({
       return;
     }
 
-    var visible = _.map(fuzzy.filter(filterBy, this.state.visible), function(result) {
-      return result.string;
-    });
+    var visible = _.pluck(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
 
     this.setState({
       visible: visible
     });
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    var nextOptions = _.compact(
+      _.pluck(nextProps.optionsList, 'title').concat(_.pluck(nextProps.optionsList, 'name'))
+    );
+
+    var currentOptions = _.compact(
+      _.pluck(this.props.optionsList, 'title').concat(_.pluck(this.props.optionsList, 'name'))
+    );
+
+    if (_.difference(nextOptions, currentOptions).length > 0) {
+      this.setState({
+        visible: [],
+        selected: ''
+      });
+    }
+  },
+
   render: function() {
     var wrapperClass = this.state.expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
     var innerClass = this.state.expanded ? 'inner-wrapper expanded' : 'inner-wrapper';
+    var visible = this.state.visible.length > 0 ? this.state.visible : this.getOptionNames();
+    var selected = this.props.selection || this.state.selected || this.props.defaultSelection;
 
     return (
       <div className={wrapperClass}>
         <Label
-          selected={this.state.selected}
+          selected={selected}
           onClick={this.onLabelClicked}
         />
         <div className={innerClass}>
@@ -154,8 +170,8 @@ var SelectorMenu = React.createClass({
             filterList={this.filterList}
           />
           <List
-            defaultSelection={this.props.defaultSelection}
-            optionNames={this.state.visible}
+            defaultSelection={selected}
+            optionNames={visible}
             onOptionSelect={this.selectOption}
           />
         </div>
