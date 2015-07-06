@@ -3,7 +3,6 @@ var _ = require('lodash');
 var Label = require('./label');
 var List = require('./list');
 var Search = require('./search');
-var ClickOff = require('react-onclickoutside');
 var fuzzy = require('fuzzy');
 
 /*
@@ -26,8 +25,6 @@ var SelectorMenu = React.createClass({
     optionsList: React.PropTypes.array,
     onSelectionChange: React.PropTypes.func.isRequired
   },
-
-  mixins: [ClickOff],
 
   getDefaultProps: function() {
     return {

@@ -1,6 +1,4 @@
-var _ = require('lodash');
 var React = window.React || require('react/addons');
-
 
 var List = React.createClass({
 

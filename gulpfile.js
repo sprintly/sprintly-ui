@@ -32,7 +32,7 @@ gulp.task('build', function() {
 
 gulp.task('watch', ['build'], function() {
   var bundler = watchify('./src/index.js', watchify.args);
-  bundler.transform('reactify');
+  bundler.transform('babelify');
   bundler.on('update', rebundle);
 
   function rebundle() {
@@ -73,7 +73,7 @@ gulp.task('build-test', function() {
 
 gulp.task('watch-test', ['build-test'], function() {
   var bundler = watchify('./test/build.js', watchify.args);
-  bundler.transform('reactify');
+  bundler.transform('babelify');
   bundler.on('update', rebundle);
 
   function rebundle() {

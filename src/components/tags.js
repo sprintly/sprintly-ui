@@ -1,5 +1,4 @@
 var React = window.React || require('react/addons');
-var _ = require('lodash');
 
 /*
  * Tags element displays either a textual list of tags ("one, two, three")
@@ -89,7 +88,7 @@ var Tags = React.createClass({
   },
 
   buildTagList: function() {
-    return _.map(this.props.tags, function(tag, i, arr) {
+    return this.props.tags.map((tag, i, arr) => {
       var maybeComma = i === (arr.length - 1) ? null : ',';
       return (
         <li key={'tag' + ':' + i} className='tags__list expanded'>
@@ -98,7 +97,7 @@ var Tags = React.createClass({
           </button>{maybeComma}
         </li>
       );
-    }, this);
+    });
   }
 });
 

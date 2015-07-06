@@ -48,9 +48,6 @@ describe('SortableTable', function() {
 
       this.node = this.sortable.getDOMNode();
     });
-    afterEach(function() {
-      React.unmountComponentAtNode(this.sortable.getDOMNode().parent);
-    });
 
     it('should render a table header', function() {
       assert.ok(TestUtils.findRenderedComponentWithType(this.sortable, Header));
@@ -148,9 +145,6 @@ describe('SortableTable', function() {
         />
       );
     });
-    afterEach(function() {
-      React.unmountComponentAtNode(this.sortable.getDOMNode().parent);
-    });
 
     it('should enable bulk edit mode on children if isBulkEditable prop set to true', function() {
       var header = TestUtils.findRenderedComponentWithType(this.sortable, Header);
@@ -186,9 +180,6 @@ describe('SortableTable', function() {
           onSortCollection={this.stub}
         />
       );
-    });
-    afterEach(function() {
-      React.unmountComponentAtNode(this.sortable.getDOMNode().parent);
     });
 
     it('should trigger the onSortCollection callback on column label click', function() {

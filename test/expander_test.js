@@ -15,9 +15,6 @@ describe('Expander', function() {
       />
     );
   });
-  afterEach(function() {
-    React.unmountComponentAtNode(this.expander.getDOMNode().parent);
-  });
 
   it('should render expander buttons element with condensed selected by default', function() {
     assert.ok(TestUtils.findRenderedDOMComponentWithClass(this.expander, 'expander condensed'));
