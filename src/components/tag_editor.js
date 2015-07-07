@@ -1,5 +1,6 @@
 var React = window.React || require('react/addons');
 var _ = require('lodash');
+var onClickOutside = require('@sprintly/react-onclickoutside');
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -29,6 +30,10 @@ var TagEditor = React.createClass({
       showMenu: false
     };
   },
+
+  mixins: [
+    onClickOutside
+  ],
 
   handleClickOutside: function(ev) {
     ev.stopPropagation();

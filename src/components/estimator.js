@@ -1,4 +1,5 @@
 var React = window.React || require('react/addons');
+var onClickOutside = require('@sprintly/react-onclickoutside');
 /*
  * Estimator element displays item score that, when clicked, opens a menu
  * for editing the current score. Expects an estimate changer utility object
@@ -16,6 +17,10 @@ var Estimator = React.createClass({
     5: 'L',
     8: 'XL'
   },
+
+  mixins: [
+    onClickOutside
+  ],
 
   propTypes: {
     modelId: React.PropTypes.arrayOf(React.PropTypes.number),

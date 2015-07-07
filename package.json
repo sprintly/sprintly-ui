@@ -13,6 +13,7 @@
     "url": "https://github.com/sprintly/sprintly-ui/issues"
   },
   "dependencies": {
+    "@sprintly/react-onclickoutside": "^1.0.0",
     "browserify-istanbul": "^0.1.4",
     "fuzzy": "^0.1.0",
     "lodash": "^2.4.1",

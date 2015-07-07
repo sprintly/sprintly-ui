@@ -4,6 +4,7 @@ var Label = require('./label');
 var List = require('./list');
 var Search = require('./search');
 var fuzzy = require('fuzzy');
+var onClickOutside = require('@sprintly/react-onclickoutside');
 
 /*
  * Renders dropdown showing currently selected options,
@@ -39,6 +40,10 @@ var SelectorMenu = React.createClass({
       expanded: false
     };
   },
+
+  mixins: [
+    onClickOutside
+  ],
 
   getOptionNames: function() {
     // Returns a list of option names, plus the default value.
