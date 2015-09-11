@@ -122,7 +122,7 @@ var TagEditor = React.createClass({
   },
 
   buildTagList: function() {
-    return this.props.tags.map((tag) => {
+    return this.props.tags.map(function(tag) {
       return (
         <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
           <button className='tag_editor__tag' onClick={this.onTagRemoveClick}>
