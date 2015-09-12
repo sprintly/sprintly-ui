@@ -88,7 +88,7 @@ var Tags = React.createClass({
   },
 
   buildTagList: function() {
-    return this.props.tags.map(function(tag, i, arr) {
+    return _.map(this.props.tags, function(tag, i, arr) {
       var maybeComma = i === (arr.length - 1) ? null : ',';
       return (
         <li key={'tag' + ':' + i} className='tags__list expanded'>
@@ -97,7 +97,7 @@ var Tags = React.createClass({
           </button>{maybeComma}
         </li>
       );
-    });
+    }, this);
   }
 });
 

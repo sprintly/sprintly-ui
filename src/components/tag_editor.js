@@ -131,7 +131,7 @@ var TagEditor = React.createClass({
   },
 
   buildTagList: function() {
-    return this.props.tags.map(function(tag) {
+    return _.map(this.props.tags, function(tag) {
       return (
         <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
           <button className='tag_editor__tag' onClick={_.partial(this.handleRemoveClick, tag)}>
@@ -140,7 +140,7 @@ var TagEditor = React.createClass({
           {tag}
         </li>
       );
-    });
+    }, this);
   }
 });
 
