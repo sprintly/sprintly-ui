@@ -24,7 +24,7 @@ describe("SelectorMenu", function() {
       />
     );
 
-    this.node = this.selector.getDOMNode();
+    this.node = React.findDOMNode(this.selector);
   });
 
   describe("rendering", function() {
@@ -32,8 +32,8 @@ describe("SelectorMenu", function() {
       assert.ok(TestUtils.findRenderedComponentWithType(this.selector, Label));
     });
     it("should render default label on first render", function() {
-      var label = TestUtils.findRenderedComponentWithType(this.selector, Label);
-      assert.strictEqual(label.getDOMNode().textContent, "All");
+      var label = React.findDOMNode(TestUtils.findRenderedComponentWithType(this.selector, Label));
+      assert.strictEqual(label.textContent, "All");
     });
     it("should render a search input", function() {
       assert.ok(TestUtils.findRenderedComponentWithType(this.selector, Search));
@@ -75,7 +75,7 @@ describe("SelectorMenu", function() {
     it("should only show options relevant to user search, if search input entered", function() {
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
-      input.getDOMNode().value = "option 1";
+      React.findDOMNode(input).value = "option 1";
       TestUtils.Simulate.change(input);
       assert.equal(TestUtils.scryRenderedDOMComponentsWithClass(this.selector, "option").length, 1);
     });
@@ -83,7 +83,7 @@ describe("SelectorMenu", function() {
       var spy = sinon.spy(this.selector.props, "onSelectionChange");
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
-      input.getDOMNode().value = "Option 1";
+      React.findDOMNode(input).value = "Option 1";
       TestUtils.Simulate.keyDown(input, {which: 13});
 
       sinon.assert.calledWith(spy, "Option 1");
@@ -92,7 +92,7 @@ describe("SelectorMenu", function() {
       var spy = sinon.spy(this.selector, 'selectOption');
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
-      input.getDOMNode().value = "option 1"; // lowercased
+      React.findDOMNode(input).value = "option 1"; // lowercased
       TestUtils.Simulate.keyDown(input, {which: 13});
 
       sinon.assert.calledWith(spy, "Option 1");
@@ -101,7 +101,7 @@ describe("SelectorMenu", function() {
       var spy = sinon.spy(this.selector, "selectOption");
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
-      input.getDOMNode().value = "2"; // partial
+      React.findDOMNode(input).value = "2"; // partial
       TestUtils.Simulate.keyDown(input, {which: 13});
 
       sinon.assert.calledWith(spy, "Option 2");
@@ -113,7 +113,7 @@ describe("SelectorMenu", function() {
       ];
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
-      input.getDOMNode().value = "option 1";
+      React.findDOMNode(input).value = "option 1";
       TestUtils.Simulate.keyDown(input, {which: 13});
 
       _.each(spies, function(spy) {
@@ -130,35 +130,38 @@ describe("SelectorMenu", function() {
       });
     });
     it('renders the label correctly', function() {
-      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
-      assert.equal('Sam B.', label.getDOMNode().textContent);
+      var label = React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label'));
+      assert.equal('Sam B.', label.textContent);
     });
     it('renders the list correctly', function() {
-      var list = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options')
-      assert.lengthOf(list.getDOMNode().children, 4);
+      var list = React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options'));
+      assert.lengthOf(list.children, 4);
     });
     it('adds an unexpected value to the rendered options list', function() {
       this.selector.setProps({ selection: 'Unassigned' })
-      var list = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options')
-      assert.lengthOf(list.getDOMNode().children, 5);
+      var list = React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options'));
+      assert.lengthOf(list.children, 5);
     });
     it('renders the default label when selection is empty', function() {
       this.selector.setProps({ selection: '', defaultSelection: 'Foo' });
-      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
-      assert.equal('Foo', label.getDOMNode().textContent);
+      var label = React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label'));
+      assert.equal('Foo', label.textContent);
     });
     it('overrides selection when new options are passed in', function() {
       this.selector.setProps({ selection: '' });
+
       // Mock the internal state as if the input changed
       this.selector.setState({ selected: 'Flora W.' });
-      var label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
-      assert.equal('Flora W.', label.getDOMNode().textContent, 'renders when state set');
+      var label = React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label'));
+      assert.equal('Flora W.', label.textContent, 'renders when state set');
+
       // Update the optionsList, which should clear out previous state
       this.selector.setProps({ optionsList: [{ title: 'Foo B.' }] });
-      label = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label');
-      assert.equal('All', label.getDOMNode().textContent, 'renders the default label');
-      var list = TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options')
-      assert.lengthOf(list.getDOMNode().children, 2, 'renders the new options list');
+      label = React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label'));
+      assert.equal('All', label.textContent, 'renders the default label');
+
+      var list = React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options'));
+      assert.lengthOf(list.children, 2, 'renders the new options list');
     });
   });
 });

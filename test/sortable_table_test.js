@@ -46,7 +46,7 @@ describe('SortableTable', function() {
         />
       );
 
-      this.node = this.sortable.getDOMNode();
+      this.node = React.findDOMNode(this.sortable);
     });
 
     it('should render a table header', function() {
@@ -69,7 +69,7 @@ describe('SortableTable', function() {
       var rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
       var anchors = TestUtils.scryRenderedDOMComponentsWithTag(rowCols[0], 'a')
       var item = this.items[0];
-      var node = anchors[0].getDOMNode();
+      var node = React.findDOMNode(anchors[0]);
 
       assert.equal(node.text, item.product.name);
       assert.include(node.href, item.product.id);
@@ -80,7 +80,7 @@ describe('SortableTable', function() {
       var rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
       var anchors = TestUtils.scryRenderedDOMComponentsWithTag(rowCols[1], 'a')
       var item = this.items[0];
-      var node = anchors[0].getDOMNode();
+      var node = React.findDOMNode(anchors[0]);
 
       assert.equal(node.text, '#' + item.number);
       assert.include(node.href, item.product.id + '/item/' + item.number);
@@ -158,7 +158,7 @@ describe('SortableTable', function() {
       var columns = TestUtils.scryRenderedDOMComponentsWithTag(this.sortable, 'th');
 
       assert.equal(columns.length, columnsLength + 1);
-      assert.equal(columns[0].getDOMNode().className, 'sortable__label control');
+      assert.equal(React.findDOMNode(columns[0]).className, 'sortable__label control');
     });
 
     it('should trigger the onBulkSelect callback on edit checkbox select', function() {

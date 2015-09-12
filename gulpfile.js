@@ -40,7 +40,6 @@ var jsMapDist = './dist/js/sprintly-ui.js.map';
 
 function bundle(b) {
   b.transform(babelify)
-    .transform(istanbulify({ignore: ["**/node_modules/**","**/test/**"]}))
     .bundle()
     .pipe(exorcist(jsMapDist))
     .pipe(source(jsDist))
@@ -93,28 +92,35 @@ gulp.task('dev-server', function() {
 /*
  * Test
  */
+var testArgs = {
+  debug: true,
+  verbose: true
+};
+
+var testSrc = './test/index.js';
+var testDest = './test/';
+var testDist = 'build.js';
+
+function bundleTests(b) {
+  b.transform(babelify)
+    .transform(istanbulify({ignore: ["**/node_modules/**","**/test/**"]}))
+    .bundle()
+    .pipe(source(testDist))
+    .pipe(gulp.dest(testDest));
+}
 
 gulp.task('build-test', function() {
-  var bundler = watchify(browserify('./test/index.js', _.extend({}, watchify.args, {
-    debug: true,
-    verbose: true
-  })));
-
-  return bundler
-      .transform(babelify)
-      .bundle()
-      .pipe(source('build.js'))
-      .pipe(gulp.dest('./test/'));
+  var bundler = browserify(testSrc, testArgs);
+  bundleTests(bundler);
 });
 
-gulp.task('watch-test', ['build-test'], function() {
-  var bundler = watchify('./test/build.js', watchify.args);
-  bundler.transform('babelify');
-  bundler.on('update', rebundle);
+gulp.task('watch-test', function() {
+  var bundler = watchify(browserify(testSrc, _.extend({}, watchify.args, testArgs)));
+  bundleTests(bundler);
 
-  function rebundle() {
-    gulp.run('build-test');
-  }
+  bundler.on('update', function() {
+    return bundleTests(bundler);
+  });
 });
 
 gulp.task('test-server', function() {

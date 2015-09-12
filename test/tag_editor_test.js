@@ -28,8 +28,8 @@ describe('TagEditor', function() {
         tagChanger={{}}
       />
     );
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    assert.equal(button.getDOMNode().textContent, 'Add a tag.');
+    var button = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button'));
+    assert.equal(button.textContent, 'Add a tag.');
   });
 
   it('should not render the edit menu by default', function() {
@@ -76,8 +76,9 @@ describe('TagEditor', function() {
     var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
-    form = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form').getDOMNode();
+    form = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
     form.children[0].value = 'new tag';
+    TestUtils.Simulate.change(form.children[0]);
     TestUtils.Simulate.submit(form);
 
     sinon.assert.calledOnce(stub.addOrRemove);
@@ -100,8 +101,9 @@ describe('TagEditor', function() {
     var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
-    form = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form').getDOMNode();
+    form = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
     form.children[0].value = 'new tag';
+    TestUtils.Simulate.change(form.children[0]);
     TestUtils.Simulate.submit(form);
 
     assert.isFalse(tagEditor.state.showMenu);

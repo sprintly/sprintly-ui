@@ -13,7 +13,7 @@
     "url": "https://github.com/sprintly/sprintly-ui/issues"
   },
   "dependencies": {
-    "browserify-istanbul": "^0.1.4",
+    "browserify-istanbul": "^0.2.1",
     "fuzzy": "^0.1.0",
     "lodash": "^2.4.1",
     "object-path": "^0.9.0",
