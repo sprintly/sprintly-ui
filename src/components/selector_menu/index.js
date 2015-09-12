@@ -69,32 +69,22 @@ var SelectorMenu = React.createClass({
       expanded: expandOrContract
     });
 
-    this.refs.searchInput.getDOMNode().focus();
-  },
-
-  cleanSearchState: function() {
-    this.refs.searchInput.getDOMNode().value = '';
-
-    this.setState({
-      visible: []
-    });
+    React.findDOMNode(this.refs.searchInput).focus();
   },
 
   selectOption: function(optionName) {
-    this.cleanSearchState();
     this.onLabelClicked();
 
     this.setState({
-      selected: optionName
+      selected: optionName,
+      visible: []
     });
 
     this.props.onSelectionChange(optionName);
   },
 
-  normalizeInputValue: function(val) {
-    // Normalizes casing to option casing from user input.
+  processSearchInput: function(val) {
     // Matches partials against an alphabetically sorted list.
-    val = val.toLowerCase();
     var sortedNames = this.getOptionNames().sort();
 
     var selection = _.find(sortedNames, function(name) {
@@ -105,18 +95,7 @@ var SelectorMenu = React.createClass({
       selection = this.props.defaultSelection;
     }
 
-    return selection;
-  },
-
-  checkIfSubmit: function(ev) {
-    // If user presses ENTER in input box, submit choice.
-    var value = ev.target.value;
-    var option = '';
-
-    if (ev.which === 13 && value) {
-      option = this.normalizeInputValue(value);
-      this.selectOption(option);
-    }
+    this.selectOption(selection);
   },
 
   filterList: function(filterBy) {
@@ -168,8 +147,8 @@ var SelectorMenu = React.createClass({
         <div className={innerClass}>
           <Search
             ref='searchInput'
-            onKeyDown={this.checkIfSubmit}
             filterList={this.filterList}
+            processSearchInput={this.processSearchInput}
           />
           <List
             defaultSelection={selected}
