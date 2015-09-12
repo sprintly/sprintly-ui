@@ -13,66 +13,51 @@
     "url": "https://github.com/sprintly/sprintly-ui/issues"
   },
   "dependencies": {
-    "@sprintly/react-onclickoutside": "^1.0.0",
     "browserify-istanbul": "^0.1.4",
     "fuzzy": "^0.1.0",
     "lodash": "^2.4.1",
-    "moment": "^2.9.0",
     "object-path": "^0.9.0",
+    "react-onclickoutside": "^0.3.1"
+  },
+  "peerDependencies": {
+    "moment": "^2.9.0",
     "react": "^0.13.3"
   },
   "devDependencies": {
     "babelify": "^6.1.2",
     "browserify": "^10.2.4",
     "chai": "^1.10.0",
-    "clean-css": "^3.1.6",
     "connect": "^3.3.3",
     "coveralls": "^2.11.2",
     "es5-shim": "^4.0.5",
     "exorcist": "^0.4.0",
     "gulp": "^3.8.10",
+    "gulp-csso": "^1.0.0",
     "gulp-less": "^3.0.1",
-    "gulp-mocha-phantomjs": "^0.5.1",
+    "gulp-mocha-phantomjs": "^0.5.3",
+    "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.0",
+    "gulp-uglify": "^1.4.1",
     "istanbul": "^0.3.5",
     "mocha": "^2.0.1",
+    "moment": "^2.10.6",
     "open": "^0.0.5",
-    "react-tools": "^0.12.0",
-    "reactify": "^1.1.0",
+    "react": "^0.13.3",
     "serve-static": "^1.8.0",
     "sinon": "^1.12.1",
-    "uglify-js": "^2.4.15",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^3.2.3"
   },
   "scripts": {
-    "dev": "gulp build && npm run build-css && gulp dev-server",
+    "dev": "gulp build && gulp less && gulp dev-server",
     "test": "gulp test && gulp test-server",
     "test-cli": "gulp test",
     "test-browser": "gulp test-server",
     "watchify-test": "watchify test -o 'exorcist test/build.js.map > test/build.js' -dv",
     "coverage": "gulp test-coverage && istanbul report --root coverage lcov && mv coverage/ test/",
     "coveralls": "cat test/coverage/lcov.info | coveralls",
-    "build-css": "gulp less && cat dist/css/sprintly-ui.css | cleancss > dist/css/sprintly-ui.min.css",
-    "prepublish": "gulp build && cat dist/js/sprintly-ui.js | uglifyjs -cm > dist/js/sprintly-ui.min.js",
+    "prepublish": "gulp jsmin && gulp cssmin",
     "clean": "rm test/build.js && rm -rf test/coverage/"
-  },
-  "browserify": {
-    "transform": [
-      [
-        "babelify"
-      ],
-      [
-        "browserify-istanbul",
-        {
-          "ignore": [
-            "**/node_modules/**",
-            "**/test/**"
-          ]
-        }
-      ]
-    ],
-    "ignore": "sinon"
   },
   "directories": {
     "doc": "docs",

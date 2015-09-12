@@ -1,50 +1,55 @@
 'use strict';
 
+var _ = require('lodash');
 var gulp = require('gulp');
 var path = require('path');
 var http = require('http');
 var connect = require('connect');
 var serveStatic = require('serve-static');
-var openPage = require('open');
-var mochaPhantomJS = require('gulp-mocha-phantomjs');
-var browserify = require('browserify');
-var watchify = require('watchify');
 var source = require('vinyl-source-stream');
+var openPage = require('open');
+
+var browserify = require('browserify');
+var istanbulify = require('browserify-istanbul');
+var watchify = require('watchify');
+var babelify = require('babelify');
+var exorcist = require('exorcist');
+
 var less = require('gulp-less');
+var mochaPhantomJS = require('gulp-mocha-phantomjs');
+var uglify = require('gulp-uglify');
+var csso = require('gulp-csso');
+var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 
 /*
  * Dev
  */
+var appArgs = {
+  ignore: 'sinon',
+  exclude: ['react'],
+  standalone: 'SprintlyUI',
+  debug: true,
+  verbose: true
+};
+
+var jsSrc = './src/';
+var jsDest = './dist/js/';
+var jsDist = 'sprintly-ui.js';
+var jsMapDist = './dist/js/sprintly-ui.js.map';
+
+function bundle(b) {
+  b.transform(babelify)
+    .transform(istanbulify({ignore: ["**/node_modules/**","**/test/**"]}))
+    .bundle()
+    .pipe(exorcist(jsMapDist))
+    .pipe(source(jsDist))
+    .pipe(gulp.dest(jsDest));
+}
 
 gulp.task('build', function() {
-  var bundler = browserify('./src/index.js', {
-    exclude: 'react',
-    standalone: 'SprintlyUI',
-    debug: true,
-    verbose: true
-  });
-
-  return bundler.bundle()
-    .pipe(source('sprintly-ui.js'))
-    .pipe(gulp.dest('./dist/js/'));
-});
-
-gulp.task('watch', ['build'], function() {
-  var bundler = watchify('./src/index.js', watchify.args);
-  bundler.transform('babelify');
-  bundler.on('update', rebundle);
-
-  function rebundle() {
-    return gulp.run('build');
-  }
-});
-
-gulp.task('dev-server', function() {
-  var tests = connect();
-  tests.use(serveStatic('./'));
-  http.createServer(tests).listen(8090);
-  openPage('http://localhost:8090/examples/');
+  var bundler = browserify(jsSrc, appArgs);
+  bundle(bundler);
 });
 
 gulp.task('less', function() {
@@ -55,18 +60,49 @@ gulp.task('less', function() {
     .pipe(gulp.dest('./dist/css/'));
 });
 
+gulp.task('watch', function() {
+  var bundler = watchify(browserify(jsSrc, _.extend({}, watchify.args, appArgs)));
+  bundle(bundler);
+
+  bundler.on('update', function() {
+    return bundle(bundler);
+  });
+});
+
+gulp.task('jsmin', ['build'], function() {
+  gulp.src('./dist/js/sprintly-ui.js')
+    .pipe(uglify())
+    .pipe(rename({extname: '.min.js'}))
+    .pipe(gulp.dest('./dist/js'));
+});
+
+gulp.task('cssmin', ['less'], function() {
+  gulp.src('./dist/css/sprintly-ui.css')
+    .pipe(csso())
+    .pipe(rename({extname: '.min.css'}))
+    .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('dev-server', function() {
+  var tests = connect();
+  tests.use(serveStatic('./'));
+  http.createServer(tests).listen(8090);
+  openPage('http://localhost:8090/examples/');
+});
 
 /*
  * Test
  */
 
 gulp.task('build-test', function() {
-  var bundler = browserify('./test/index.js', {
+  var bundler = watchify(browserify('./test/index.js', _.extend({}, watchify.args, {
     debug: true,
     verbose: true
-  });
+  })));
 
-  return bundler.bundle()
+  return bundler
+      .transform(babelify)
+      .bundle()
       .pipe(source('build.js'))
       .pipe(gulp.dest('./test/'));
 });

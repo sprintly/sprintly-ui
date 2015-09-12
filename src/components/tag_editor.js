@@ -18,6 +18,10 @@ var TagEditor = React.createClass({
     tagChanger: React.PropTypes.object
   },
 
+  mixins: [
+    onClickOutside
+  ],
+
   getDefaultProps: function() {
     return {
       modelId: null,
@@ -27,13 +31,10 @@ var TagEditor = React.createClass({
 
   getInitialState: function() {
     return {
+      value: '',
       showMenu: false
     };
   },
-
-  mixins: [
-    onClickOutside
-  ],
 
   handleClickOutside: function(ev) {
     ev.stopPropagation();
@@ -42,7 +43,7 @@ var TagEditor = React.createClass({
     });
   },
 
-  onTagEditClick: function(ev) {
+  handleEditClick: function(ev) {
     ev.stopPropagation();
     if (this.props.readOnly || !this.props.tagChanger) {
       return;
@@ -55,33 +56,11 @@ var TagEditor = React.createClass({
     });
   },
 
-  onFormSubmit: function(ev) {
-    ev.preventDefault();
-    if (this.props.readOnly || !this.props.tagChanger) {
-      return;
-    }
-
-    var input = ev.target.childNodes[0];
-    var tag = input.value;
-
-    this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'add');
-    input.value = '';
-
-    // Close popup if we've just added our first tag
-    if (this.props.tags.length < 1) {
-      this.setState({
-        showMenu: false
-      });
-    }
-  },
-
-  onTagRemoveClick: function(ev) {
+  handleRemoveClick: function(tag, ev) {
     ev.stopPropagation();
     if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
-
-    var tag = ev.target.parentNode.nextSibling.textContent;
 
     this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'remove');
 
@@ -93,15 +72,45 @@ var TagEditor = React.createClass({
     }
   },
 
+  handleChange: function(ev) {
+    this.setState({
+      value: ev.target.value
+    });
+  },
+
+  onFormSubmit: function(ev) {
+    ev.preventDefault();
+    if (this.props.readOnly || !this.props.tagChanger) {
+      return;
+    }
+
+    var tag = this.state.value;
+    this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'add');
+
+    // Close popup if we've just added our first tag
+    var newState = {value: ''};
+    if (this.props.tags.length < 1) {
+      newState.showMenu = false;
+    }
+
+    this.setState(newState);
+  },
+
   render: function() {
     var tagsLength = this.props.tags.length;
-    var addTagText = tagsLength ? null : 'Add a tag.'
+    var addTagText = tagsLength ? null : 'Add a tag.';
     var tagEditMenu = this.state.showMenu ?
       (
         <div>
           <div className='tag_editor__menu'>
             <form onSubmit={this.onFormSubmit}>
-              <input type='text' className='add-tag' placeholder='Add a tag' />
+              <input
+                type='text'
+                placeholder='Add a tag'
+                value={this.state.value}
+                className='add-tag'
+                onChange={this.handleChange}
+              />
             </form>
             <ul className='tag_editor__list'>
               {this.buildTagList()}
@@ -112,7 +121,7 @@ var TagEditor = React.createClass({
 
     return (
       <div className='tag_editor__wrapper' key={this.props.modelId}>
-        <button className='tag_editor__tag' onClick={this.onTagEditClick}>
+        <button className='tag_editor__tag' onClick={this.handleEditClick}>
           <i className='tag_editor__edit_icon' />
           {addTagText}
         </button>
@@ -125,7 +134,7 @@ var TagEditor = React.createClass({
     return this.props.tags.map(function(tag) {
       return (
         <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
-          <button className='tag_editor__tag' onClick={this.onTagRemoveClick}>
+          <button className='tag_editor__tag' onClick={_.partial(this.handleRemoveClick, tag)}>
             <i className='tag_editor__delete_icon' />
           </button>
           {tag}
