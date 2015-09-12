@@ -4,7 +4,7 @@ var Label = require('./label');
 var List = require('./list');
 var Search = require('./search');
 var fuzzy = require('fuzzy');
-var onClickOutside = require('@sprintly/react-onclickoutside');
+var onClickOutside = require('react-onclickoutside');
 
 /*
  * Renders dropdown showing currently selected options,

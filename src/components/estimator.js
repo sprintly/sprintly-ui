@@ -1,5 +1,5 @@
 var React = window.React || require('react/addons');
-var onClickOutside = require('@sprintly/react-onclickoutside');
+var onClickOutside = require('react-onclickoutside');
 /*
  * Estimator element displays item score that, when clicked, opens a menu
  * for editing the current score. Expects an estimate changer utility object
