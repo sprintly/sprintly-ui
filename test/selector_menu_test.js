@@ -20,7 +20,7 @@ describe("SelectorMenu", function() {
       <SelectorMenu
         optionsList={this.optionsJSON}
         defaultSelection="All"
-        onSelectionChange={function() {}}
+        onSelectionChange={sinon.spy()}
       />
     );
 
@@ -80,19 +80,20 @@ describe("SelectorMenu", function() {
       assert.equal(TestUtils.scryRenderedDOMComponentsWithClass(this.selector, "option").length, 1);
     });
     it("should trigger callback on ENTER pressed any valid option entered in search bar", function() {
-      var spy = sinon.spy(this.selector.props, "onSelectionChange");
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
       React.findDOMNode(input).value = "Option 1";
+      TestUtils.Simulate.change(input);
       TestUtils.Simulate.keyDown(input, {which: 13});
 
-      sinon.assert.calledWith(spy, "Option 1");
+      sinon.assert.calledWith(this.selector.props.onSelectionChange, "Option 1");
     });
     it("should be able to handle case insensitive input from user", function() {
       var spy = sinon.spy(this.selector, 'selectOption');
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
       React.findDOMNode(input).value = "option 1"; // lowercased
+      TestUtils.Simulate.change(input);
       TestUtils.Simulate.keyDown(input, {which: 13});
 
       sinon.assert.calledWith(spy, "Option 1");
@@ -102,23 +103,21 @@ describe("SelectorMenu", function() {
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
       React.findDOMNode(input).value = "2"; // partial
+      TestUtils.Simulate.change(input);
       TestUtils.Simulate.keyDown(input, {which: 13});
 
       sinon.assert.calledWith(spy, "Option 2");
     });
     it("should close menu and clear input on submit", function() {
-      var spies = [
-        sinon.spy(this.selector, "onLabelClicked"),
-        sinon.spy(this.selector, "cleanSearchState")
-      ];
+      var spy = sinon.spy(this.selector, "onLabelClicked");
       var input = TestUtils.findRenderedDOMComponentWithTag(this.selector, "input");
 
       React.findDOMNode(input).value = "option 1";
+      TestUtils.Simulate.change(input);
       TestUtils.Simulate.keyDown(input, {which: 13});
 
-      _.each(spies, function(spy) {
-        sinon.assert.calledOnce(spy);
-      });
+      sinon.assert.calledOnce(spy);
+      assert.equal(React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(this.selector, "input")).value, "");
     });
   });
 

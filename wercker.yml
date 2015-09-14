@@ -5,7 +5,7 @@ build:
     - script:
         name: Unit Tests
         code: |
-          npm run test-cli
+          npm run test
 
     - script:
         name: Coverage

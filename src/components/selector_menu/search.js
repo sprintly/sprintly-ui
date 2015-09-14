@@ -40,6 +40,7 @@ var Search = React.createClass({
       <input
         className='selector__searchbox'
         type='text'
+        value={this.state.value}
         onKeyDown={this.maybeSubmit}
         onChange={this.handleChange}
       />

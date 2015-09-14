@@ -63,7 +63,7 @@ We hope to provide utility classes and mixins wherever possible for controlling 
 Running ```$ npm test``` will run tests in the cli and then in the browser (a test server will open localhost:8080/test/ automatically). To run tests in the terminal only run ```$ npm run test-cli```, or to run tests the browser only run ```$ npm run test-browser```.
 
 To see Istanbul coverage information, run ```$ npm test``` to build tests and start the server,
-and, in a new tab, run ```$ npm run coverage```. To view html coverage info, visit localhost:8080/test/coverage/lcov. If you are unfamiliar with lcov html reports, these allow you to drill down through code files to view per-file coverage data as well as line-by-line coverage.
+and, in a new tab, run ```$ npm run coverage```. To view html coverage info, visit localhost:8080/test/coverage/lcov-report. If you are unfamiliar with lcov html reports, these allow you to drill down through code files to view per-file coverage data as well as line-by-line coverage.
 
 
 ## Examples

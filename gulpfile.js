@@ -39,7 +39,7 @@ var jsDist = 'sprintly-ui.js';
 var jsMapDist = './dist/js/sprintly-ui.js.map';
 
 function bundle(b) {
-  b.transform(babelify)
+  return b.transform(babelify)
     .bundle()
     .pipe(exorcist(jsMapDist))
     .pipe(source(jsDist))
@@ -48,7 +48,7 @@ function bundle(b) {
 
 gulp.task('build', function() {
   var bundler = browserify(jsSrc, appArgs);
-  bundle(bundler);
+  return bundle(bundler);
 });
 
 gulp.task('less', function() {
@@ -94,24 +94,27 @@ gulp.task('dev-server', function() {
  */
 var testArgs = {
   debug: true,
-  verbose: true
+  verbose: true,
+  ignore: 'sinon'
 };
 
 var testSrc = './test/index.js';
 var testDest = './test/';
 var testDist = 'build.js';
+var testMapDist = './test/build.js.map';
 
 function bundleTests(b) {
-  b.transform(babelify)
+  return b.transform(babelify)
     .transform(istanbulify({ignore: ["**/node_modules/**","**/test/**"]}))
     .bundle()
+    .pipe(exorcist(testMapDist))
     .pipe(source(testDist))
     .pipe(gulp.dest(testDest));
 }
 
 gulp.task('build-test', function() {
   var bundler = browserify(testSrc, testArgs);
-  bundleTests(bundler);
+  return bundleTests(bundler);
 });
 
 gulp.task('watch-test', function() {
@@ -134,7 +137,10 @@ gulp.task('test', ['build-test'], function() {
   gulp.src('./test/index.html')
     .pipe(mochaPhantomJS({
       reporter: 'dot'
-    }));
+    })).
+    on('error', function(err) {
+      console.log("There was an error running tests: ", err.message);
+    });
 });
 
 gulp.task('test-coverage', function() {
