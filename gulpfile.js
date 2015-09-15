@@ -15,6 +15,7 @@ var watchify = require('watchify');
 var babelify = require('babelify');
 var exorcist = require('exorcist');
 
+var gutil = require('gulp-util');
 var less = require('gulp-less');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var uglify = require('gulp-uglify');
@@ -66,6 +67,8 @@ gulp.task('watch', function() {
   bundler.on('update', function() {
     return bundle(bundler);
   });
+  bundler.on('log', gutil.log);
+  gulp.watch('src/less/**/*.less', ['less']);
 });
 
 gulp.task('jsmin', ['build'], function() {
