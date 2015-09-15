@@ -27,6 +27,10 @@ var SelectorMenu = React.createClass({
     onSelectionChange: React.PropTypes.func.isRequired
   },
 
+  mixins: [
+    onClickOutside
+  ],
+
   getDefaultProps: function() {
     return {
       defaultSelection: 'All',
@@ -37,13 +41,27 @@ var SelectorMenu = React.createClass({
   getInitialState: function() {
     return {
       visible: [],
-      expanded: false
+      expanded: false,
+      clearInput: false
     };
   },
 
-  mixins: [
-    onClickOutside
-  ],
+  componentWillReceiveProps: function(nextProps) {
+    var nextOptions = _.compact(
+      _.pluck(nextProps.optionsList, 'title').concat(_.pluck(nextProps.optionsList, 'name'))
+    );
+
+    var currentOptions = _.compact(
+      _.pluck(this.props.optionsList, 'title').concat(_.pluck(this.props.optionsList, 'name'))
+    );
+
+    if (_.difference(nextOptions, currentOptions).length > 0) {
+      this.setState({
+        visible: [],
+        selected: ''
+      });
+    }
+  },
 
   getOptionNames: function() {
     // Returns a list of option names, plus the default value.
@@ -64,12 +82,11 @@ var SelectorMenu = React.createClass({
   },
 
   onLabelClicked: function() {
-    var expandOrContract = this.state.expanded ? false : true;
+    var expanded = this.state.expanded ? false : true;
     this.setState({
-      expanded: expandOrContract
+      expanded: expanded,
+      clearInput: true
     });
-
-    React.findDOMNode(this.refs.searchInput).focus();
   },
 
   selectOption: function(optionName) {
@@ -111,25 +128,9 @@ var SelectorMenu = React.createClass({
     var visible = _.pluck(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
 
     this.setState({
-      visible: visible
+      visible: visible,
+      clearInput: false
     });
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    var nextOptions = _.compact(
-      _.pluck(nextProps.optionsList, 'title').concat(_.pluck(nextProps.optionsList, 'name'))
-    );
-
-    var currentOptions = _.compact(
-      _.pluck(this.props.optionsList, 'title').concat(_.pluck(this.props.optionsList, 'name'))
-    );
-
-    if (_.difference(nextOptions, currentOptions).length > 0) {
-      this.setState({
-        visible: [],
-        selected: ''
-      });
-    }
   },
 
   render: function() {
@@ -148,6 +149,7 @@ var SelectorMenu = React.createClass({
           <Search
             ref='searchInput'
             filterList={this.filterList}
+            clearInput={this.state.clearInput}
             processSearchInput={this.processSearchInput}
           />
           <List

@@ -13,19 +13,14 @@ var List = React.createClass({
     };
   },
 
-  onOptionSelect: function(ev) {
-    var optionName = ev.currentTarget.textContent;
-    this.props.onOptionSelect(optionName);
-  },
-
   render: function() {
     var options = this.props.optionNames.map(function(optionName) {
       return optionName.length ? (
-        <li key={optionName} className='option' onClick={this.onOptionSelect}>
+        <li key={optionName} className='option' onClick={_.partial(this.props.onOptionSelect, optionName)}>
           <span className='inner'>{optionName}</span>
         </li>
       ) : null;
-    }, this);
+    }.bind(this));
 
     return (
       <ul className='selector__options'>

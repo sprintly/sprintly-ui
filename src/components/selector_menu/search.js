@@ -4,6 +4,7 @@ var React = window.React || require('react/addons');
 var Search = React.createClass({
 
   propTypes: {
+    inputOverride: React.PropTypes.string,
     filterList: React.PropTypes.func.isRequired,
     processSearchInput: React.PropTypes.func.isRequired
   },
@@ -12,6 +13,18 @@ var Search = React.createClass({
     return {
       value: ''
     };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps && nextProps.clearInput) {
+      this.setState({
+        value: ""
+      });
+    }
+  },
+
+  componentDidUpdate: function() {
+    React.findDOMNode(this).focus();
   },
 
   handleChange: function(ev) {
