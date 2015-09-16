@@ -23,7 +23,7 @@ var TableRow = React.createClass({
   propTypes: {
     model: React.PropTypes.object.isRequired,
     columns: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    expanded: React.PropTypes.string,
+    expanded: React.PropTypes.bool,
     baseUrl: React.PropTypes.string,
     modelChangerUtilities: React.PropTypes.object,
     navigatorUtility: React.PropTypes.object,
@@ -31,38 +31,8 @@ var TableRow = React.createClass({
     onBulkSelect: React.PropTypes.func
   },
 
-  getDefaultProps: function() {
-    return {
-      expanded: 'condensed',
-      baseUrl: '',
-      modelChangerUtilities: {},
-      onBulkSelect: _.noop()
-    };
-  },
-
-  bulkSelectClicked: function(ev) {
-    // WIP: This will likely change.
-    ev.stopPropagation();
-    this.props.onBulkSelect(this.props.model);
-  },
-
-  render: function() {
-    var modelId = [this.props.model.product.id, this.props.model.number];
-    var condensed = this.props.expanded === 'condensed' ? true : false;
-
-    var wrapperClass = condensed ? 'wrapper condensed' : 'wrapper expanded';
-    var rowClass = 'sortable__row ' + this.props.model.type;
-    if (!condensed) {
-      rowClass += ' expanded';
-    }
-
-    // "matched": item is grouped with parent/subitems.
-    // "nonMatching": item doesn't fit collection filters, but is included to match w/subitems that do.
-    if (this.props.model.isMatched) {
-      rowClass += this.props.model.isNonMatching ? ' matched non-matching' : ' matched';
-    }
-
-    var columnMap = {
+  getCellBuilder: function(column, className, id) {
+    var methodMap = {
       product: this.buildProductCell,
       number: this.buildNumberCell,
       size: this.buildEstimateCell,
@@ -73,9 +43,25 @@ var TableRow = React.createClass({
       'assigned to': this.buildAssigneeCell,
       created: this.buildCreatedAtCell
     };
+    return methodMap[column](className, id);
+  },
+
+  render: function() {
+    var modelId = [this.props.model.product.id, this.props.model.number];
+
+    var wrapperClass = 'wrapper ' + (this.props.expanded ? 'expanded' : 'condensed');
+    var rowClass = 'sortable__row ' + this.props.model.type;
+    if (this.props.expanded) {
+      rowClass += ' expanded';
+    }
+
+    // "matched": item is grouped with parent/subitems.
+    // "nonMatching": item doesn't fit collection filters, but is included to match w/subitems that do.
+    if (this.props.model.isMatched) {
+      rowClass += this.props.model.isNonMatching ? ' matched non-matching' : ' matched';
+    }
 
     var cells = [];
-
     if (this.props.isBulkEditable) {
       cells.push(
         <td key={'control' + ':' + modelId} className='sortable__cell'>
@@ -87,7 +73,7 @@ var TableRow = React.createClass({
     _.each(this.props.columns, function(column) {
       cells.push(
         <td key={column + ':' + modelId} className='sortable__cell'>
-          {columnMap[column](wrapperClass, modelId)}
+          {this.getCellBuilder(column, wrapperClass, modelId)}
         </td>
       );
     }, this);
@@ -106,7 +92,7 @@ var TableRow = React.createClass({
 
     return (
       <div className={classes}>
-        <input type='checkbox' onClick={this.bulkSelectClicked} />
+        <input type='checkbox' onClick={_.partial(this.props.onBulkSelect, this.props.model)} />
       </div>
     );
   },
@@ -118,7 +104,7 @@ var TableRow = React.createClass({
     };
 
     var subitemClass = this.props.expanded ? 'subitem expanded' : 'subitem';
-    var subitemArrow = this.props.model.parent ? ( <i className={subitemClass}></i> ) : null;
+    var subitemArrow = this.props.model.parent ? <i className={subitemClass}></i> : null;
 
     return (
       <div className={classes + ' wider'}>
@@ -134,6 +120,7 @@ var TableRow = React.createClass({
       className: 'js-item-link link number-cell',
       'data-item-number': this.props.model.number
     };
+
     return (
       <div className={classes}>
         <a {...props}>#{this.props.model.number}</a>
@@ -211,7 +198,7 @@ var TableRow = React.createClass({
 
     var tagsProps = {
       tags: this.props.model.tags,
-      condensed: this.props.expanded === 'condensed' ? true : false,
+      condensed: this.props.expanded,
       navigatorUtility: this.props.navigatorUtility
     };
 

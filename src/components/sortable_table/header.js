@@ -17,16 +17,10 @@ var TableHeader = React.createClass({
   propTypes: {
     tableType: React.PropTypes.string,
     columns: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    expanded: React.PropTypes.string,
+    expanded: React.PropTypes.bool,
     isBulkEditable: React.PropTypes.bool,
     onExpanderClick: React.PropTypes.func,
     onLabelClick: React.PropTypes.func
-  },
-
-  getDefaultProps: function() {
-    return {
-      expanded: 'condensed'
-    };
   },
 
   getInitialState: function() {
@@ -41,17 +35,16 @@ var TableHeader = React.createClass({
     };
   },
 
-  onLabelClick: function(ev) {
+  onLabelClick: function(columnName, ev) {
     /*
      * Grabs table type and sort option and passes to sort callback.
      * Flips direction in direction hash.
      */
-    var column = ev.target.textContent.toLowerCase();
-    var direction = this.state.directionHash[column] === 'ascending' ? 'descending' : 'ascending';
+    var direction = this.state.directionHash[columnName] === 'ascending' ? 'descending' : 'ascending';
     var hashCopy = _.cloneDeep(this.state.directionHash);
 
-    this.props.onLabelClick(this.props.tableType, column, direction);
-    hashCopy[column] = direction;
+    this.props.onLabelClick(this.props.tableType, columnName, direction);
+    hashCopy[columnName] = direction;
 
     this.setState({
       directionHash: hashCopy
@@ -66,17 +59,14 @@ var TableHeader = React.createClass({
     var hasProductColumn = _.contains(this.props.columns, 'product');
 
     var control = this.props.isBulkEditable ?
-      (
-        <th key='control' className='sortable__label control'></th>
-      ) : null;
+        <th key='control' className='sortable__label control' /> : null;
 
-    var expander = null;
     var expander = hasProductColumn ?
       (
         <th key='expander' className='sortable__label'>
           <Expander
             expanded={this.props.expanded}
-            onClick={this.props.onExpanderClick}
+            onExpanderClick={this.props.onExpanderClick}
           />
         </th>
       ) : null;
@@ -98,7 +88,7 @@ var TableHeader = React.createClass({
       return (
         <th key={column} title='click to sort' className='sortable__label'>
           <button className={'sortable__button ' + column.replace(' ', '-')} key={column}
-            onClick={this.onLabelClick}>
+            onClick={_.partial(this.onLabelClick, column.toLowerCase())}>
             {column}
           </button>
         </th>

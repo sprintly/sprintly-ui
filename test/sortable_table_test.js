@@ -98,15 +98,15 @@ describe('SortableTable', function() {
     });
 
     it('should render condensed rows by default', function() {
-      assert.equal(TestUtils.findRenderedComponentWithType(this.sortable, Expander).props.expanded, 'condensed');
-      assert.equal(TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0].props.expanded, 'condensed');
+      assert.isFalse(TestUtils.findRenderedComponentWithType(this.sortable, Expander).props.expanded);
+      assert.isFalse(TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0].props.expanded);
     });
 
     it('should update expander state and render an expanded row on expand button click', function() {
       var expandButton = TestUtils.findRenderedDOMComponentWithClass(this.sortable, 'expander__button expand');
       TestUtils.Simulate.click(expandButton);
-      assert.equal(TestUtils.findRenderedComponentWithType(this.sortable, Expander).props.expanded, 'expanded');
-      assert.equal(TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0].props.expanded, 'expanded');
+      assert.isTrue(TestUtils.findRenderedComponentWithType(this.sortable, Expander).props.expanded);
+      assert.isTrue(TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0].props.expanded);
     });
 
     it('should render an item component element for each applicable property in each row', function() {

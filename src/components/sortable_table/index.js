@@ -31,6 +31,7 @@ var SortableTable = React.createClass({
 
   getDefaultProps: function() {
     return {
+      baseUrl: '',
       isBulkEditable: false,
       onBulkSelect: _.noop(),
       modelChangerUtilities: {}
@@ -39,15 +40,17 @@ var SortableTable = React.createClass({
 
   getInitialState: function() {
     return {
-      expanded: 'condensed',
+      expanded: false,
       sortBy: 'number'
     };
   },
 
-  onExpandClicked: function(expandOrCondense) {
-    this.setState({
-      expanded: expandOrCondense
-    });
+  onExpandClicked: function(expanded) {
+    if (expanded !== this.state.expanded) {
+      this.setState({
+        expanded: expanded
+      });
+    }
   },
 
   render: function() {
