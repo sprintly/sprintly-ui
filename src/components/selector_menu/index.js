@@ -3,8 +3,8 @@ var _ = require('lodash');
 var Label = require('./label');
 var List = require('./list');
 var Search = require('./search');
-var ClickOff = require('react-onclickoutside');
 var fuzzy = require('fuzzy');
+var onClickOutside = require('@sprintly/react-onclickoutside');
 
 /*
  * Renders dropdown showing currently selected options,
@@ -27,7 +27,9 @@ var SelectorMenu = React.createClass({
     onSelectionChange: React.PropTypes.func.isRequired
   },
 
-  mixins: [ClickOff],
+  mixins: [
+    onClickOutside
+  ],
 
   getDefaultProps: function() {
     return {
@@ -39,8 +41,26 @@ var SelectorMenu = React.createClass({
   getInitialState: function() {
     return {
       visible: [],
-      expanded: false
+      expanded: false,
+      clearInput: false
     };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    var nextOptions = _.compact(
+      _.pluck(nextProps.optionsList, 'title').concat(_.pluck(nextProps.optionsList, 'name'))
+    );
+
+    var currentOptions = _.compact(
+      _.pluck(this.props.optionsList, 'title').concat(_.pluck(this.props.optionsList, 'name'))
+    );
+
+    if (_.difference(nextOptions, currentOptions).length > 0) {
+      this.setState({
+        visible: [],
+        selected: ''
+      });
+    }
   },
 
   getOptionNames: function() {
@@ -62,37 +82,26 @@ var SelectorMenu = React.createClass({
   },
 
   onLabelClicked: function() {
-    var expandOrContract = this.state.expanded ? false : true;
+    var expanded = this.state.expanded ? false : true;
     this.setState({
-      expanded: expandOrContract
-    });
-
-    this.refs.searchInput.getDOMNode().focus();
-  },
-
-  cleanSearchState: function() {
-    this.refs.searchInput.getDOMNode().value = '';
-
-    this.setState({
-      visible: []
+      expanded: expanded,
+      clearInput: true
     });
   },
 
   selectOption: function(optionName) {
-    this.cleanSearchState();
     this.onLabelClicked();
 
     this.setState({
-      selected: optionName
+      selected: optionName,
+      visible: []
     });
 
     this.props.onSelectionChange(optionName);
   },
 
-  normalizeInputValue: function(val) {
-    // Normalizes casing to option casing from user input.
+  processSearchInput: function(val) {
     // Matches partials against an alphabetically sorted list.
-    val = val.toLowerCase();
     var sortedNames = this.getOptionNames().sort();
 
     var selection = _.find(sortedNames, function(name) {
@@ -103,18 +112,7 @@ var SelectorMenu = React.createClass({
       selection = this.props.defaultSelection;
     }
 
-    return selection;
-  },
-
-  checkIfSubmit: function(ev) {
-    // If user presses ENTER in input box, submit choice.
-    var value = ev.target.value;
-    var option = '';
-
-    if (ev.which === 13 && value) {
-      option = this.normalizeInputValue(value);
-      this.selectOption(option);
-    }
+    this.selectOption(selection);
   },
 
   filterList: function(filterBy) {
@@ -130,25 +128,9 @@ var SelectorMenu = React.createClass({
     var visible = _.pluck(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
 
     this.setState({
-      visible: visible
+      visible: visible,
+      clearInput: false
     });
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    var nextOptions = _.compact(
-      _.pluck(nextProps.optionsList, 'title').concat(_.pluck(nextProps.optionsList, 'name'))
-    );
-
-    var currentOptions = _.compact(
-      _.pluck(this.props.optionsList, 'title').concat(_.pluck(this.props.optionsList, 'name'))
-    );
-
-    if (_.difference(nextOptions, currentOptions).length > 0) {
-      this.setState({
-        visible: [],
-        selected: ''
-      });
-    }
   },
 
   render: function() {
@@ -166,8 +148,9 @@ var SelectorMenu = React.createClass({
         <div className={innerClass}>
           <Search
             ref='searchInput'
-            onKeyDown={this.checkIfSubmit}
             filterList={this.filterList}
+            clearInput={this.state.clearInput}
+            processSearchInput={this.processSearchInput}
           />
           <List
             defaultSelection={selected}

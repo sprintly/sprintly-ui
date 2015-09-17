@@ -1,5 +1,4 @@
 var React = window.React || require('react/addons');
-var _ = require('lodash');
 
 /*
  * (WIP)

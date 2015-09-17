@@ -26,8 +26,8 @@ describe('Estimator', function() {
   });
 
   it('should render a button with the correct score', function() {
-    var score = TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button');
-    assert.equal(score.getDOMNode().textContent, 's');
+    var score = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button'));
+    assert.equal(score.textContent, 's');
   });
 
   it('should not render the score selector menu by default', function() {
@@ -63,7 +63,7 @@ describe('Estimator', function() {
     this.estimator.setState({menuOpen:true});
     var scores = TestUtils.scryRenderedDOMComponentsWithTag(this.estimator, 'button');
     var sameScore = scores[2];
-    assert.equal(sameScore.getDOMNode().textContent, 'S');
+    assert.equal(React.findDOMNode(sameScore).textContent, 'S');
 
     TestUtils.Simulate.click(sameScore);
     sinon.assert.notCalled(this.stub.changeScore);

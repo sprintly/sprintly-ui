@@ -1,4 +1,4 @@
-var _ = require('lodash');
+ var _ = require('lodash');
 var React = window.React || require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var sinon = require('sinon');
@@ -16,7 +16,7 @@ describe('Tags', function() {
         tags={[]}
       />
     );
-    assert.notOk(tags.getDOMNode().children.length);
+    assert.notOk(React.findDOMNode(tags).children.length);
   });
 
   it('should render a the tag name if a single tag passed in as prop', function() {
@@ -26,7 +26,7 @@ describe('Tags', function() {
         tags={["test"]}
       />
     );
-    var node = tags.getDOMNode();
+    var node = React.findDOMNode(tags);
 
     assert.equal(node.children.length, 1);
     assert.equal(node.textContent, 'test');
@@ -54,7 +54,7 @@ describe('Tags', function() {
 
     assert.equal(renderedItemTags.length, 4);
     _.each(renderedItemTags, function(tag, i) {
-      assert.equal(tag.getDOMNode().textContent, itemTags[i]);
+      assert.equal(React.findDOMNode(tag).textContent, itemTags[i]);
     });
   });
 
@@ -67,7 +67,7 @@ describe('Tags', function() {
       />
     );
     var haveTrailingComma = _.map(TestUtils.scryRenderedDOMComponentsWithTag(tags, 'li'), function(li, i) {
-      return li.getDOMNode().textContent.match(',') ? true : false;
+      return React.findDOMNode(li).textContent.match(',') ? true : false;
     });
 
     assert.deepEqual(haveTrailingComma, [true, true, true, false]);
@@ -82,7 +82,7 @@ describe('Tags', function() {
       />
     );
     assert.equal(TestUtils.scryRenderedDOMComponentsWithTag(tags, 'button').length, 1);
-    assert.equal(tags.getDOMNode().textContent, '4 tags');
+    assert.equal(React.findDOMNode(tags).textContent, '4 tags');
   });
 
   it('should trigger a navigation event on tag click if navigator utility prop provided', function() {

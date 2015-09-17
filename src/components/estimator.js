@@ -1,7 +1,5 @@
 var React = window.React || require('react/addons');
-var _ = require('lodash');
-var clickOff = require('react-onclickoutside');
-
+var onClickOutside = require('@sprintly/react-onclickoutside');
 /*
  * Estimator element displays item score that, when clicked, opens a menu
  * for editing the current score. Expects an estimate changer utility object
@@ -20,6 +18,10 @@ var Estimator = React.createClass({
     8: 'XL'
   },
 
+  mixins: [
+    onClickOutside
+  ],
+
   propTypes: {
     modelId: React.PropTypes.arrayOf(React.PropTypes.number),
     readOnly: React.PropTypes.bool,
@@ -27,8 +29,6 @@ var Estimator = React.createClass({
     score: React.PropTypes.string.isRequired,
     estimateChanger: React.PropTypes.object
   },
-
-  mixins: [clickOff],
 
   getDefaultProps: function() {
     return {
@@ -85,7 +85,7 @@ var Estimator = React.createClass({
     var scoreMenu = null;
 
     if (this.state.menuOpen) {
-      var scores = _.map(this.ALL_ESTIMATES, function(score) {
+      var scores = this.ALL_ESTIMATES.map(function(score) {
         return (
           <li key={score} className='estimator__score'>
             <button className={'estimator__button ' + this.props.itemType}
@@ -95,7 +95,7 @@ var Estimator = React.createClass({
             </button>
           </li>
         );
-      }, this);
+      }.bind(this));
 
       scoreMenu = (
         <div className='estimator__menu'>
