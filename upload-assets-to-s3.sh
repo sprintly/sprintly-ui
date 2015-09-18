@@ -32,7 +32,7 @@ fi
 git checkout $TAGNAME
 
 # build css
-npm run build-css || exit 1
+gulp cssmin || exit 1
 
 # upload css to s3 in a tagged folder.
 s3put --access_key $AWS_ACCESS_KEY_ID --secret_key $AWS_ACCESS_KEY_SECRET --bucket sprintly-ui-build-artifacts --prefix $PWD/dist/css/ --key_prefix $TAGNAME dist/css
