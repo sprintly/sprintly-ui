@@ -198,7 +198,7 @@ var TableRow = React.createClass({
 
     var tagsProps = {
       tags: this.props.model.tags,
-      condensed: this.props.expanded,
+      condensed: !this.props.expanded,
       navigatorUtility: this.props.navigatorUtility
     };
 
