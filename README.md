@@ -1,4 +1,5 @@
 # Sprintly-UI
+[![Circle CI](https://circleci.com/gh/sprintly/sprintly-ui/tree/master.svg?style=svg)](https://circleci.com/gh/sprintly/sprintly-ui/tree/master)
 [![Coverage Status](https://coveralls.io/repos/sprintly/sprintly-ui/badge.svg?branch=master&service=github)](https://coveralls.io/github/sprintly/sprintly-ui?branch=master)
 [![Dependency Status](https://gemnasium.com/sprintly/sprintly-ui.svg)](https://gemnasium.com/sprintly/sprintly-ui)
 
