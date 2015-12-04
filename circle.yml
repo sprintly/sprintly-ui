@@ -1,0 +1,13 @@
+machine:
+  node:
+    version: 5.1.0
+  environment:
+    COVERALLS_TOKEN: "y8CHg5kSoIhd6WJxVYAoKWNBY9PIIn3uE"
+    COVERALLS_GIT_BRANCH: $CIRCLE_BRANCH
+test:
+  post:
+    - echo "service_name: CircleCI" >> .coveralls.yml
+    - echo "repo_token: $COVERALLS_TOKEN" >> .coveralls.yml
+    - echo "git_commit: $CIRCLE_SHA1" >> .coveralls.yml
+    - echo "service_job_id: $CIRCLE_BUILD_NUM" >> .coveralls.yml
+    - npm run coveralls
