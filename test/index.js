@@ -1,4 +1,3 @@
-window._ = require('lodash');
 require('es5-shim');
 
 var chai = require('chai');

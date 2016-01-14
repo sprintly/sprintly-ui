@@ -1,4 +1,4 @@
-var React = window.React || require('react/addons');
+import React from 'react';
 
 /*
  * Tags element displays either a textual list of tags ("one, two, three")
@@ -12,7 +12,7 @@ var React = window.React || require('react/addons');
  * conjunction with the TagEdit element.
  */
 
-var Tags = React.createClass({
+const Tags = React.createClass({
 
   propTypes: {
     tags: React.PropTypes.arrayOf(React.PropTypes.string),
@@ -21,24 +21,18 @@ var Tags = React.createClass({
     altOnTagClick: React.PropTypes.func
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       tags: '',
       condensed: false
     };
   },
 
-  getInitialState: function() {
-    return {};
-  },
-
-  onTagClick: function(ev) {
-    /*
-     * If navigatorUtility prop passed in, will trigger navigation event to tag-filtered
-     * view. Alternatively, pass in a different callback to trigger some other event.
-     */
-    var tag = ev.target.textContent;
-
+  /*
+   * If navigatorUtility prop passed in, will trigger navigation event to tag-filtered
+   * view. Alternatively, pass in a different callback to trigger some other event.
+   */
+  onTagClick(tag, event) {
     if (this.props.navigatorUtility) {
       this.props.navigatorUtility.setTagFilterAndRoute(tag);
     } else if (this.props.altOnTagClick) {
@@ -46,23 +40,22 @@ var Tags = React.createClass({
     }
   },
 
-  render: function() {
-    /*
-     * If the item has no tags, the TagEdit sibling element takes over,
-     * adding the 'Add a tag.' button.
-     * If we only have a single tag, print the tag.
-     * If we have more than one tag and if condensed,
-     * prints the number of tags: ie, "4 tags"; or, if expanded,
-     * shows a full textual representation of tags: "tag1, tag2, tag3"
-     */
-    var wrapped = null;
-    var tagListItems = [];
+  /*
+   * If the item has no tags, the TagEdit sibling element takes over,
+   * adding the 'Add a tag.' button.
+   * If we only have a single tag, print the tag.
+   * If we have more than one tag and if condensed,
+   * prints the number of tags: ie, "4 tags"; or, if expanded,
+   * shows a full textual representation of tags: "tag1, tag2, tag3"
+   */
+  render() {
+    let wrapped = '';
+    let tagListItems = [];
 
-    var len = this.props.tags.length;
-
+    let len = this.props.tags.length;
     if (len === 1) {
       wrapped = (
-        <button className='tags__tag' onClick={this.onTagClick}>
+        <button className='tags__tag' onClick={() => { return this.onTagClick(this.props.tags[0]); }}>
           {this.props.tags}
         </button>
       );
@@ -87,18 +80,19 @@ var Tags = React.createClass({
     );
   },
 
-  buildTagList: function() {
-    return this.props.tags.map(function(tag, i, arr) {
-      var maybeComma = i === (arr.length - 1) ? null : ',';
+  buildTagList() {
+    return this.props.tags.map((tag, i, arr) => {
+
+      let maybeComma = i === (arr.length - 1) ? '' : ',';
       return (
         <li key={'tag' + ':' + i} className='tags__list expanded'>
-          <button className='tags__tag' onClick={this.onTagClick}>
+          <button className='tags__tag' onClick={() => { return this.onTagClick(tag); }}>
             {tag}
           </button>{maybeComma}
         </li>
       );
-    }.bind(this));
+    });
   }
 });
 
-module.exports = Tags;
+export default Tags;

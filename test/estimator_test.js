@@ -1,10 +1,8 @@
-var _ = require('lodash');
-var React = window.React || require('react/addons');
-var TestUtils = React.addons.TestUtils;
-var sinon = require('sinon');
-var Estimator = require('../src/components/estimator');
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
+import sinon from 'sinon';
+import Estimator from '../src/components/estimator';
 
-var TestUtils = React.addons.TestUtils;
 /*
  * Estimator component tests.
  */
@@ -26,7 +24,7 @@ describe('Estimator', function() {
   });
 
   it('should render a button with the correct score', function() {
-    var score = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button'));
+    let score = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button'));
     assert.equal(score.textContent, 's');
   });
 
@@ -35,14 +33,14 @@ describe('Estimator', function() {
   });
 
   it('should change menu state to "open" and render the selector menu on click', function() {
-    var score = TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button');
+    let score = TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button');
     TestUtils.Simulate.click(score);
     assert.isTrue(this.estimator.state.menuOpen);
     assert.ok(TestUtils.findRenderedDOMComponentWithClass(this.estimator, 'estimator__menu'));
   });
 
   it('should close the menu and reset state if clicked a second time after opening', function() {
-    var score = TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button');
+    let score = TestUtils.findRenderedDOMComponentWithTag(this.estimator, 'button');
     TestUtils.Simulate.click(score);
     TestUtils.Simulate.click(score);
     assert.isFalse(this.estimator.state.menuOpen);
@@ -51,8 +49,8 @@ describe('Estimator', function() {
 
   it('should trigger a changeScore method on estimateChanger utility with score number value', function() {
     this.estimator.setState({menuOpen:true});
-    var scores = TestUtils.scryRenderedDOMComponentsWithTag(this.estimator, 'button');
-    var newScore = scores[scores.length - 1]; // Last score would be 'XL'
+    let scores = TestUtils.scryRenderedDOMComponentsWithTag(this.estimator, 'button');
+    let newScore = scores[scores.length - 1]; // Last score would be 'XL'
 
     TestUtils.Simulate.click(newScore);
     sinon.assert.calledOnce(this.stub.changeScore);
@@ -61,9 +59,9 @@ describe('Estimator', function() {
 
   it('should not trigger the changeScore method if the same score is selected', function() {
     this.estimator.setState({menuOpen:true});
-    var scores = TestUtils.scryRenderedDOMComponentsWithTag(this.estimator, 'button');
-    var sameScore = scores[2];
-    assert.equal(React.findDOMNode(sameScore).textContent, 'S');
+    let scores = TestUtils.scryRenderedDOMComponentsWithTag(this.estimator, 'button');
+    let sameScore = scores[2];
+    assert.equal(ReactDOM.findDOMNode(sameScore).textContent, 'S');
 
     TestUtils.Simulate.click(sameScore);
     sinon.assert.notCalled(this.stub.changeScore);

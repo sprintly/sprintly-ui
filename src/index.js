@@ -1,20 +1,17 @@
-var Estimator = require('./components/estimator');
-var Expander = require('./components/expander');
-var SelectorMenu = require('./components/selector_menu');
-var SortableTable = require('./components/sortable_table');
-var Status = require('./components/status');
-var TagEditor = require('./components/tag_editor');
-var Tags = require('./components/tags');
-var GroupSort = require('./utils/group_and_sort');
+import Estimator from './components/estimator';
+import Expander from './components/expander';
+import SelectorMenu from './components/selector_menu';
+import SortableTable from './components/sortable_table';
+import TagEditor from './components/tag_editor';
+import Tags from './components/tags';
+import GroupSort from './utils/group_and_sort';
 
-
-module.exports = {
-  Estimator: Estimator,
-  Expander: Expander,
-  SelectorMenu: SelectorMenu,
-  SortableTable: SortableTable,
-  Status: Status,
-  TagEditor: TagEditor,
-  Tags: Tags,
-  GroupSort: GroupSort
+export default {
+  Estimator,
+  Expander,
+  SelectorMenu,
+  SortableTable,
+  TagEditor,
+  Tags,
+  GroupSort
 };

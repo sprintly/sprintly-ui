@@ -1,6 +1,5 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var onClickOutside = require('@sprintly/react-onclickoutside');
+import React from 'react';
+import clickOutside from '@sprintly/react-onclickoutside';
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -9,7 +8,7 @@ var onClickOutside = require('@sprintly/react-onclickoutside');
  * you'll probably want to pass those in.
  */
 
-var TagEditor = React.createClass({
+const TagEditor = React.createClass({
 
   propTypes: {
     modelId: React.PropTypes.arrayOf(React.PropTypes.number),
@@ -19,49 +18,50 @@ var TagEditor = React.createClass({
   },
 
   mixins: [
-    onClickOutside
+    clickOutside
   ],
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       modelId: null,
       readOnly: false
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       value: '',
       showMenu: false
     };
   },
 
-  handleClickOutside: function(ev) {
-    ev.stopPropagation();
+  handleClickOutside(event) {
+    event.stopPropagation();
+
     this.setState({
       showMenu: false
     });
   },
 
-  handleEditClick: function(ev) {
-    ev.stopPropagation();
+  handleEditClick(event) {
+    event.stopPropagation();
+
     if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
 
-    var showOrHide = this.state.showMenu ? false : true;
-
+    let showMenu = this.state.showMenu ? false : true;
     this.setState({
-      showMenu: showOrHide
+      showMenu: showMenu
     });
   },
 
-  handleRemoveClick: function(tag, ev) {
-    ev.stopPropagation();
+  handleRemoveClick(tag, event) {
+    event.stopPropagation();
+
     if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
-
     this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'remove');
 
     // Close popup if we've just removed our last tag
@@ -72,23 +72,24 @@ var TagEditor = React.createClass({
     }
   },
 
-  handleChange: function(ev) {
+  handleChange(event) {
     this.setState({
-      value: ev.target.value
+      value: event.target.value
     });
   },
 
-  onFormSubmit: function(ev) {
-    ev.preventDefault();
+  onFormSubmit: function(event) {
+    event.preventDefault();
+
     if (this.props.readOnly || !this.props.tagChanger) {
       return;
     }
 
-    var tag = this.state.value;
+    let tag = this.state.value;
     this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'add');
 
     // Close popup if we've just added our first tag
-    var newState = {value: ''};
+    let newState = {value: ''};
     if (this.props.tags.length < 1) {
       newState.showMenu = false;
     }
@@ -96,10 +97,10 @@ var TagEditor = React.createClass({
     this.setState(newState);
   },
 
-  render: function() {
-    var tagsLength = this.props.tags.length;
-    var addTagText = tagsLength ? null : 'Add a tag.';
-    var tagEditMenu = this.state.showMenu ?
+  render() {
+    let tagsLength = this.props.tags.length;
+    let addTagText = tagsLength ? '' : 'Add a tag.';
+    let tagEditMenu = this.state.showMenu ?
       (
         <div>
           <div className='tag_editor__menu'>
@@ -117,7 +118,7 @@ var TagEditor = React.createClass({
             </ul>
           </div>
         </div>
-      ) : null;
+      ) : '';
 
     return (
       <div className='tag_editor__wrapper' key={this.props.modelId}>
@@ -130,18 +131,18 @@ var TagEditor = React.createClass({
     );
   },
 
-  buildTagList: function() {
-    return this.props.tags.map(function(tag) {
+  buildTagList() {
+    return this.props.tags.map((tag) => {
       return (
         <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
-          <button className='tag_editor__tag' onClick={_.partial(this.handleRemoveClick, tag)}>
+          <button className='tag_editor__tag' onClick={() => { return this.handleRemoveClick(tag); }}>
             <i className='tag_editor__delete_icon' />
           </button>
           {tag}
         </li>
       );
-    }.bind(this));
+    });
   }
 });
 
-module.exports = TagEditor;
+export default TagEditor;

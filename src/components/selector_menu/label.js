@@ -1,22 +1,21 @@
-var React = window.React || require('react/addons');
+import React from 'react';
 
-
-var Label = React.createClass({
+const Label = React.createClass({
 
   propTypes: {
     selected: React.PropTypes.string,
-    onClick: React.PropTypes.func.isRequired
+    onLabelClick: React.PropTypes.func.isRequired
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       selected: 'All'
     };
   },
 
-  render: function() {
+  render() {
     return (
-      <div className='selector__label' onClick={this.props.onClick}>
+      <div className='selector__label' onClick={this.props.onLabelClick}>
         <span className='inner'>{this.props.selected}</span>
         <i className='selector__icon'></i>
       </div>
@@ -24,5 +23,4 @@ var Label = React.createClass({
   }
 });
 
-
-module.exports = Label;
+export default Label;

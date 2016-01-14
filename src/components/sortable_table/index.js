@@ -1,7 +1,6 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var TableHeader = require('./header');
-var TableRow = require('./row');
+import React from 'react';
+import TableHeader from './header';
+import TableRow from './row';
 
 /*
  * Takes an array of json objects (for example, a Backbone.Collection.toJSON())
@@ -13,8 +12,7 @@ var TableRow = require('./row');
  * events up to parent view for processing.
  */
 
-
-var SortableTable = React.createClass({
+const SortableTable = React.createClass({
 
   propTypes: {
     tableType: React.PropTypes.string,
@@ -29,23 +27,23 @@ var SortableTable = React.createClass({
     navigatorUtility: React.PropTypes.object
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       baseUrl: '',
       isBulkEditable: false,
-      onBulkSelect: _.noop(),
+      onBulkSelect: function() {},
       modelChangerUtilities: {}
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       expanded: false,
       sortBy: 'number'
     };
   },
 
-  onExpandClicked: function(expanded) {
+  onExpandClicked(expanded) {
     if (expanded !== this.state.expanded) {
       this.setState({
         expanded: expanded
@@ -53,21 +51,22 @@ var SortableTable = React.createClass({
     }
   },
 
-  render: function() {
-    var rows = [];
+  render() {
+    let props = this.props;
+    let rows = [];
 
-    _.each(this.props.collection, function(model) {
-      var modelId = [model.product.id, model.number];
-      var rowProps = {
+    props.collection.forEach((model) => {
+      let modelId = [model.product.id, model.number];
+      let rowProps = {
         key: modelId,
         model: model,
-        columns: this.props.columnNames,
+        columns: props.columnNames,
         expanded: this.state.expanded,
-        baseUrl: this.props.baseUrl,
-        modelChangerUtilities: this.props.modelChangerUtilities,
-        navigatorUtility: this.props.navigatorUtility,
-        isBulkEditable: this.props.isBulkEditable,
-        onBulkSelect: this.props.onBulkSelect
+        baseUrl: props.baseUrl,
+        modelChangerUtilities: props.modelChangerUtilities,
+        navigatorUtility: props.navigatorUtility,
+        isBulkEditable: props.isBulkEditable,
+        onBulkSelect: props.onBulkSelect
       };
 
       if (model.isMatched && !model.parent) {
@@ -76,35 +75,34 @@ var SortableTable = React.createClass({
           <tr key={modelId + ':spacer'} className='sortable__row spacer' />
         );
       }
+
       rows.push(
         <TableRow {...rowProps} />
       );
-    }, this);
+    });
 
-    var headerProps = {
-      tableType: this.props.tableType,
-      columns: this.props.columnNames,
+    let headerProps = {
+      tableType: props.tableType,
+      columns: props.columnNames,
       sortedBy: this.state.sortBy,
       expanded: this.state.expanded,
-      isBulkEditable: this.props.isBulkEditable,
+      isBulkEditable: props.isBulkEditable,
       onExpanderClick: this.onExpandClicked,
-      onLabelClick: this.props.onSortCollection
+      onLabelClick: props.onSortCollection
     };
 
     return (
-      <div className={'sortable__wrapper ' + this.props.label}>
-        <h2 className='sortable__title'>{this.props.label}</h2>
+      <div className={'sortable__wrapper ' + props.label}>
+        <h2 className='sortable__title'>{props.label}</h2>
         <table className='sortable__table'>
           <thead className='head'>
             <TableHeader {...headerProps} />
           </thead>
-          <tbody>
-            {rows}
-          </tbody>
+          <tbody>{rows}</tbody>
         </table>
       </div>
     );
   }
 });
 
-module.exports = SortableTable;
+export default SortableTable;

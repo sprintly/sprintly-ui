@@ -1,8 +1,7 @@
-var _ = require('lodash');
-var React = window.React || require('react/addons');
-var TestUtils = React.addons.TestUtils;
-var sinon = require('sinon');
-var TagEditor = require('../src/components/tag_editor');
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import sinon from 'sinon';
+import TagEditor from '../src/components/tag_editor';
 
 /*
  * TagEditor element tests.
@@ -10,7 +9,7 @@ var TagEditor = require('../src/components/tag_editor');
 
 describe('TagEditor', function() {
   it('should always render a tag edit icon', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
@@ -21,19 +20,20 @@ describe('TagEditor', function() {
   });
 
   it('should also render "Add a tag." if the item has no tags', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={{}}
       />
     );
-    var button = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button'));
+
+    let button = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button'));
     assert.equal(button.textContent, 'Add a tag.');
   });
 
   it('should not render the edit menu by default', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={["test", "test2"]}
@@ -46,14 +46,15 @@ describe('TagEditor', function() {
   });
 
   it('should render the edit menu containing an input if "Add a tag." clicked', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={{}}
       />
     );
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+
+    let button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
     assert.ok(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
@@ -61,22 +62,19 @@ describe('TagEditor', function() {
   });
 
   it('should trigger an add event on tag change utility if a new tag is added', function() {
-    var stub = {
-      addOrRemove: sinon.stub()
-    };
-
-    var tagEditor = TestUtils.renderIntoDocument(
+    let stub = { addOrRemove: sinon.stub() };
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={stub}
       />
     );
-    var form;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+
+    let button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
-    form = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
+    let form = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
     form.children[0].value = 'new tag';
     TestUtils.Simulate.change(form.children[0]);
     TestUtils.Simulate.submit(form);
@@ -86,22 +84,19 @@ describe('TagEditor', function() {
   });
 
   it('should close the edit menu if adding the first tag on an item', function() {
-    var stub = {
-      addOrRemove: sinon.stub()
-    };
-
-    var tagEditor = TestUtils.renderIntoDocument(
+    let stub = { addOrRemove: sinon.stub() };
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={stub}
       />
     );
-    var form;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+
+    let button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
-    form = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
+    let form = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
     form.children[0].value = 'new tag';
     TestUtils.Simulate.change(form.children[0]);
     TestUtils.Simulate.submit(form);
@@ -111,37 +106,35 @@ describe('TagEditor', function() {
   });
 
   it('should render the current item tags in the edit menu if item has tags', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={["test", "test2"]}
         tagChanger={{}}
       />
     );
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+
+    let button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
     assert.equal(TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'li').length, 2);
   });
 
   it('should trigger a remove event on tag changer utility if tag is deleted from menu', function() {
-    var stub = {
-      addOrRemove: sinon.stub()
-    };
-    var currentTags = ["test", "test2"];
+    let stub = { addOrRemove: sinon.stub() };
+    let currentTags = ["test", "test2"];
 
-    var tagEditor = TestUtils.renderIntoDocument(
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={currentTags}
         tagChanger={stub}
       />
     );
-    var deleteButton;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    let button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
-    deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
+    let deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
     TestUtils.Simulate.click(deleteButton);
 
     sinon.assert.calledOnce(stub.addOrRemove);
@@ -149,22 +142,19 @@ describe('TagEditor', function() {
   });
 
   it('should close the edit menu automatically if the last item tag is deleted', function() {
-    var stub = {
-      addOrRemove: sinon.stub()
-    };
-
-    var tagEditor = TestUtils.renderIntoDocument(
+    let stub = { addOrRemove: sinon.stub() };
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={["test"]}
         tagChanger={stub}
       />
     );
-    var deleteButton;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+
+    let button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
-    deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
+    let deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
     TestUtils.Simulate.click(deleteButton);
 
     assert.isFalse(tagEditor.state.showMenu);
@@ -172,22 +162,19 @@ describe('TagEditor', function() {
   });
 
   it('should not close the menu if there are still item tags left', function() {
-    var stub = {
-      addOrRemove: sinon.stub()
-    };
-
-    var tagEditor = TestUtils.renderIntoDocument(
+    let stub = { addOrRemove: sinon.stub() };
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={["test", "test2"]}
         tagChanger={stub}
       />
     );
-    var deleteButton;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+
+    let button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
 
-    deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
+    let deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
     TestUtils.Simulate.click(deleteButton);
 
     assert.isTrue(tagEditor.state.showMenu);
@@ -195,14 +182,15 @@ describe('TagEditor', function() {
   });
 
   it('should close the menu if the tag edit button is clicked a second time', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    let tagEditor = TestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={{}}
       />
     );
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+
+    let button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
     TestUtils.Simulate.click(button);
     TestUtils.Simulate.click(button);
 

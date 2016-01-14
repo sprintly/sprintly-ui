@@ -2,7 +2,7 @@
   "name": "sprintly-ui",
   "title": "Sprintly UI",
   "description": "A React-based UI kit for building Sprintly interfaces",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "main": "./src/index.js",
   "homepage": "https://github.com/sprintly/sprintly-ui",
   "repository": {
@@ -13,18 +13,22 @@
     "url": "https://github.com/sprintly/sprintly-ui/issues"
   },
   "dependencies": {
+    "@sprintly/react-onclickoutside": "^1.0.0",
     "browserify-istanbul": "^0.2.1",
     "fuzzy": "^0.1.0",
-    "lodash": "^3.10.1",
-    "object-path": "^0.9.0",
-    "@sprintly/react-onclickoutside": "^1.0.0"
+    "lodash.pluck": "^3.1.2",
+    "lodash.union": "^4.0.1",
+    "object-assign": "^4.0.1",
+    "object-path": "^0.9.0"
   },
   "peerDependencies": {
     "moment": "^2.10.6",
-    "react": "^0.13.3"
+    "react": "^0.14.6"
   },
   "devDependencies": {
-    "babelify": "^6.1.2",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^6.4.0",
     "browserify": "^11.1.0",
     "chai": "^3.2.0",
     "connect": "^3.4.0",
@@ -44,7 +48,9 @@
     "moment": "^2.10.6",
     "open": "^0.0.5",
     "phantomjs": "1.9.7-15",
-    "react": "^0.13.3",
+    "react": "^0.14.6",
+    "react-addons-test-utils": "^0.14.6",
+    "react-dom": "^0.14.6",
     "serve-static": "^1.10.0",
     "sinon": "^1.12.1",
     "vinyl-source-stream": "^1.0.0",
@@ -52,7 +58,15 @@
   },
   "browserify": {
     "transform": [
-      "babelify"
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015",
+            "react"
+          ]
+        }
+      ]
     ]
   },
   "scripts": {
@@ -81,6 +95,6 @@
     "quickleft",
     "quick left"
   ],
-  "author": "Quick Left Team (http://quickleft.com/)",
+  "author": "Sprintly Team (http://sprint.ly/)",
   "license": "BSD-2-Clause"
 }

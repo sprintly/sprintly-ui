@@ -1,10 +1,10 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var Label = require('./label');
-var List = require('./list');
-var Search = require('./search');
-var fuzzy = require('fuzzy');
-var onClickOutside = require('@sprintly/react-onclickoutside');
+import React from 'react';
+import pluck from 'lodash.pluck';
+import fuzzy from 'fuzzy';
+import Label from './label';
+import List from './list';
+import Search from './search';
+import clickOutside from '@sprintly/react-onclickoutside';
 
 /*
  * Renders dropdown showing currently selected options,
@@ -19,7 +19,7 @@ var onClickOutside = require('@sprintly/react-onclickoutside');
  *
  */
 
-var SelectorMenu = React.createClass({
+const SelectorMenu = React.createClass({
 
   propTypes: {
     defaultSelection: React.PropTypes.string,
@@ -28,17 +28,17 @@ var SelectorMenu = React.createClass({
   },
 
   mixins: [
-    onClickOutside
+    clickOutside
   ],
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       defaultSelection: 'All',
       optionsList: []
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       visible: [],
       expanded: false,
@@ -46,16 +46,18 @@ var SelectorMenu = React.createClass({
     };
   },
 
-  componentWillReceiveProps: function(nextProps) {
-    var nextOptions = _.compact(
-      _.pluck(nextProps.optionsList, 'title').concat(_.pluck(nextProps.optionsList, 'name'))
-    );
+  componentWillReceiveProps(nextProps) {
+    let currentOptions = this.props.optionsList;
+    let diff = [];
 
-    var currentOptions = _.compact(
-      _.pluck(this.props.optionsList, 'title').concat(_.pluck(this.props.optionsList, 'name'))
-    );
+    nextProps.optionsList.forEach((option, idx) => {
+      let attr = option.title ? 'title' : 'name';
+      if (option[attr] !== currentOptions[idx][attr]) {
+        diff.push(option);
+      }
+    });
 
-    if (_.difference(nextOptions, currentOptions).length > 0) {
+    if (diff.length) {
       this.setState({
         visible: [],
         selected: ''
@@ -63,48 +65,57 @@ var SelectorMenu = React.createClass({
     }
   },
 
-  getOptionNames: function() {
-    // Returns a list of option names, plus the default value.
-    var options = [this.props.selection || this.state.selected || this.props.defaultSelection];
+  /*
+   * Returns a list of option names, plus the default value.
+   */
+  getOptionNames() {
+    let options = [this.props.selection || this.state.selected || this.props.defaultSelection];
 
-    _.each(this.props.optionsList, function(option) {
-      return option.title ? options.push(option.title) : options.push(option.name);
+    this.props.optionsList.forEach((option) => {
+      let attr = option.title ? 'title' : 'name';
+      if (!options.includes(option[attr])) {
+        options.push(option[attr]);
+      }
     });
 
-    return _.unique(options);
+    return options;
   },
 
-  handleClickOutside: function(ev) {
-    ev.stopPropagation();
+  handleClickOutside(event) {
+    event.stopPropagation();
+
     this.setState({
       expanded: false
     });
   },
 
-  onLabelClicked: function() {
-    var expanded = this.state.expanded ? false : true;
+  onLabelClicked() {
+    let expanded = this.state.expanded ? false : true;
+
     this.setState({
       expanded: expanded,
       clearInput: true
     });
   },
 
-  selectOption: function(optionName) {
+  selectOption(option) {
     this.onLabelClicked();
 
     this.setState({
-      selected: optionName,
+      selected: option,
       visible: []
     });
 
-    this.props.onSelectionChange(optionName);
+    this.props.onSelectionChange(option);
   },
 
-  processSearchInput: function(val) {
-    // Matches partials against an alphabetically sorted list.
-    var sortedNames = this.getOptionNames().sort();
+  /*
+   * Matches partials against an alphabetically sorted list.
+   */
+  processSearchInput(val) {
+    let sortedNames = this.getOptionNames().sort();
 
-    var selection = _.find(sortedNames, function(name) {
+    let selection = sortedNames.find((name) => {
       return name.toLowerCase().indexOf(val) > -1;
     });
 
@@ -115,35 +126,38 @@ var SelectorMenu = React.createClass({
     this.selectOption(selection);
   },
 
-  filterList: function(filterBy) {
-    // If user input, returns fuzzy search-delimited list of options;
-    // else, shows all options.
+  /*
+   * Returns a fuzzy-search-delimited list of options if there's user input.
+   * Returns all options otherwise.
+   */
+  filterList(filterBy) {
     if (!filterBy) {
       this.setState({
         visible: this.getOptionNames()
       });
+
       return;
     }
 
-    var visible = _.pluck(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
-
+    let visible = pluck(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
     this.setState({
       visible: visible,
       clearInput: false
     });
   },
 
-  render: function() {
-    var wrapperClass = this.state.expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
-    var innerClass = this.state.expanded ? 'inner-wrapper expanded' : 'inner-wrapper';
-    var visible = this.state.visible.length > 0 ? this.state.visible : this.getOptionNames();
-    var selected = this.props.selection || this.state.selected || this.props.defaultSelection;
+  render() {
+    let wrapperClass = this.state.expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
+    let innerClass = this.state.expanded ? 'inner-wrapper expanded' : 'inner-wrapper';
+
+    let visible = this.state.visible.length > 0 ? this.state.visible : this.getOptionNames();
+    let selected = this.props.selection || this.state.selected || this.props.defaultSelection;
 
     return (
       <div className={wrapperClass}>
         <Label
           selected={selected}
-          onClick={this.onLabelClicked}
+          onLabelClick={this.onLabelClicked}
         />
         <div className={innerClass}>
           <Search
@@ -163,4 +177,4 @@ var SelectorMenu = React.createClass({
   }
 });
 
-module.exports = SelectorMenu;
+export default SelectorMenu;

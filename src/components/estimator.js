@@ -1,5 +1,5 @@
-var React = window.React || require('react/addons');
-var onClickOutside = require('@sprintly/react-onclickoutside');
+import React from 'react';
+import clickOutside from '@sprintly/react-onclickoutside';
 /*
  * Estimator element displays item score that, when clicked, opens a menu
  * for editing the current score. Expects an estimate changer utility object
@@ -7,7 +7,7 @@ var onClickOutside = require('@sprintly/react-onclickoutside');
  * and syncing any changes with the backend.
  */
 
-var Estimator = React.createClass({
+const Estimator = React.createClass({
   ALL_ESTIMATES: [0, 1, 3, 5, 8],
 
   ESTIMATE_HASH: {
@@ -19,7 +19,7 @@ var Estimator = React.createClass({
   },
 
   mixins: [
-    onClickOutside
+    clickOutside
   ],
 
   propTypes: {
@@ -30,45 +30,42 @@ var Estimator = React.createClass({
     estimateChanger: React.PropTypes.object
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       modelId: null,
       readOnly: false
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       menuOpen: false
     };
   },
 
-  handleClickOutside: function(ev) {
-    ev.stopPropagation();
+  handleClickOutside(event) {
+    event.stopPropagation();
 
     this.setState({
       menuOpen: false
     });
   },
 
-  onScoreClick: function() {
+  onScoreClick() {
     if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
 
-    var openOrClose = this.state.menuOpen === false ? true : false;
-
+    let menuOpen = !this.state.menuOpen ? true : false;
     this.setState({
-      menuOpen: openOrClose
+      menuOpen: menuOpen
     });
   },
 
-  onScoreChange: function(ev) {
+  onScoreChange(newScore, event) {
     if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
-
-    var newScore = parseInt(ev.target.getAttribute('data-score'), 10);
 
     if (this.props.score === this.ESTIMATE_HASH[newScore].toLowerCase()) {
       return;
@@ -80,22 +77,22 @@ var Estimator = React.createClass({
     });
   },
 
-  render: function() {
-    var currentScore = this.props.score === '~' ? '?' : this.props.score;
-    var scoreMenu = null;
+  render() {
+    let currentScore = this.props.score === '~' ? '?' : this.props.score;
+    let scoreMenu = '';
 
     if (this.state.menuOpen) {
-      var scores = this.ALL_ESTIMATES.map(function(score) {
+      let scores = this.ALL_ESTIMATES.map((score) => {
         return (
           <li key={score} className='estimator__score'>
-            <button className={'estimator__button ' + this.props.itemType}
-              data-score={score}
-              onClick={this.onScoreChange}>
+            <button
+              className={'estimator__button ' + this.props.itemType}
+              onClick={() => { return this.onScoreChange(score); }}>
               {this.ESTIMATE_HASH[score]}
             </button>
           </li>
         );
-      }.bind(this));
+      });
 
       scoreMenu = (
         <div className='estimator__menu'>
@@ -118,4 +115,4 @@ var Estimator = React.createClass({
   }
 });
 
-module.exports = Estimator;
+export default Estimator;

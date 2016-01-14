@@ -1,7 +1,7 @@
-var React = window.React || require('react/addons');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-
-var Search = React.createClass({
+const Search = React.createClass({
 
   propTypes: {
     inputOverride: React.PropTypes.string,
@@ -9,46 +9,45 @@ var Search = React.createClass({
     processSearchInput: React.PropTypes.func.isRequired
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       value: ''
     };
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps && nextProps.clearInput) {
-      this.setState({
-        value: ""
-      });
-    }
-  },
-
-  componentDidUpdate: function() {
-    React.findDOMNode(this).focus();
-  },
-
-  handleChange: function(ev) {
-    var val = ev.target.value;
-
-    this.setState({
-      value: val
-    });
-
-    this.props.filterList(val);
-  },
-
-  maybeSubmit: function(ev) {
-    var val = this.state.value;
-
-    if (ev.which === 13 && val.length) {
       this.setState({
         value: ''
       });
-      this.props.processSearchInput(val.toLowerCase());
     }
   },
 
-  render: function() {
+  componentDidUpdate() {
+    ReactDOM.findDOMNode(this).focus();
+  },
+
+  handleChange(event) {
+    let value = event.target.value;
+
+    this.setState({
+      value
+    });
+    this.props.filterList(value);
+  },
+
+  maybeSubmit(event) {
+    let value = this.state.value;
+
+    if (event.which === 13 && value.length) {
+      this.setState({
+        value: ''
+      });
+      this.props.processSearchInput(value.toLowerCase());
+    }
+  },
+
+  render() {
     return (
       <input
         className='selector__searchbox'
@@ -61,5 +60,4 @@ var Search = React.createClass({
   }
 });
 
-
-module.exports = Search;
+export default Search;

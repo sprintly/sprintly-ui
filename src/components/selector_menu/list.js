@@ -1,26 +1,27 @@
-var React = window.React || require('react/addons');
+import React from 'react';
 
-var List = React.createClass({
+const List = React.createClass({
 
   propTypes: {
     optionNames: React.PropTypes.array,
     onOptionSelect: React.PropTypes.func.isRequired
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       optionNames: []
     };
   },
 
-  render: function() {
-    var options = this.props.optionNames.map(function(optionName) {
-      return optionName.length ? (
-        <li key={optionName} className='option' onClick={_.partial(this.props.onOptionSelect, optionName)}>
-          <span className='inner'>{optionName}</span>
+  render() {
+    let options = this.props.optionNames.map((name) => {
+      return name.length ? (
+        <li key={name} className='option'
+          onClick={() => { return this.props.onOptionSelect(name); }}>
+          <span className='inner'>{name}</span>
         </li>
-      ) : null;
-    }.bind(this));
+      ) : '';
+    });
 
     return (
       <ul className='selector__options'>
@@ -30,4 +31,4 @@ var List = React.createClass({
   }
 });
 
-module.exports = List;
+export default List;

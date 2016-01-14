@@ -1,6 +1,6 @@
-var React = window.React || require('react/addons');
-var _ = require('lodash');
-var Expander = require('../expander');
+import React from 'react';
+import assign from 'object-assign';
+import Expander from '../expander';
 
 /*
  * Renders header bar where cells are clickable elements that trigger a
@@ -11,8 +11,7 @@ var Expander = require('../expander');
  * action on that table's data alone (if rendering multiple tables in a view.)
  */
 
-
-var TableHeader = React.createClass({
+const TableHeader = React.createClass({
 
   propTypes: {
     tableType: React.PropTypes.string,
@@ -23,78 +22,77 @@ var TableHeader = React.createClass({
     onLabelClick: React.PropTypes.func
   },
 
-  getInitialState: function() {
-    /*
-     * Keeps track of sort direction on each column.
-     */
-    var directionHash = _.zipObject(this.props.columns,
-      _.times(this.props.columns.length, function() { return 'ascending'; }));
+  /*
+   * Keeps track of sort direction on each column.
+   */
+  getInitialState() {
+    let directionHash = {};
+    this.props.columns.forEach((column) => {
+      directionHash[column] = 'ascending';
+    });
 
     return {
-      directionHash: directionHash
+      directionHash
     };
   },
 
-  onLabelClick: function(columnName, ev) {
-    /*
-     * Grabs table type and sort option and passes to sort callback.
-     * Flips direction in direction hash.
-     */
-    var direction = this.state.directionHash[columnName] === 'ascending' ? 'descending' : 'ascending';
-    var hashCopy = _.cloneDeep(this.state.directionHash);
+  /*
+   * Grabs table type and sort option and passes to sort callback.
+   * Flips direction in direction hash.
+   */
+  onLabelClick(columnName, event) {
+    let direction = this.state.directionHash[columnName] === 'ascending' ? 'descending' : 'ascending';
+    let updatedHash = assign({}, this.state.directionHash, {
+      [columnName]: direction
+    });
 
     this.props.onLabelClick(this.props.tableType, columnName, direction);
-    hashCopy[columnName] = direction;
-
     this.setState({
-      directionHash: hashCopy
+      directionHash: updatedHash
     });
   },
 
-  render: function() {
-    /*
-     * Render column labels and optionally render an expander element that proxies click events
-     * to table (Note: we'll only render this if we have a control column to render it into).
-     */
-    var hasProductColumn = _.contains(this.props.columns, 'product');
+  /*
+   * Render column labels and optionally render an expander element that proxies click events
+   * to table (Note: we'll only render this if we have a control column to render it into).
+   */
+  render() {
+    let props = this.props;
+    let control = props.isBulkEditable ?
+        <th key='control' className='sortable__label control' /> : '';
 
-    var control = this.props.isBulkEditable ?
-        <th key='control' className='sortable__label control' /> : null;
-
-    var expander = hasProductColumn ?
+    let expander = props.columns.includes('product') ?
       (
         <th key='expander' className='sortable__label'>
           <Expander
-            expanded={this.props.expanded}
-            onExpanderClick={this.props.onExpanderClick}
+            expanded={props.expanded}
+            onExpanderClick={props.onExpanderClick}
           />
         </th>
-      ) : null;
+      ) : '';
+
+    let labels = props.columns.map((column) => {
+      // We don't want to render a label for the control column (ie, 'products')
+      return column !== 'product' ? (
+        <th key={column} title='click to sort' className='sortable__label'>
+          <button
+            className={'sortable__button ' + column.replace(' ', '-')}
+            key={column}
+            onClick={() => { return this.onLabelClick(column.toLowerCase()); }}>
+            {column}
+          </button>
+        </th>
+      ) : '';
+    });
 
     return (
       <tr className='sortable__row'>
         {control}
         {expander}
-        {this.buildColumnLabels()}
+        {labels}
       </tr>
     );
-  },
-
-  buildColumnLabels: function() {
-    // We don't want to render a label for the 'Control' column, so pop it off the list.
-    var columns = _.without(this.props.columns, 'product');
-
-    return _.map(columns, function(column) {
-      return (
-        <th key={column} title='click to sort' className='sortable__label'>
-          <button className={'sortable__button ' + column.replace(' ', '-')} key={column}
-            onClick={_.partial(this.onLabelClick, column.toLowerCase())}>
-            {column}
-          </button>
-        </th>
-      );
-    }, this);
   }
 });
 
-module.exports = TableHeader;
+export default TableHeader;
