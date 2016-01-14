@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
 var gulp = require('gulp');
 var path = require('path');
 var http = require('http');
@@ -15,6 +14,7 @@ var watchify = require('watchify');
 var babelify = require('babelify');
 var exorcist = require('exorcist');
 
+var assign = require('object-assign');
 var gutil = require('gulp-util');
 var less = require('gulp-less');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
@@ -61,7 +61,7 @@ gulp.task('less', function() {
 });
 
 gulp.task('watch', function() {
-  var bundler = watchify(browserify(jsSrc, _.extend({}, watchify.args, appArgs)));
+  var bundler = watchify(browserify(jsSrc, assign({}, watchify.args, appArgs)));
   bundle(bundler);
 
   bundler.on('update', function() {
@@ -121,7 +121,7 @@ gulp.task('build-test', function() {
 });
 
 gulp.task('watch-test', function() {
-  var bundler = watchify(browserify(testSrc, _.extend({}, watchify.args, testArgs)));
+  var bundler = watchify(browserify(testSrc, assign({}, watchify.args, testArgs)));
   bundleTests(bundler);
 
   bundler.on('update', function() {
