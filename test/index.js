@@ -8,7 +8,6 @@ require('./estimator_test.js');
 require('./expander_test.js');
 require('./selector_menu_test.js');
 require('./sortable_table_test.js');
-require('./status_test.js');
 require('./tag_editor_test.js');
 require('./tags_test.js');
 require('./group_and_sort_test.js');

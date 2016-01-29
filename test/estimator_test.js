@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import Estimator from '../src/components/estimator';
@@ -54,7 +55,7 @@ describe('Estimator', function() {
 
     TestUtils.Simulate.click(newScore);
     sinon.assert.calledOnce(this.stub.changeScore);
-    sinon.assert.calledWith(this.stub.changeScore, [1,1], parseInt(_.invert(this.estimator.ESTIMATE_HASH)['XL'], 10));
+    sinon.assert.calledWith(this.stub.changeScore, [1,1], parseInt(Object.keys(this.estimator.ESTIMATE_HASH).pop(), 10));
   });
 
   it('should not trigger the changeScore method if the same score is selected', function() {

@@ -1,3 +1,4 @@
+import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import Expander from '../src/components/expander';

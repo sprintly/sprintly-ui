@@ -56,9 +56,8 @@ const Estimator = React.createClass({
       return;
     }
 
-    let menuOpen = !this.state.menuOpen ? true : false;
     this.setState({
-      menuOpen: menuOpen
+      menuOpen: !this.state.menuOpen ? true : false
     });
   },
 

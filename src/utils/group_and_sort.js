@@ -1,6 +1,7 @@
 import lookup from 'object-path';
 import assign from 'object-assign';
 import union from 'lodash.union';
+import sortBy from 'lodash.sortby';
 
 /*
  * Takes a array of items json data (such as a sprintly-data or sprintly-search-backed
@@ -49,15 +50,15 @@ export function groupSort(jsonArray, property, direction) {
   property = propertyConversion[property] || 'number';
   direction = direction || 'descending';
 
-  let lookups = this.createParentLookups(jsonArray);
+  let lookups = createParentLookups(jsonArray);
   let parents = lookups.parents;
   let matched = lookups.matched;
 
-  let preparedItems = this.prepareArrayForSort(jsonArray, parents, matched);
+  let preparedItems = prepareArrayForSort(jsonArray, parents, matched);
 
   return direction === 'ascending' ?
-    this.sort(preparedItems, property) :
-    this.reverseSort(this.sort(preparedItems, property));
+    sort(preparedItems, property) :
+    reverseSort(sort(preparedItems, property));
 };
 
 
@@ -146,8 +147,8 @@ function parentPreferred(item, prop) {
  * so the fourth value causes subitems to show later in the list.
  */
 function sort(processedJson, property) {
-  return _.sortBy(processedJson, function(item) {
-    var itemProperty = this.parentPreferred(item, property);
+  return sortBy(processedJson, function(item) {
+    var itemProperty = parentPreferred(item, property);
 
     if (typeof itemProperty === 'string') {
       itemProperty = property === 'score' ?
@@ -156,7 +157,7 @@ function sort(processedJson, property) {
 
     return [
       itemProperty,
-      this.parentPreferred(item, 'number'),
+      parentPreferred(item, 'number'),
       item.product.id,
       !!item.parent,
       item.number
