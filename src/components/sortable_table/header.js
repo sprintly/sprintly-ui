@@ -61,7 +61,7 @@ const TableHeader = React.createClass({
     let control = props.isBulkEditable ?
         <th key='control' className='sortable__label control' /> : '';
 
-    let expander = props.columns.includes('product') ?
+    let expander = props.columns.indexOf('product') >= 0 ?
       (
         <th key='expander' className='sortable__label'>
           <Expander

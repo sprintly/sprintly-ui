@@ -43,8 +43,8 @@ describe("GroupSort", function() {
       let lookups = GroupSort.createParentLookups(items);
       let result = pluck(GroupSort.prepareArrayForSort(items, lookups.parents, lookups.matched), 'number');
 
-      assert.isTrue(result.includes(6));
-      assert.isTrue(result.includes(8));
+      assert.isTrue(result.indexOf(6) >= 0);
+      assert.isTrue(result.indexOf(8) >= 0);
     });
 
     it('should not add nonMatching parents from previous', function() {

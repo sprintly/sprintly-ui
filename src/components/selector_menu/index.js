@@ -1,4 +1,5 @@
 import React from 'react';
+import find from 'array-find';
 import pluck from 'lodash.pluck';
 import fuzzy from 'fuzzy';
 import Label from './label';
@@ -52,7 +53,8 @@ const SelectorMenu = React.createClass({
 
     nextProps.optionsList.forEach((option, idx) => {
       let attr = option.title ? 'title' : 'name';
-      if (option[attr] !== currentOptions[idx][attr]) {
+      let c = currentOptions[idx];
+      if (option[attr] !== c[attr]) {
         diff.push(option);
       }
     });
@@ -73,7 +75,7 @@ const SelectorMenu = React.createClass({
 
     this.props.optionsList.forEach((option) => {
       let attr = option.title ? 'title' : 'name';
-      if (!options.includes(option[attr])) {
+      if (options.indexOf(option[attr]) === -1) {
         options.push(option[attr]);
       }
     });
@@ -115,7 +117,7 @@ const SelectorMenu = React.createClass({
   processSearchInput(val) {
     let sortedNames = this.getOptionNames().sort();
 
-    let selection = sortedNames.find((name) => {
+    let selection = find(sortedNames, (name) => {
       return name.toLowerCase().indexOf(val) > -1;
     });
 

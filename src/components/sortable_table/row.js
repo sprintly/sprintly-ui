@@ -42,6 +42,8 @@ const TableRow = React.createClass({
       created: this.buildCreatedAtCell
     };
 
+    console.log("METHOD: " + methodMap[column]);
+    console.log("COLUMN: " + column);
     return methodMap[column](className, id);
   },
 

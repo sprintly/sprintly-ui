@@ -10,20 +10,21 @@ import Search from '../src/components/selector_menu/search';
 
 describe("SelectorMenu", function() {
   beforeEach(function() {
-    this.optionsJSON = [
+    this.optionsList = [
       {title: "Option 1"},
       {title: "Option 2"}
     ];
 
     this.selector = TestUtils.renderIntoDocument(
       <SelectorMenu
-        optionsList={this.optionsJSON}
+        optionsList={this.optionsList}
         defaultSelection="All"
         onSelectionChange={sinon.spy()}
       />
     );
 
     this.node = ReactDOM.findDOMNode(this.selector);
+    this.documentNode = ReactDOM.findDOMNode(this.selector).parentNode;
   });
 
   describe("rendering", function() {
@@ -124,43 +125,100 @@ describe("SelectorMenu", function() {
 
   describe('controlled component with selection', function() {
     beforeEach(function() {
-      this.selector.setProps({
-        selection: 'Sam B.',
-        optionsList: [{ title: 'Sam B.' }, { title: 'Flora W.' }, { title: 'Justin A.' }, { title: 'Nick S.' }]
-      });
+      this.options = [
+        {title: 'Sam B.'},
+        {title: 'Flora W.'},
+        {title: 'Justin A.'},
+        {title: 'Nick S.'}
+      ];
     });
     it('renders the label correctly', function() {
-      let label = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label'));
+      let selector = (
+        <SelectorMenu
+          selection='Sam B.'
+          optionsList={this.options}
+          defaultSelection="All"
+          onSelectionChange={sinon.spy()}
+        />
+      );
+      ReactDOM.render(selector, this.documentNode);
+
+      let label = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(selector, 'selector__label'));
       assert.equal('Sam B.', label.textContent);
     });
     it('renders the list correctly', function() {
-      let list = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options'));
+      let selector = (
+        <SelectorMenu
+          selection='Sam B.'
+          optionsList={this.options}
+          defaultSelection="All"
+          onSelectionChange={sinon.spy()}
+        />
+      );
+      ReactDOM.render(selector, this.documentNode);
+
+      let list = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(selector, 'selector__options'));
       assert.lengthOf(list.children, 4);
     });
     it('adds an unexpected value to the rendered options list', function() {
-      this.selector.setProps({ selection: 'Unassigned' })
-      let list = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options'));
+      let selector = (
+        <SelectorMenu
+          selection='Unassigned'
+          optionsList={this.options}
+          defaultSelection="All"
+          onSelectionChange={sinon.spy()}
+        />
+      );
+      ReactDOM.render(selector, this.documentNode);
+
+      let list = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(selector, 'selector__options'));
       assert.lengthOf(list.children, 5);
     });
     it('renders the default label when selection is empty', function() {
-      this.selector.setProps({ selection: '', defaultSelection: 'Foo' });
-      let label = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label'));
+      let selector = (
+        <SelectorMenu
+          selection=''
+          optionsList={this.options}
+          defaultSelection='Foo'
+          onSelectionChange={sinon.spy()}
+        />
+      );
+      ReactDOM.render(selector, this.documentNode);
+
+      let label = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(selector, 'selector__label'));
       assert.equal('Foo', label.textContent);
     });
     it('overrides selection when new options are passed in', function() {
-      this.selector.setProps({ selection: '' });
+      let buildSelector = (opts) => {
+        return (
+          <SelectorMenu
+            selection={opts.selection}
+            optionsList={opts.options}
+            defaultSelection='Foo'
+            onSelectionChange={sinon.spy()}
+          />
+        );
+      };
+
+      let selector = buildSelector({selection: '', options: this.options});
+      ReactDOM.render(selector, this.documentNode);
 
       // Mock the internal state as if the input changed
-      this.selector.setState({ selected: 'Flora W.' });
-      let label = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label'));
+      selector.selectOption('Flora W.');
+      let label = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(selector, 'selector__label'));
       assert.equal('Flora W.', label.textContent, 'renders when state set');
 
       // Update the optionsList, which should clear out previous state
-      this.selector.setProps({ optionsList: [{ title: 'Foo B.' }] });
-      label = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__label'));
+      let newOpts = [
+        {title: 'Foo B.'}
+      ];
+      selector = buildSelector({options: newOpts});
+      ReactDOM.render(selector, this.documentNode);
+
+      label = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(selector, 'selector__label'));
       assert.equal('All', label.textContent, 'renders the default label');
 
-      let list = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(this.selector, 'selector__options'));
+      let list = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(selector, 'selector__options'));
       assert.lengthOf(list.children, 2, 'renders the new options list');
     });
   });
