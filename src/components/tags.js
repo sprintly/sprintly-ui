@@ -32,7 +32,7 @@ const Tags = React.createClass({
    * If navigatorUtility prop passed in, will trigger navigation event to tag-filtered
    * view. Alternatively, pass in a different callback to trigger some other event.
    */
-  onTagClick(tag, event) {
+  onTagClick(event, tag) {
     if (this.props.navigatorUtility) {
       this.props.navigatorUtility.setTagFilterAndRoute(tag);
     } else if (this.props.altOnTagClick) {
@@ -55,7 +55,7 @@ const Tags = React.createClass({
     let len = this.props.tags.length;
     if (len === 1) {
       wrapped = (
-        <button className='tags__tag' onClick={() => { return this.onTagClick(this.props.tags[0]); }}>
+        <button className='tags__tag' onClick={(event) => { return this.onTagClick(event, this.props.tags[0]); }}>
           {this.props.tags}
         </button>
       );
@@ -86,7 +86,7 @@ const Tags = React.createClass({
       let maybeComma = i === (arr.length - 1) ? '' : ',';
       return (
         <li key={'tag' + ':' + i} className='tags__list expanded'>
-          <button className='tags__tag' onClick={() => { return this.onTagClick(tag); }}>
+          <button className='tags__tag' onClick={(event) => { return this.onTagClick(event, tag); }}>
             {tag}
           </button>{maybeComma}
         </li>

@@ -9,7 +9,7 @@ var serveStatic = require('serve-static');
 var openPage = require('open');
 
 /*
- *
+ * Dev
  */
 gulp.task('dev-server', function() {
   var tests = connect();

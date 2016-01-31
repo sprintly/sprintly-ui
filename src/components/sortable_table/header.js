@@ -40,7 +40,7 @@ const TableHeader = React.createClass({
    * Grabs table type and sort option and passes to sort callback.
    * Flips direction in direction hash.
    */
-  onLabelClick(columnName, event) {
+  onLabelClick(event, columnName) {
     let direction = this.state.directionHash[columnName] === 'ascending' ? 'descending' : 'ascending';
     let updatedHash = assign({}, this.state.directionHash, {
       [columnName]: direction
@@ -58,8 +58,9 @@ const TableHeader = React.createClass({
    */
   render() {
     let props = this.props;
-    let control = props.isBulkEditable ?
-        <th key='control' className='sortable__label control' /> : '';
+    let control = props.isBulkEditable ? (
+      <th key='control' className='sortable__label control' />
+    ) : null;
 
     let expander = props.columns.indexOf('product') >= 0 ?
       (
@@ -69,20 +70,23 @@ const TableHeader = React.createClass({
             onExpanderClick={props.onExpanderClick}
           />
         </th>
-      ) : '';
+      ) : null;
 
-    let labels = props.columns.map((column) => {
+    let labels = [];
+    props.columns.forEach((column) => {
       // We don't want to render a label for the control column (ie, 'products')
-      return column !== 'product' ? (
-        <th key={column} title='click to sort' className='sortable__label'>
-          <button
-            className={'sortable__button ' + column.replace(' ', '-')}
-            key={column}
-            onClick={() => { return this.onLabelClick(column.toLowerCase()); }}>
-            {column}
-          </button>
-        </th>
-      ) : '';
+      if (column !== 'product') {
+        labels.push(
+          <th key={column} title='click to sort' className='sortable__label'>
+            <button
+              className={'sortable__button ' + column.replace(' ', '-')}
+              key={column}
+              onClick={(event) => { return this.onLabelClick(event, column.toLowerCase()); }}>
+              {column}
+            </button>
+          </th>
+        );
+      }
     });
 
     return (

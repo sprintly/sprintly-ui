@@ -1,5 +1,3 @@
-require('es5-shim');
-
 var chai = require('chai');
 window.assert = chai.assert;
 

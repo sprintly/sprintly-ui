@@ -1,5 +1,5 @@
 import React from 'react';
-import clickOutside from '@sprintly/react-onclickoutside';
+import clickOutsideWrapper from 'react-click-outside';
 /*
  * Estimator element displays item score that, when clicked, opens a menu
  * for editing the current score. Expects an estimate changer utility object
@@ -17,10 +17,6 @@ const Estimator = React.createClass({
     5: 'L',
     8: 'XL'
   },
-
-  mixins: [
-    clickOutside
-  ],
 
   propTypes: {
     modelId: React.PropTypes.arrayOf(React.PropTypes.number),
@@ -61,7 +57,7 @@ const Estimator = React.createClass({
     });
   },
 
-  onScoreChange(newScore, event) {
+  onScoreChange(event, newScore) {
     if (this.props.readOnly || !this.props.estimateChanger) {
       return;
     }
@@ -86,7 +82,7 @@ const Estimator = React.createClass({
           <li key={score} className='estimator__score'>
             <button
               className={'estimator__button ' + this.props.itemType}
-              onClick={() => { return this.onScoreChange(score); }}>
+              onClick={(event) => { return this.onScoreChange(event, score); }}>
               {this.ESTIMATE_HASH[score]}
             </button>
           </li>
@@ -114,4 +110,4 @@ const Estimator = React.createClass({
   }
 });
 
-export default Estimator;
+export default clickOutsideWrapper(Estimator);

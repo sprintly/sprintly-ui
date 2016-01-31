@@ -1,5 +1,5 @@
 import React from 'react';
-import clickOutside from '@sprintly/react-onclickoutside';
+import clickOutsideWrapper from 'react-click-outside';
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -16,10 +16,6 @@ const TagEditor = React.createClass({
     tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     tagChanger: React.PropTypes.object
   },
-
-  mixins: [
-    clickOutside
-  ],
 
   getDefaultProps() {
     return {
@@ -56,7 +52,7 @@ const TagEditor = React.createClass({
     });
   },
 
-  handleRemoveClick(tag, event) {
+  handleRemoveClick(event, tag) {
     event.stopPropagation();
 
     if (this.props.readOnly || !this.props.tagChanger) {
@@ -135,7 +131,7 @@ const TagEditor = React.createClass({
     return this.props.tags.map((tag) => {
       return (
         <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
-          <button className='tag_editor__tag' onClick={() => { return this.handleRemoveClick(tag); }}>
+          <button className='tag_editor__tag' onClick={(event) => { return this.handleRemoveClick(event, tag); }}>
             <i className='tag_editor__delete_icon' />
           </button>
           {tag}
@@ -145,4 +141,4 @@ const TagEditor = React.createClass({
   }
 });
 
-export default TagEditor;
+export default clickOutsideWrapper(TagEditor);

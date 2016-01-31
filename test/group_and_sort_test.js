@@ -1,5 +1,6 @@
 import GroupSort from '../src/utils/group_and_sort';
 import pluck from 'lodash.pluck';
+import assign from 'object-assign';
 import sinon from 'sinon';
 
 
@@ -57,31 +58,7 @@ describe("GroupSort", function() {
       let result = GroupSort.prepareArrayForSort(items, memberParents, matchingParents);
 
       assert.deepEqual(pluck(result, 'number'), [6,2]);
-      assert.isFalse(pluck(result, 'testing').length);
-    });
-
-    it('should convert passed-in properties to the correct item property lookup', function() {
-      let actual = [];
-      let stub = sinon.stub(GroupSort, 'sort', (arr, prop, dir) => {
-        actual.push(prop);
-        return;
-      });
-
-      let items = [genItem(1,2)];
-      let expected = ['product.name', 'assigned_to.first_name',
-        'assigned_to.first_name', 'created_by.first_name', 'created_by.first_name',
-        'created_at', 'created_at'];
-
-      GroupSort.groupSort(items, 'product', 'ascending');
-      GroupSort.groupSort(items, 'assigned to', 'ascending');
-      GroupSort.groupSort(items, 'assigned_to', 'ascending');
-      GroupSort.groupSort(items, 'created by', 'ascending');
-      GroupSort.groupSort(items, 'created_by', 'ascending');
-      GroupSort.groupSort(items, 'created', 'ascending');
-      GroupSort.groupSort(items, 'created_at', 'ascending');
-
-      assert.deepEqual(actual, expected);
-      stub.restore();
+      assert.equal(result.filter((r) => {return r.testing}).length, 0);
     });
   });
 

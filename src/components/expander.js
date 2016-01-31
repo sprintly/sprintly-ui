@@ -29,12 +29,12 @@ const Expander = React.createClass({
       <div className={'expander ' + className}>
         <button
           className={buttonClass + (expanded ? ' expand active' : ' expand')}
-          onClick={() => { return this.props.onExpanderClick(true); }}>
+          onClick={(event) => { return this.props.onExpanderClick(event, true); }}>
           <i className={iconClass + (expanded ? ' expand active' : ' expand')} />
         </button>
         <button
           className={buttonClass + (!expanded ? ' condense active' : ' condense')}
-          onClick={() => { return this.props.onExpanderClick(false); }}>
+          onClick={(event) => { return this.props.onExpanderClick(event, false); }}>
           <i className={iconClass + (!expanded ? ' condense active' : ' condense')} />
         </button>
       </div>

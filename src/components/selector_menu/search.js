@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const Search = React.createClass({
 
@@ -24,7 +23,7 @@ const Search = React.createClass({
   },
 
   componentDidUpdate() {
-    ReactDOM.findDOMNode(this).focus();
+    this.refs.input.focus();
   },
 
   handleChange(event) {
@@ -49,13 +48,16 @@ const Search = React.createClass({
 
   render() {
     return (
-      <input
-        className='selector__searchbox'
-        type='text'
-        value={this.state.value}
-        onKeyDown={this.maybeSubmit}
-        onChange={this.handleChange}
-      />
+      <div>
+        <input
+          ref='input'
+          className='selector__searchbox'
+          type='text'
+          value={this.state.value}
+          onKeyDown={this.maybeSubmit}
+          onChange={this.handleChange}
+        />
+      </div>
     );
   }
 });

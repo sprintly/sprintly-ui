@@ -7,6 +7,7 @@ import Header from '../src/components/sortable_table/header';
 import Row from '../src/components/sortable_table/row';
 import Expander from '../src/components/expander';
 import Estimator from '../src/components/estimator';
+import Status from '../src/components/status';
 import Tags from '../src/components/tags';
 import TagEditor from '../src/components/tag_editor';
 
@@ -67,23 +68,19 @@ describe('SortableTable', function() {
     it('should render the product name as a permalink', function() {
       let row = TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0];
       let rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
-      let anchors = TestUtils.scryRenderedDOMComponentsWithTag(rowCols[0], 'a');
+      let node = ReactDOM.findDOMNode(rowCols[0]).getElementsByTagName('a')[0];
 
       let item = this.items[0];
-      let node = ReactDOM.findDOMNode(anchors[0]);
-
       assert.equal(node.text, item.product.name);
       assert.include(node.href, item.product.id);
     });
 
-    it('should render the item number be a permalink', function() {
+    it('should render the item number as a permalink', function() {
       let row = TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0];
       let rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
-      let anchors = TestUtils.scryRenderedDOMComponentsWithTag(rowCols[1], 'a');
+      let node = ReactDOM.findDOMNode(rowCols[1]).getElementsByTagName('a')[0];
 
       let item = this.items[0];
-      let node = ReactDOM.findDOMNode(anchors[0]);
-
       assert.equal(node.text, '#' + item.number);
       assert.include(node.href, item.product.id + '/item/' + item.number);
     });

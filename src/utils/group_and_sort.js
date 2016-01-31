@@ -61,7 +61,6 @@ export function groupSort(jsonArray, property, direction) {
     reverseSort(sort(preparedItems, property));
 };
 
-
 /*
  * Makes a hash of unique parent ids ("productId:parentNumber") for each:
  * first, all the array's subitems' parents - whether the parent is a member of

@@ -1,5 +1,6 @@
 import React from 'react';
 import Estimator from '../estimator';
+import Status from '../status';
 import Tags from '../tags';
 import TagEditor from '../tag_editor';
 import moment from 'moment';
@@ -9,7 +10,7 @@ import moment from 'moment';
  * Row accepts expanded prop for controlling whether the row appears
  * condensed (default) or optionally expanded (if using row with the sortable TableHeader.
  * Toggling between the two states happens via the Expander element in TableHeader.)
- * TODO(fw): reorg styles so don't have to calculate here.
+ * @TODO: reorg styles so don't have to calculate here.
  */
 
 function abbreviateUsername(user) {
@@ -39,11 +40,10 @@ const TableRow = React.createClass({
       title: this.buildTitleCell,
       tags: this.buildTagsCell,
       'created by': this.buildCreatedByCell,
+      'assigned to': this.buildAssigneeCell,
       created: this.buildCreatedAtCell
     };
 
-    console.log("METHOD: " + methodMap[column]);
-    console.log("COLUMN: " + column);
     return methodMap[column](className, id);
   },
 
@@ -172,6 +172,11 @@ const TableRow = React.createClass({
         {abbreviateUsername(this.props.model.created_by)}
       </div>
     );
+  },
+
+  buildAssigneeCell(classes, mId) {
+    // @TODO
+    return (<div></div>);
   },
 
   buildTitleCell(classes) {

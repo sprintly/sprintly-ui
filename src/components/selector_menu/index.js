@@ -5,7 +5,7 @@ import fuzzy from 'fuzzy';
 import Label from './label';
 import List from './list';
 import Search from './search';
-import clickOutside from '@sprintly/react-onclickoutside';
+import clickOutsideWrapper from 'react-click-outside';
 
 /*
  * Renders dropdown showing currently selected options,
@@ -18,6 +18,9 @@ import clickOutside from '@sprintly/react-onclickoutside';
  * NOTE:
  * Options in optionsList must have either a 'title' or a 'name' property.
  *
+ * @TODO: this needs to be restructured. It's ultimately really difficult to
+ * work with (and test) a component that has to juggle props and state to
+ * accommodate external input for selection value.
  */
 
 const SelectorMenu = React.createClass({
@@ -27,10 +30,6 @@ const SelectorMenu = React.createClass({
     optionsList: React.PropTypes.array,
     onSelectionChange: React.PropTypes.func.isRequired
   },
-
-  mixins: [
-    clickOutside
-  ],
 
   getDefaultProps() {
     return {
@@ -52,9 +51,7 @@ const SelectorMenu = React.createClass({
     let diff = [];
 
     nextProps.optionsList.forEach((option, idx) => {
-      let attr = option.title ? 'title' : 'name';
-      let c = currentOptions[idx];
-      if (option[attr] !== c[attr]) {
+      if (option[attr] !== currentOptions[idx][attr]) {
         diff.push(option);
       }
     });
@@ -65,6 +62,14 @@ const SelectorMenu = React.createClass({
         selected: ''
       });
     }
+  },
+
+  handleClickOutside(event) {
+    event.stopPropagation();
+
+    this.setState({
+      expanded: false
+    });
   },
 
   /*
@@ -81,14 +86,6 @@ const SelectorMenu = React.createClass({
     });
 
     return options;
-  },
-
-  handleClickOutside(event) {
-    event.stopPropagation();
-
-    this.setState({
-      expanded: false
-    });
   },
 
   onLabelClicked() {
@@ -179,4 +176,4 @@ const SelectorMenu = React.createClass({
   }
 });
 
-export default SelectorMenu;
+export default clickOutsideWrapper(SelectorMenu);

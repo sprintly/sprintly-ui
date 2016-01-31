@@ -43,7 +43,7 @@ const SortableTable = React.createClass({
     };
   },
 
-  onExpandClicked(expanded) {
+  onExpandClicked(event, expanded) {
     if (expanded !== this.state.expanded) {
       this.setState({
         expanded: expanded

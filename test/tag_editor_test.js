@@ -136,7 +136,7 @@ describe('TagEditor', function() {
     TestUtils.Simulate.click(button);
 
     let deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
-    TestUtils.Simulate.click(deleteButton);
+    TestUtils.Simulate.click(deleteButton, {stopPropagation:sinon.stub()});
 
     sinon.assert.calledOnce(stub.addOrRemove);
     sinon.assert.calledWith(stub.addOrRemove, [1,1], currentTags, 'test', 'remove');
@@ -156,7 +156,7 @@ describe('TagEditor', function() {
     TestUtils.Simulate.click(button);
 
     let deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
-    TestUtils.Simulate.click(deleteButton);
+    TestUtils.Simulate.click(deleteButton, {stopPropagation:sinon.stub()});
 
     assert.isFalse(tagEditor.state.showMenu);
     assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
@@ -176,7 +176,7 @@ describe('TagEditor', function() {
     TestUtils.Simulate.click(button);
 
     let deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
-    TestUtils.Simulate.click(deleteButton);
+    TestUtils.Simulate.click(deleteButton, {stopPropagation:sinon.stub()});
 
     assert.isTrue(tagEditor.state.showMenu);
     assert.ok(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
