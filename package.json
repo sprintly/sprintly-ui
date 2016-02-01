@@ -19,7 +19,8 @@
     "lodash.sortby": "^4.0.0",
     "lodash.union": "^4.0.1",
     "object-assign": "^4.0.1",
-    "object-path": "^0.9.0"
+    "object-path": "^0.9.0",
+    "react-click-outside": "^2.1.0"
   },
   "peerDependencies": {
     "moment": "^2.10.6",
@@ -99,9 +100,7 @@
     "ui library",
     "components",
     "ui components",
-    "component library",
-    "quickleft",
-    "quick left"
+    "component library"
   ],
   "author": "Sprintly Team (http://sprint.ly/)",
   "license": "BSD-2-Clause"
