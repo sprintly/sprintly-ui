@@ -4,5 +4,5 @@ npm-debug.log
 test/build.js*
 test/coverage/
 coverage/
-dist/css/
-dist/js/
+dist/js/**.js
+dist/css/*.css
