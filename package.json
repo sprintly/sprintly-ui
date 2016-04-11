@@ -19,8 +19,7 @@
     "lodash.sortby": "^4.0.0",
     "lodash.union": "^4.0.1",
     "object-assign": "^4.0.1",
-    "object-path": "^0.9.0",
-    "react-click-outside": "^2.1.0"
+    "object-path": "^0.9.0"
   },
   "peerDependencies": {
     "moment": "^2.10.6",
@@ -46,6 +45,7 @@
     "less": "^2.6.0",
     "mocha": "^2.4.5",
     "moment": "^2.10.6",
+    "nodemon": "^1.9.1",
     "open": "^0.0.5",
     "phantomjs": "1.9.7-15",
     "react": "^0.14.6",

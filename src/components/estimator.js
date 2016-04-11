@@ -1,5 +1,4 @@
 import React from 'react';
-import clickOutsideWrapper from 'react-click-outside';
 /*
  * Estimator element displays item score that, when clicked, opens a menu
  * for editing the current score. Expects an estimate changer utility object
@@ -39,8 +38,10 @@ const Estimator = React.createClass({
     };
   },
 
-  handleClickOutside(event) {
-    event.stopPropagation();
+  onClickOff(event) {
+    if (event.target.className === "estimator__button") {
+      return;
+    }
 
     this.setState({
       menuOpen: false
@@ -99,15 +100,20 @@ const Estimator = React.createClass({
     }
 
     return (
-      <div className='estimator__score'>
-        <button className={'estimator__button ' + this.props.itemType}
-          onClick={this.onScoreClick}>
-          {currentScore}
-        </button>
-        {scoreMenu}
+      <div>
+        <div className='estimator__score'>
+          <button className={'estimator__button ' + this.props.itemType}
+            onClick={this.onScoreClick}>
+            {currentScore}
+          </button>
+          {scoreMenu}
+        </div>
+        {this.state.menuOpen ? (
+          <div className="layer__click-off" onClick={event => this.onClickOff(event)} />
+        ) : null}
       </div>
     );
   }
 });
 
-export default clickOutsideWrapper(Estimator);
+export default Estimator;

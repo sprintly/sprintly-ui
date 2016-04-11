@@ -5,7 +5,6 @@ import fuzzy from 'fuzzy';
 import Label from './label';
 import List from './list';
 import Search from './search';
-import clickOutsideWrapper from 'react-click-outside';
 
 /*
  * Renders dropdown showing currently selected options,
@@ -64,8 +63,10 @@ const SelectorMenu = React.createClass({
     }
   },
 
-  handleClickOutside(event) {
-    event.stopPropagation();
+  onClickOff(event) {
+    if (event.target.className === "option") {
+      return;
+    }
 
     this.setState({
       expanded: false
@@ -153,27 +154,32 @@ const SelectorMenu = React.createClass({
     let selected = this.props.selection || this.state.selected || this.props.defaultSelection;
 
     return (
-      <div className={wrapperClass}>
-        <Label
-          selected={selected}
-          onLabelClick={this.onLabelClicked}
-        />
-        <div className={innerClass}>
-          <Search
-            ref='searchInput'
-            filterList={this.filterList}
-            clearInput={this.state.clearInput}
-            processSearchInput={this.processSearchInput}
+      <div>
+        <div className={wrapperClass}>
+          <Label
+            selected={selected}
+            onLabelClick={this.onLabelClicked}
           />
-          <List
-            defaultSelection={selected}
-            optionNames={visible}
-            onOptionSelect={this.selectOption}
-          />
+          <div className={innerClass}>
+            <Search
+              ref='searchInput'
+              filterList={this.filterList}
+              clearInput={this.state.clearInput}
+              processSearchInput={this.processSearchInput}
+            />
+            <List
+              defaultSelection={selected}
+              optionNames={visible}
+              onOptionSelect={this.selectOption}
+            />
+          </div>
         </div>
+        {this.state.expanded ? (
+          <div className="layer__click-off" onClick={event => this.onClickOff(event)} />
+        ) : null}
       </div>
     );
   }
 });
 
-export default clickOutsideWrapper(SelectorMenu);
+export default SelectorMenu;

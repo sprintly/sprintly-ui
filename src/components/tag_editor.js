@@ -1,5 +1,4 @@
 import React from 'react';
-import clickOutsideWrapper from 'react-click-outside';
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -31,8 +30,10 @@ const TagEditor = React.createClass({
     };
   },
 
-  handleClickOutside(event) {
-    event.stopPropagation();
+  onClickOff(event) {
+    if (event.target.className === "tag_editor__tag") {
+      return;
+    }
 
     this.setState({
       showMenu: false
@@ -93,6 +94,19 @@ const TagEditor = React.createClass({
     this.setState(newState);
   },
 
+  buildTagList() {
+    return this.props.tags.map((tag) => {
+      return (
+        <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
+          <button className='tag_editor__tag' onClick={(event) => { return this.handleRemoveClick(event, tag); }}>
+            <i className='tag_editor__delete_icon' />
+          </button>
+          {tag}
+        </li>
+      );
+    });
+  },
+
   render() {
     let tagsLength = this.props.tags.length;
     let addTagText = tagsLength ? '' : 'Add a tag.';
@@ -117,28 +131,20 @@ const TagEditor = React.createClass({
       ) : '';
 
     return (
-      <div className='tag_editor__wrapper' key={this.props.modelId}>
-        <button className='tag_editor__tag' onClick={this.handleEditClick}>
-          <i className='tag_editor__edit_icon' />
-          {addTagText}
-        </button>
-        {tagEditMenu}
+      <div className="tag_editor">
+        <div className='tag_editor__wrapper' key={this.props.modelId}>
+          <button className='tag_editor__tag' onClick={this.handleEditClick}>
+            <i className='tag_editor__edit_icon' />
+            {addTagText}
+          </button>
+          {tagEditMenu}
+        </div>
+        {this.state.showMenu ? (
+          <div className="layer__click-off" onClick={event => this.onClickOff(event)} />
+        ) : null}
       </div>
     );
-  },
-
-  buildTagList() {
-    return this.props.tags.map((tag) => {
-      return (
-        <li className='tag_editor__wrapper in-menu' key={this.props.modelId + ':' + tag}>
-          <button className='tag_editor__tag' onClick={(event) => { return this.handleRemoveClick(event, tag); }}>
-            <i className='tag_editor__delete_icon' />
-          </button>
-          {tag}
-        </li>
-      );
-    });
   }
 });
 
-export default clickOutsideWrapper(TagEditor);
+export default TagEditor;
