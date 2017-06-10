@@ -1,6 +1,8 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
 var _ = require('lodash');
 var onClickOutside = require('@sprintly/react-onclickoutside');
+var createReactClass = require('create-react-class');
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -9,13 +11,13 @@ var onClickOutside = require('@sprintly/react-onclickoutside');
  * you'll probably want to pass those in.
  */
 
-var TagEditor = React.createClass({
+var TagEditor = createReactClass({
 
   propTypes: {
-    modelId: React.PropTypes.arrayOf(React.PropTypes.number),
-    readOnly: React.PropTypes.bool,
-    tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    tagChanger: React.PropTypes.object
+    modelId: PropTypes.arrayOf(PropTypes.number),
+    readOnly: PropTypes.bool,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    tagChanger: PropTypes.object
   },
 
   mixins: [

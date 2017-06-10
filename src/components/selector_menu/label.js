@@ -1,11 +1,13 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 
 
-var Label = React.createClass({
+var Label = createReactClass({
 
   propTypes: {
-    selected: React.PropTypes.string,
-    onClick: React.PropTypes.func.isRequired
+    selected: PropTypes.string,
+    onClick: PropTypes.func.isRequired
   },
 
   getDefaultProps: function() {

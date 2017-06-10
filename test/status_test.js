@@ -1,6 +1,6 @@
 var _ = require('lodash');
-var React = window.React || require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = window.React || require('react');
+var ReactTestUtils = require('react-dom/test-utils');
 var sinon = require('sinon');
 var Status = require('../src/components/status');
 

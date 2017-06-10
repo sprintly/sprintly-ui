@@ -1,12 +1,15 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var ReactDOM = require('react-dom');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 
 
-var Search = React.createClass({
+var Search = createReactClass({
 
   propTypes: {
-    inputOverride: React.PropTypes.string,
-    filterList: React.PropTypes.func.isRequired,
-    processSearchInput: React.PropTypes.func.isRequired
+    inputOverride: PropTypes.string,
+    filterList: PropTypes.func.isRequired,
+    processSearchInput: PropTypes.func.isRequired
   },
 
   getInitialState: function() {
@@ -24,7 +27,7 @@ var Search = React.createClass({
   },
 
   componentDidUpdate: function() {
-    React.findDOMNode(this).focus();
+    ReactDOM.findDOMNode(this).focus();
   },
 
   handleChange: function(ev) {

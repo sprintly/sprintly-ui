@@ -1,5 +1,8 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
 var onClickOutside = require('@sprintly/react-onclickoutside');
+var createReactClass = require('create-react-class');
+
 /*
  * Estimator element displays item score that, when clicked, opens a menu
  * for editing the current score. Expects an estimate changer utility object
@@ -7,7 +10,7 @@ var onClickOutside = require('@sprintly/react-onclickoutside');
  * and syncing any changes with the backend.
  */
 
-var Estimator = React.createClass({
+var Estimator = createReactClass({
   ALL_ESTIMATES: [0, 1, 3, 5, 8],
 
   ESTIMATE_HASH: {
@@ -23,11 +26,11 @@ var Estimator = React.createClass({
   ],
 
   propTypes: {
-    modelId: React.PropTypes.arrayOf(React.PropTypes.number),
-    readOnly: React.PropTypes.bool,
-    itemType: React.PropTypes.string.isRequired,
-    score: React.PropTypes.string.isRequired,
-    estimateChanger: React.PropTypes.object
+    modelId: PropTypes.arrayOf(PropTypes.number),
+    readOnly: PropTypes.bool,
+    itemType: PropTypes.string.isRequired,
+    score: PropTypes.string.isRequired,
+    estimateChanger: PropTypes.object
   },
 
   getDefaultProps: function() {

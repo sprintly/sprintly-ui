@@ -1,15 +1,17 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 
 /*
  * Buttons for toggling the expanded/condensed state of
  * column items and table rows.
  */
 
-var Expander = React.createClass({
+var Expander = createReactClass({
 
   propTypes: {
-    expanded: React.PropTypes.bool,
-    onExpanderClick: React.PropTypes.func.isRequired
+    expanded: PropTypes.bool,
+    onExpanderClick: PropTypes.func.isRequired
   },
 
   getDefaultProps: function() {

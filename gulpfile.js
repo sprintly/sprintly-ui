@@ -40,7 +40,7 @@ var jsDist = 'sprintly-ui.js';
 var jsMapDist = './dist/js/sprintly-ui.js.map';
 
 function bundle(b) {
-  return b.transform(babelify)
+  return b.transform('babelify', {presets: ["es2015", "react"]})
     .bundle()
     .pipe(exorcist(jsMapDist))
     .pipe(source(jsDist))
@@ -49,6 +49,9 @@ function bundle(b) {
 
 gulp.task('build', function() {
   var bundler = browserify(jsSrc, appArgs);
+  bundler.external('react/addons');
+  bundler.external('react/lib/ReactContext');
+  bundler.external('react/lib/ExecutionEnvironment');
   return bundle(bundler);
 });
 
@@ -107,7 +110,7 @@ var testDist = 'build.js';
 var testMapDist = './test/build.js.map';
 
 function bundleTests(b) {
-  return b.transform(babelify)
+  return b.transform('babelify', {presets: ["es2015", "react"]})
     .transform(istanbulify({ignore: ["**/node_modules/**","**/test/**"]}))
     .bundle()
     .pipe(exorcist(testMapDist))
@@ -117,6 +120,9 @@ function bundleTests(b) {
 
 gulp.task('build-test', function() {
   var bundler = browserify(testSrc, testArgs);
+  bundler.external('react/addons');
+  bundler.external('react/lib/ReactContext');
+  bundler.external('react/lib/ExecutionEnvironment');
   return bundleTests(bundler);
 });
 

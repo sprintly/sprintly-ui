@@ -1,5 +1,6 @@
 var GroupSort = require('../src/utils/group_and_sort');
 var sinon = require('sinon');
+var _ = require('lodash');
 
 var productMap = ['sprintly', 'mystery wagon', 'star wars', 'blues clues'];
 
@@ -39,10 +40,10 @@ describe("GroupSort", function() {
     it('should pull all subitem parents into top-level of array', function() {
       var items = [genItem(2,1,6), genItem(4,3,8)];
       var lookups = GroupSort.createParentLookups(items);
-      var result = _.pluck(GroupSort.prepareArrayForSort(items, lookups.parents, lookups.matched), 'number');
+      var result = _.map(GroupSort.prepareArrayForSort(items, lookups.parents, lookups.matched), 'number');
 
-      assert.isTrue(_.contains(result, 6));
-      assert.isTrue(_.contains(result, 8));
+      assert.isTrue(_.includes(result, 6));
+      assert.isTrue(_.includes(result, 8));
     });
 
     it('should not add nonMatching parents from previous', function() {
@@ -54,16 +55,17 @@ describe("GroupSort", function() {
       var matchingParents = {'1:6':true};
       var result = GroupSort.prepareArrayForSort(items, memberParents, matchingParents);
 
-      assert.deepEqual(_.pluck(result, 'number'), [6,2]);
-      assert.isTrue(_.compact(_.pluck(result, 'testing')).length === 0);
+      assert.deepEqual(_.map(result, 'number'), [6,2]);
+      assert.isTrue(_.compact(_.map(result, 'testing')).length === 0);
     });
 
     it('should convert passed-in properties to the correct item property lookup', function() {
       var actual = [];
-      var stub = sinon.stub(GroupSort, 'sort', function(arr, prop, dir) {
+      var stub = sinon.stub(GroupSort, 'sort').callsFake(function(arr, prop, dir) {
         actual.push(prop);
         return;
       });
+
       var items = [genItem(1,2)];
       var expected = ['product.name', 'assigned_to.first_name',
         'assigned_to.first_name', 'created_by.first_name', 'created_by.first_name',
@@ -88,7 +90,7 @@ describe("GroupSort", function() {
     it("should return top-level items in descending order by number by default", function() {
       var items = [genItem(2,1), genItem(1,2)];
       var actual = GroupSort.groupSort(items);
-      assert.deepEqual(_.pluck(actual, 'number'), [2,1]);
+      assert.deepEqual(_.map(actual, 'number'), [2,1]);
     });
 
     it("should pull the parent of the subitem and add to array if the parent is not already member", function() {
@@ -101,13 +103,13 @@ describe("GroupSort", function() {
     it("should use the parents' sort order as the basis for sort", function() {
       var items = [genItem(4,1), genItem(2,1), genItem(3,1,1)];
       var actual = GroupSort.groupSort(items); // default is descending by number
-      assert.deepEqual(_.pluck(actual, 'number'), [4, 2, 1, 3]);
+      assert.deepEqual(_.map(actual, 'number'), [4, 2, 1, 3]);
     });
 
     it("should handle change in sort direction appropriately", function() {
       var items = [genItem(3,2), genItem(1,2), genItem(1,1), genItem(2,1)];
       var actual = GroupSort.groupSort(items, 'number', 'ascending');
-      assert.deepEqual(_.pluck(actual, 'number'), [1, 1, 2, 3]);
+      assert.deepEqual(_.map(actual, 'number'), [1, 1, 2, 3]);
     });
 
     it('should sort by properties other than default "number"', function () {
@@ -134,7 +136,7 @@ describe("GroupSort", function() {
       var actual = GroupSort.groupSort(items, 'number', 'ascending');
       var expected = [1,4,5,2,3];
 
-      assert.deepEqual(_.pluck(actual, 'number'), expected);
+      assert.deepEqual(_.map(actual, 'number'), expected);
     });
 
     it('should also sort children after parent if decending', function() {
@@ -142,7 +144,7 @@ describe("GroupSort", function() {
       var actual = GroupSort.groupSort(items, 'number', 'descending');
       var expected = [11,5,6,8];
 
-      assert.deepEqual(_.pluck(actual, 'number'), expected);
+      assert.deepEqual(_.map(actual, 'number'), expected);
     });
 
     it('should respect product number when sorting and grouping subitems w/their parents', function() {

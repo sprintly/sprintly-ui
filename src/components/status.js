@@ -1,16 +1,18 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 
 /*
  * (WIP)
  * TODO(fw)
  */
 
-var Status = React.createClass({
+var Status = createReactClass({
   propTypes: {
-    modelId: React.PropTypes.arrayOf(React.PropTypes.number),
-    readOnly: React.PropTypes.bool,
-    status: React.PropTypes.number.isRequired,
-    statusChanger: React.PropTypes.object
+    modelId: PropTypes.arrayOf(PropTypes.number),
+    readOnly: PropTypes.bool,
+    status: PropTypes.number.isRequired,
+    statusChanger: PropTypes.object
   },
 
   mixins: [],

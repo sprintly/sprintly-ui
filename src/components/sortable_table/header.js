@@ -1,6 +1,8 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
 var _ = require('lodash');
 var Expander = require('../expander');
+var createReactClass = require('create-react-class');
 
 /*
  * Renders header bar where cells are clickable elements that trigger a
@@ -12,15 +14,15 @@ var Expander = require('../expander');
  */
 
 
-var TableHeader = React.createClass({
+var TableHeader = createReactClass({
 
   propTypes: {
-    tableType: React.PropTypes.string,
-    columns: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    expanded: React.PropTypes.bool,
-    isBulkEditable: React.PropTypes.bool,
-    onExpanderClick: React.PropTypes.func,
-    onLabelClick: React.PropTypes.func
+    tableType: PropTypes.string,
+    columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+    expanded: PropTypes.bool,
+    isBulkEditable: PropTypes.bool,
+    onExpanderClick: PropTypes.func,
+    onLabelClick: PropTypes.func
   },
 
   getInitialState: function() {
@@ -56,7 +58,7 @@ var TableHeader = React.createClass({
      * Render column labels and optionally render an expander element that proxies click events
      * to table (Note: we'll only render this if we have a control column to render it into).
      */
-    var hasProductColumn = _.contains(this.props.columns, 'product');
+    var hasProductColumn = _.includes(this.props.columns, 'product');
 
     var control = this.props.isBulkEditable ?
         <th key='control' className='sortable__label control' /> : null;
@@ -84,7 +86,7 @@ var TableHeader = React.createClass({
     // We don't want to render a label for the 'Control' column, so pop it off the list.
     var columns = _.without(this.props.columns, 'product');
 
-    return _.map(columns, function(column) {
+    return _.map(columns, _.bind(function(column) {
       return (
         <th key={column} title='click to sort' className='sortable__label'>
           <button className={'sortable__button ' + column.replace(' ', '-')} key={column}
@@ -93,7 +95,7 @@ var TableHeader = React.createClass({
           </button>
         </th>
       );
-    }, this);
+    }, this));
   }
 });
 

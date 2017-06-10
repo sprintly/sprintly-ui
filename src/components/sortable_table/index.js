@@ -1,7 +1,9 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
 var _ = require('lodash');
 var TableHeader = require('./header');
 var TableRow = require('./row');
+var createReactClass = require('create-react-class');
 
 /*
  * Takes an array of json objects (for example, a Backbone.Collection.toJSON())
@@ -14,19 +16,19 @@ var TableRow = require('./row');
  */
 
 
-var SortableTable = React.createClass({
+var SortableTable = createReactClass({
 
   propTypes: {
-    tableType: React.PropTypes.string,
-    label: React.PropTypes.string,
-    collection: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    columnNames: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    baseUrl: React.PropTypes.string,
-    onSortCollection: React.PropTypes.func,
-    isBulkEditable: React.PropTypes.bool,
-    onBulkSelect: React.PropTypes.func,
-    modelChangerUtilities: React.PropTypes.object,
-    navigatorUtility: React.PropTypes.object
+    tableType: PropTypes.string,
+    label: PropTypes.string,
+    collection: PropTypes.arrayOf(PropTypes.object).isRequired,
+    columnNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+    baseUrl: PropTypes.string,
+    onSortCollection: PropTypes.func,
+    isBulkEditable: PropTypes.bool,
+    onBulkSelect: PropTypes.func,
+    modelChangerUtilities: PropTypes.object,
+    navigatorUtility: PropTypes.object
   },
 
   getDefaultProps: function() {
@@ -56,7 +58,7 @@ var SortableTable = React.createClass({
   render: function() {
     var rows = [];
 
-    _.each(this.props.collection, function(model) {
+    _.each(this.props.collection, _.bind(function(model) {
       var modelId = [model.product.id, model.number];
       var rowProps = {
         key: modelId,
@@ -79,7 +81,7 @@ var SortableTable = React.createClass({
       rows.push(
         <TableRow {...rowProps} />
       );
-    }, this);
+    }, this));
 
     var headerProps = {
       tableType: this.props.tableType,

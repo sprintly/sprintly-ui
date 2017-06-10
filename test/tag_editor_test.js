@@ -1,6 +1,7 @@
 var _ = require('lodash');
-var React = window.React || require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = window.React || require('react');
+var ReactDOM = require('react-dom');
+var ReactTestUtils = require('react-dom/test-utils');
 var sinon = require('sinon');
 var TagEditor = require('../src/components/tag_editor');
 
@@ -10,30 +11,30 @@ var TagEditor = require('../src/components/tag_editor');
 
 describe('TagEditor', function() {
   it('should always render a tag edit icon', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={{}}
       />
     );
-    assert.ok(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'i'));
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'i'));
   });
 
   it('should also render "Add a tag." if the item has no tags', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={{}}
       />
     );
-    var button = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button'));
+    var button = ReactDOM.findDOMNode(ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button'));
     assert.equal(button.textContent, 'Add a tag.');
   });
 
   it('should not render the edit menu by default', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={["test", "test2"]}
@@ -42,22 +43,22 @@ describe('TagEditor', function() {
     );
 
     assert.isFalse(tagEditor.state.showMenu);
-    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
+    assert.notOk(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
   });
 
   it('should render the edit menu containing an input if "Add a tag." clicked', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={{}}
       />
     );
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    TestUtils.Simulate.click(button);
+    var button = ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    ReactTestUtils.Simulate.click(button);
 
-    assert.ok(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
-    assert.ok(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'input'));
+    assert.ok(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'input'));
   });
 
   it('should trigger an add event on tag change utility if a new tag is added', function() {
@@ -65,7 +66,7 @@ describe('TagEditor', function() {
       addOrRemove: sinon.stub()
     };
 
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
@@ -73,13 +74,13 @@ describe('TagEditor', function() {
       />
     );
     var form;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    TestUtils.Simulate.click(button);
+    var button = ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    ReactTestUtils.Simulate.click(button);
 
-    form = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
+    form = ReactDOM.findDOMNode(ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
     form.children[0].value = 'new tag';
-    TestUtils.Simulate.change(form.children[0]);
-    TestUtils.Simulate.submit(form);
+    ReactTestUtils.Simulate.change(form.children[0]);
+    ReactTestUtils.Simulate.submit(form);
 
     sinon.assert.calledOnce(stub.addOrRemove);
     sinon.assert.calledWith(stub.addOrRemove, [1,1], [], 'new tag', 'add');
@@ -90,7 +91,7 @@ describe('TagEditor', function() {
       addOrRemove: sinon.stub()
     };
 
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
@@ -98,30 +99,30 @@ describe('TagEditor', function() {
       />
     );
     var form;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    TestUtils.Simulate.click(button);
+    var button = ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    ReactTestUtils.Simulate.click(button);
 
-    form = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
+    form = ReactDOM.findDOMNode(ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'form'));
     form.children[0].value = 'new tag';
-    TestUtils.Simulate.change(form.children[0]);
-    TestUtils.Simulate.submit(form);
+    ReactTestUtils.Simulate.change(form.children[0]);
+    ReactTestUtils.Simulate.submit(form);
 
     assert.isFalse(tagEditor.state.showMenu);
-    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor__menu').length);
+    assert.notOk(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor__menu').length);
   });
 
   it('should render the current item tags in the edit menu if item has tags', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={["test", "test2"]}
         tagChanger={{}}
       />
     );
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    TestUtils.Simulate.click(button);
+    var button = ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    ReactTestUtils.Simulate.click(button);
 
-    assert.equal(TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'li').length, 2);
+    assert.equal(ReactTestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'li').length, 2);
   });
 
   it('should trigger a remove event on tag changer utility if tag is deleted from menu', function() {
@@ -130,7 +131,7 @@ describe('TagEditor', function() {
     };
     var currentTags = ["test", "test2"];
 
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={currentTags}
@@ -138,11 +139,11 @@ describe('TagEditor', function() {
       />
     );
     var deleteButton;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    TestUtils.Simulate.click(button);
+    var button = ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    ReactTestUtils.Simulate.click(button);
 
-    deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
-    TestUtils.Simulate.click(deleteButton);
+    deleteButton = ReactTestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
+    ReactTestUtils.Simulate.click(deleteButton);
 
     sinon.assert.calledOnce(stub.addOrRemove);
     sinon.assert.calledWith(stub.addOrRemove, [1,1], currentTags, 'test', 'remove');
@@ -153,7 +154,7 @@ describe('TagEditor', function() {
       addOrRemove: sinon.stub()
     };
 
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={["test"]}
@@ -161,14 +162,14 @@ describe('TagEditor', function() {
       />
     );
     var deleteButton;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    TestUtils.Simulate.click(button);
+    var button = ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    ReactTestUtils.Simulate.click(button);
 
-    deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
-    TestUtils.Simulate.click(deleteButton);
+    deleteButton = ReactTestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
+    ReactTestUtils.Simulate.click(deleteButton);
 
     assert.isFalse(tagEditor.state.showMenu);
-    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
+    assert.notOk(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
   });
 
   it('should not close the menu if there are still item tags left', function() {
@@ -176,7 +177,7 @@ describe('TagEditor', function() {
       addOrRemove: sinon.stub()
     };
 
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={["test", "test2"]}
@@ -184,29 +185,29 @@ describe('TagEditor', function() {
       />
     );
     var deleteButton;
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    TestUtils.Simulate.click(button);
+    var button = ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    ReactTestUtils.Simulate.click(button);
 
-    deleteButton = TestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
-    TestUtils.Simulate.click(deleteButton);
+    deleteButton = ReactTestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'i')[1];
+    ReactTestUtils.Simulate.click(deleteButton);
 
     assert.isTrue(tagEditor.state.showMenu);
-    assert.ok(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
+    assert.ok(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
   });
 
   it('should close the menu if the tag edit button is clicked a second time', function() {
-    var tagEditor = TestUtils.renderIntoDocument(
+    var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
         tags={[]}
         tagChanger={{}}
       />
     );
-    var button = TestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
-    TestUtils.Simulate.click(button);
-    TestUtils.Simulate.click(button);
+    var button = ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'button');
+    ReactTestUtils.Simulate.click(button);
+    ReactTestUtils.Simulate.click(button);
 
     assert.isFalse(tagEditor.state.showMenu);
-    assert.notOk(TestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
+    assert.notOk(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
   });
 });

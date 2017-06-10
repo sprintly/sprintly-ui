@@ -1,10 +1,12 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
 var _ = require('lodash');
 var Label = require('./label');
 var List = require('./list');
 var Search = require('./search');
 var fuzzy = require('fuzzy');
 var onClickOutside = require('@sprintly/react-onclickoutside');
+var createReactClass = require('create-react-class');
 
 /*
  * Renders dropdown showing currently selected options,
@@ -19,12 +21,12 @@ var onClickOutside = require('@sprintly/react-onclickoutside');
  *
  */
 
-var SelectorMenu = React.createClass({
+var SelectorMenu = createReactClass({
 
   propTypes: {
-    defaultSelection: React.PropTypes.string,
-    optionsList: React.PropTypes.array,
-    onSelectionChange: React.PropTypes.func.isRequired
+    defaultSelection: PropTypes.string,
+    optionsList: PropTypes.array,
+    onSelectionChange: PropTypes.func.isRequired
   },
 
   mixins: [
@@ -48,11 +50,11 @@ var SelectorMenu = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     var nextOptions = _.compact(
-      _.pluck(nextProps.optionsList, 'title').concat(_.pluck(nextProps.optionsList, 'name'))
+      _.map(nextProps.optionsList, 'title').concat(_.map(nextProps.optionsList, 'name'))
     );
 
     var currentOptions = _.compact(
-      _.pluck(this.props.optionsList, 'title').concat(_.pluck(this.props.optionsList, 'name'))
+      _.map(this.props.optionsList, 'title').concat(_.map(this.props.optionsList, 'name'))
     );
 
     if (_.difference(nextOptions, currentOptions).length > 0) {
@@ -71,7 +73,7 @@ var SelectorMenu = React.createClass({
       return option.title ? options.push(option.title) : options.push(option.name);
     });
 
-    return _.unique(options);
+    return _.uniq(options);
   },
 
   handleClickOutside: function(ev) {
@@ -125,7 +127,7 @@ var SelectorMenu = React.createClass({
       return;
     }
 
-    var visible = _.pluck(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
+    var visible = _.map(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
 
     this.setState({
       visible: visible,

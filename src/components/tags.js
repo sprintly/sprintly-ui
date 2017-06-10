@@ -1,4 +1,6 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 
 /*
  * Tags element displays either a textual list of tags ("one, two, three")
@@ -12,13 +14,13 @@ var React = window.React || require('react/addons');
  * conjunction with the TagEdit element.
  */
 
-var Tags = React.createClass({
+var Tags = createReactClass({
 
   propTypes: {
-    tags: React.PropTypes.arrayOf(React.PropTypes.string),
-    condensed: React.PropTypes.bool,
-    navigatorUtility: React.PropTypes.object,
-    altOnTagClick: React.PropTypes.func
+    tags: PropTypes.arrayOf(PropTypes.string),
+    condensed: PropTypes.bool,
+    navigatorUtility: PropTypes.object,
+    altOnTagClick: PropTypes.func
   },
 
   getDefaultProps: function() {

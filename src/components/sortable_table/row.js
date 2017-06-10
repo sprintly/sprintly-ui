@@ -1,10 +1,12 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
 var _ = require('lodash');
 var Estimator = require('../estimator');
 var Status = require('../status');
 var Tags = require('../tags');
 var TagEditor = require('../tag_editor');
 var moment = require('moment');
+var createReactClass = require('create-react-class');
 
 /*
  * Renders a single table row for displaying item data.
@@ -19,16 +21,16 @@ var abbreviateUsername = function (user) {
     user.first_name;
 };
 
-var TableRow = React.createClass({
+var TableRow = createReactClass({
   propTypes: {
-    model: React.PropTypes.object.isRequired,
-    columns: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    expanded: React.PropTypes.bool,
-    baseUrl: React.PropTypes.string,
-    modelChangerUtilities: React.PropTypes.object,
-    navigatorUtility: React.PropTypes.object,
-    isBulkEditable: React.PropTypes.bool,
-    onBulkSelect: React.PropTypes.func
+    model: PropTypes.object.isRequired,
+    columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+    expanded: PropTypes.bool,
+    baseUrl: PropTypes.string,
+    modelChangerUtilities: PropTypes.object,
+    navigatorUtility: PropTypes.object,
+    isBulkEditable: PropTypes.bool,
+    onBulkSelect: PropTypes.func
   },
 
   getCellBuilder: function(column, className, id) {
@@ -70,13 +72,13 @@ var TableRow = React.createClass({
       );
     }
 
-    _.each(this.props.columns, function(column) {
+    _.each(this.props.columns, _.bind(function(column) {
       cells.push(
         <td key={column + ':' + modelId} className='sortable__cell'>
           {this.getCellBuilder(column, wrapperClass, modelId)}
         </td>
       );
-    }, this);
+    }, this));
 
     return (
       <tr className={rowClass}>

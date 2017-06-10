@@ -57,8 +57,8 @@ GroupSort.groupSort = function(jsonArray, property, direction) {
   var preparedItems = GroupSort.prepareArrayForSort(jsonArray, parents, matched);
 
   return direction === 'ascending' ?
-    this.sort(preparedItems, property) :
-    this.reverseSort(this.sort(preparedItems, property));
+    GroupSort.sort(preparedItems, property) :
+    GroupSort.reverseSort(GroupSort.sort(preparedItems, property));
 };
 
 
@@ -144,7 +144,7 @@ GroupSort.sort = function(processedJson, property) {
    */
 
   return _.sortBy(processedJson, function(item) {
-    var itemProperty = this.parentPreferred(item, property);
+    var itemProperty = GroupSort.parentPreferred(item, property);
 
     if (typeof itemProperty === 'string') {
       itemProperty = property === 'score' ?
@@ -153,7 +153,7 @@ GroupSort.sort = function(processedJson, property) {
 
     return [
       itemProperty,
-      this.parentPreferred(item, 'number'),
+      GroupSort.parentPreferred(item, 'number'),
       item.product.id,
       !!item.parent,
       item.number

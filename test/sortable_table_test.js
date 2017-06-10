@@ -1,6 +1,7 @@
 var _ = require('lodash');
-var React = window.React || require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var mount = require('enzyme').mount;
+var React = window.React || require('react');
+var ReactDOM = require('react-dom');
 var sinon = require('sinon');
 
 var SortableTable = require('../src/components/sortable_table/index');
@@ -36,7 +37,7 @@ describe('SortableTable', function() {
         genItem(2,2,'bob',5),
         genItem(5,2,'amy')
       ];
-      this.sortable = TestUtils.renderIntoDocument(
+      this.sortable = mount(
         <SortableTable
           tableType="backlog"
           label="backlog"
@@ -45,95 +46,87 @@ describe('SortableTable', function() {
           onSortCollection={_.noop()}
         />
       );
-
-      this.node = React.findDOMNode(this.sortable);
     });
 
     it('should render a table header', function() {
-      assert.ok(TestUtils.findRenderedComponentWithType(this.sortable, Header));
+      assert.isOk(this.sortable.find(Header).exists());
     });
 
     it('should render a column for each in columnNames array prop', function() {
       // testing against number of <th> and <td>s in a single row.
-      var headerCols = TestUtils.scryRenderedDOMComponentsWithTag(this.sortable, 'th');
-      var row = TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0];
-      var rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
+      var headerCols = this.sortable.find('th');
+      var rowCols = this.sortable.find(Row).first().find('td');
 
-      _.each([this.sortable.props.columnNames, headerCols, rowCols], function(cols) {
+      _.each([this.sortable.prop('columnNames'), headerCols, rowCols], function(cols) {
         assert.equal(cols.length, 8);
       });
     });
 
     it('should render the product name as a permalink', function() {
-      var row = TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0];
-      var rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
-      var anchors = TestUtils.scryRenderedDOMComponentsWithTag(rowCols[0], 'a')
+      var anchors = this.sortable.find(Row).first().find('td').find('a')
       var item = this.items[0];
-      var node = React.findDOMNode(anchors[0]);
+      var node = anchors.first();
 
-      assert.equal(node.text, item.product.name);
-      assert.include(node.href, item.product.id);
+      assert.equal(node.text(), item.product.name);
+      assert.include(node.getDOMNode().href, item.product.id);
     });
 
     it('should render the item number be a permalink', function() {
-      var row = TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0];
-      var rowCols = TestUtils.scryRenderedDOMComponentsWithTag(row, 'td');
-      var anchors = TestUtils.scryRenderedDOMComponentsWithTag(rowCols[1], 'a')
+      var anchors = this.sortable.find(Row).find('td').find('a');
       var item = this.items[0];
-      var node = React.findDOMNode(anchors[0]);
+      var node = anchors.get(1);
 
       assert.equal(node.text, '#' + item.number);
       assert.include(node.href, item.product.id + '/item/' + item.number);
     });
 
     it('should render a table row for each collection item', function() {
-      var collectionLength = this.sortable.props.collection.length;
-      var rows = TestUtils.scryRenderedComponentsWithType(this.sortable, Row);
+      var collectionLength = this.sortable.prop('collection').length;
+      var rows = this.sortable.find(Row);
       assert.equal(collectionLength, 3);
       assert.equal(rows.length, collectionLength);
     });
 
     it('should render an expander element for toggling row height per content', function() {
-      assert.ok(TestUtils.findRenderedComponentWithType(this.sortable, Expander));
+      assert.ok(this.sortable.find(Expander).exists());
     });
 
     it('should render condensed rows by default', function() {
-      assert.isFalse(TestUtils.findRenderedComponentWithType(this.sortable, Expander).props.expanded);
-      assert.isFalse(TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0].props.expanded);
+      assert.isFalse(this.sortable.find(Expander).first().prop('expanded'));
+      assert.isFalse(this.sortable.find(Row).first().prop('expanded'));
     });
 
     it('should update expander state and render an expanded row on expand button click', function() {
-      var expandButton = TestUtils.findRenderedDOMComponentWithClass(this.sortable, 'expander__button expand');
-      TestUtils.Simulate.click(expandButton);
-      assert.isTrue(TestUtils.findRenderedComponentWithType(this.sortable, Expander).props.expanded);
-      assert.isTrue(TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0].props.expanded);
+      var expandButton = this.sortable.find('.expander__button.expand');
+      expandButton.simulate('click');
+      assert.isTrue(this.sortable.find(Expander).first().prop('expanded'));
+      assert.isTrue(this.sortable.find(Row).first().prop('expanded'));
     });
 
     it('should render an item component element for each applicable property in each row', function() {
       // incl. Estimator, Status, Tags, TagEditor item component elements
-      var estimators = TestUtils.scryRenderedComponentsWithType(this.sortable, Estimator);
-      var tags = TestUtils.scryRenderedComponentsWithType(this.sortable, Tags);
-      var tagEditors = TestUtils.scryRenderedComponentsWithType(this.sortable, TagEditor);
+      var estimators = this.sortable.find(Estimator);
+      var tags = this.sortable.find(Tags);
+      var tagEditors = this.sortable.find(TagEditor);
 
       _.each([estimators, tags, tagEditors], function(comps) {
         assert.equal(comps.length, 3);
       });
     });
 
-    it('shouldn\'t render an item component element for any property that there isn\'t a column for', function() {
-      var statuses = TestUtils.scryRenderedComponentsWithType(this.sortable, Status);
-      assert.equal(statuses.length, 0);
+    it("shouldn't render an item component element for any property that there isn't a column for", function() {
+      assert.equal(this.sortable.find(Status).length, 0);
     });
 
     it('should not be bulk editable by default', function() {
-      assert.isFalse(this.sortable.props.isBulkEditable);
+      assert.isFalse(this.sortable.prop('isBulkEditable'));
     });
   });
 
   describe('bulk edit mode', function() {
     beforeEach(function() {
       this.stub = sinon.stub();
-      this.sortable = TestUtils.renderIntoDocument(
+      this.sortable = mount(
         <SortableTable
           tableType="backlog"
           label="backlog"
@@ -147,23 +140,24 @@ describe('SortableTable', function() {
     });
 
     it('should enable bulk edit mode on children if isBulkEditable prop set to true', function() {
-      var header = TestUtils.findRenderedComponentWithType(this.sortable, Header);
-      var row = TestUtils.scryRenderedComponentsWithType(this.sortable, Row)[0];
-      assert.isTrue(header.props.isBulkEditable);
-      assert.isTrue(row.props.isBulkEditable);
+      var header = this.sortable.find(Header).first();
+      var row = this.sortable.find(Row).first();
+      assert.isTrue(header.prop('isBulkEditable'));
+      assert.isTrue(row.prop('isBulkEditable'));
     });
 
     it('should add a "control" column as first member of columns array', function() {
-      var columnsLength = this.sortable.props.columnNames.length;
-      var columns = TestUtils.scryRenderedDOMComponentsWithTag(this.sortable, 'th');
+      var columnsLength = this.sortable.first().prop('columnNames').length;
+      var columns = this.sortable.find('th');
 
       assert.equal(columns.length, columnsLength + 1);
-      assert.equal(React.findDOMNode(columns[0]).className, 'sortable__label control');
+      assert.isTrue(columns.first().hasClass('sortable__label'));
+      assert.isTrue(columns.first().hasClass('control'));
     });
 
     it('should trigger the onBulkSelect callback on edit checkbox select', function() {
-      var checkboxInput = TestUtils.findRenderedDOMComponentWithTag(this.sortable, 'input');
-      TestUtils.Simulate.click(checkboxInput);
+      var checkboxInput = this.sortable.find('input').first();
+      checkboxInput.simulate('click');
       sinon.assert.calledOnce(this.stub);
     });
   });
@@ -171,7 +165,7 @@ describe('SortableTable', function() {
   describe('table sorting', function() {
     beforeEach(function() {
       this.stub = sinon.stub();
-      this.sortable = TestUtils.renderIntoDocument(
+      this.sortable = mount(
         <SortableTable
           tableType="someday"
           label="someday"
@@ -183,23 +177,24 @@ describe('SortableTable', function() {
     });
 
     it('should trigger the onSortCollection callback on column label click', function() {
-      var numberLabel = TestUtils.scryRenderedDOMComponentsWithClass(this.sortable, 'number')[0];
-      TestUtils.Simulate.click(numberLabel);
+      var numberLabel = this.sortable.find('.number').first();
+      numberLabel.simulate('click');
       sinon.assert.calledOnce(this.stub);
     });
 
     it('should pass table type, column type, and direction to callback', function() {
-      var createdByLabel = TestUtils.scryRenderedDOMComponentsWithClass(this.sortable, 'created-by')[0];
-      TestUtils.Simulate.click(createdByLabel);
+      var createdByLabel = this.sortable.find('.created-by').first();
+      createdByLabel.simulate('click');
       sinon.assert.calledWith(this.stub, 'someday', 'created by', 'descending');
     });
 
     it('should alternate passing descending and ascending as direction argument', function() {
-      var titleLabel = TestUtils.scryRenderedDOMComponentsWithClass(this.sortable, 'title')[0];
+      var titleLabel = this.sortable.find('.title').first();
 
-      TestUtils.Simulate.click(titleLabel);
+      titleLabel.simulate('click');
       sinon.assert.calledWith(this.stub, 'someday', 'title', 'descending');
-      TestUtils.Simulate.click(titleLabel);
+
+      titleLabel.simulate('click');
       sinon.assert.calledWith(this.stub, 'someday', 'title', 'ascending');
     });
   });

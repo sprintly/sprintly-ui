@@ -1,10 +1,13 @@
-var React = window.React || require('react/addons');
+var React = window.React || require('react');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 
-var List = React.createClass({
+
+var List = createReactClass({
 
   propTypes: {
-    optionNames: React.PropTypes.array,
-    onOptionSelect: React.PropTypes.func.isRequired
+    optionNames: PropTypes.array,
+    onOptionSelect: PropTypes.func.isRequired
   },
 
   getDefaultProps: function() {
