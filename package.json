@@ -44,6 +44,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
+    "isparta": "^4.0.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
     "moment": "^2.18.1",

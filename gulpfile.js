@@ -11,6 +11,7 @@ var openPage = require('open');
 
 var browserify = require('browserify');
 var istanbulify = require('browserify-istanbul');
+var isparta = require('isparta');
 var watchify = require('watchify');
 var babelify = require('babelify');
 var exorcist = require('exorcist');
@@ -111,7 +112,12 @@ var testMapDist = './test/build.js.map';
 
 function bundleTests(b) {
   return b.transform('babelify', {presets: ["es2015", "react"]})
-    .transform(istanbulify({ignore: ["**/node_modules/**","**/test/**"]}))
+    .transform(istanbulify({
+      instrumenter: isparta,
+      ignore: [
+        "**/node_modules/**","**/test/**"
+      ]
+    }))
     .bundle()
     .pipe(exorcist(testMapDist))
     .pipe(source(testDist))
