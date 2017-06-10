@@ -113,7 +113,7 @@ var testMapDist = './test/build.js.map';
 function bundleTests(b) {
   return b.transform('babelify', {presets: ["es2015", "react"]})
     .transform(istanbulify({
-      instrumenter: isparta,
+      instrumenter: isparta.Instrumenter,
       ignore: [
         "**/node_modules/**","**/test/**"
       ]
