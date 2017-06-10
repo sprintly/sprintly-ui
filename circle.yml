@@ -2,8 +2,6 @@ machine:
   node:
     version: 5.1.0
   environment:
-    COVERALLS_TOKEN: oKdZp8dibtRH5tAw3iZ1VuEVVqhGbkqI6
-    CI_NAME: travis-ci
     CI_BUILD_URL: $CIRCLE_BUILD_URL
     CI_BUILD_NUMBER: $CIRCLE_BUILD_NUM
     CI_BRANCH: $CIRCLE_BRANCH
