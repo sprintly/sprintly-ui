@@ -1,7 +1,7 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var onClickOutside = require('@sprintly/react-onclickoutside');
-var createReactClass = require('create-react-class');
+import React from '../vendor/react';
+import PropTypes from 'prop-types';
+import onClickOutside from '@sprintly/react-onclickoutside';
+import createReactClass from 'create-react-class';
 
 /*
  * Estimator element displays item score that, when clicked, opens a menu
@@ -10,7 +10,7 @@ var createReactClass = require('create-react-class');
  * and syncing any changes with the backend.
  */
 
-var Estimator = createReactClass({
+export default Estimator = createReactClass({
   ALL_ESTIMATES: [0, 1, 3, 5, 8],
 
   ESTIMATE_HASH: {
@@ -120,5 +120,3 @@ var Estimator = createReactClass({
     );
   }
 });
-
-module.exports = Estimator;

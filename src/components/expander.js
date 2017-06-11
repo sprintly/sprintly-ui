@@ -1,13 +1,13 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var createReactClass = require('create-react-class');
+import React from '../vendor/react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 /*
  * Buttons for toggling the expanded/condensed state of
  * column items and table rows.
  */
 
-var Expander = createReactClass({
+export default Expander = createReactClass({
 
   propTypes: {
     expanded: PropTypes.bool,
@@ -43,5 +43,3 @@ var Expander = createReactClass({
     );
   }
 });
-
-module.exports = Expander;

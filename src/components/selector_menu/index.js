@@ -1,12 +1,20 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var _ = require('lodash');
-var Label = require('./label');
-var List = require('./list');
-var Search = require('./search');
-var fuzzy = require('fuzzy');
-var onClickOutside = require('@sprintly/react-onclickoutside');
-var createReactClass = require('create-react-class');
+import React from '../../vendor/react';
+import PropTypes from 'prop-types';
+import Label from './label';
+import List from './list';
+import Search from './search';
+import fuzzy from 'fuzzy';
+import onClickOutside from '@sprintly/react-onclickoutside';
+import createReactClass from 'create-react-class';
+
+const _ = {
+  'compact': require('lodash/compact'),
+  'map': require('lodash/map'),
+  'difference': require('lodash/difference'),
+  'each': require('lodash/each'),
+  'find': require('lodash/find'),
+  'uniq': require('lodash/uniq')
+};
 
 /*
  * Renders dropdown showing currently selected options,
@@ -21,7 +29,7 @@ var createReactClass = require('create-react-class');
  *
  */
 
-var SelectorMenu = createReactClass({
+export default SelectorMenu = createReactClass({
 
   propTypes: {
     defaultSelection: PropTypes.string,
@@ -49,12 +57,14 @@ var SelectorMenu = createReactClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    var nextOptions = _.compact(
-      _.map(nextProps.optionsList, 'title').concat(_.map(nextProps.optionsList, 'name'))
+    const nextOptions = _.compact(
+      _.map(nextProps.optionsList, 'title').concat(
+        _.map(nextProps.optionsList, 'name'))
     );
 
-    var currentOptions = _.compact(
-      _.map(this.props.optionsList, 'title').concat(_.map(this.props.optionsList, 'name'))
+    const currentOptions = _.compact(
+      _.map(this.props.optionsList, 'title').concat(
+        _.map(this.props.optionsList, 'name'))
     );
 
     if (_.difference(nextOptions, currentOptions).length > 0) {
@@ -67,7 +77,11 @@ var SelectorMenu = createReactClass({
 
   getOptionNames: function() {
     // Returns a list of option names, plus the default value.
-    var options = [this.props.selection || this.state.selected || this.props.defaultSelection];
+    let options = [
+      this.props.selection ||
+      this.state.selected ||
+      this.props.defaultSelection
+    ];
 
     _.each(this.props.optionsList, function(option) {
       return option.title ? options.push(option.title) : options.push(option.name);
@@ -84,7 +98,7 @@ var SelectorMenu = createReactClass({
   },
 
   onLabelClicked: function() {
-    var expanded = this.state.expanded ? false : true;
+    const expanded = this.state.expanded ? false : true;
     this.setState({
       expanded: expanded,
       clearInput: true
@@ -104,9 +118,9 @@ var SelectorMenu = createReactClass({
 
   processSearchInput: function(val) {
     // Matches partials against an alphabetically sorted list.
-    var sortedNames = this.getOptionNames().sort();
+    const sortedNames = this.getOptionNames().sort();
 
-    var selection = _.find(sortedNames, function(name) {
+    let selection = _.find(sortedNames, function(name) {
       return name.toLowerCase().indexOf(val) > -1;
     });
 
@@ -127,7 +141,8 @@ var SelectorMenu = createReactClass({
       return;
     }
 
-    var visible = _.map(fuzzy.filter(filterBy, this.getOptionNames()), 'string');
+    const visible = _.map(fuzzy.filter(filterBy,
+      this.getOptionNames()), 'string');
 
     this.setState({
       visible: visible,
@@ -136,10 +151,12 @@ var SelectorMenu = createReactClass({
   },
 
   render: function() {
-    var wrapperClass = this.state.expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
-    var innerClass = this.state.expanded ? 'inner-wrapper expanded' : 'inner-wrapper';
-    var visible = this.state.visible.length > 0 ? this.state.visible : this.getOptionNames();
-    var selected = this.props.selection || this.state.selected || this.props.defaultSelection;
+    const { expanded, visible, selected } = this.state;
+    const { selection, defaultSelection } = this.props;
+    const wrapperClass = expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
+    const innerClass = expanded ? 'inner-wrapper expanded' : 'inner-wrapper';
+    const isVisible = visible.length > 0 ? visible : this.getOptionNames();
+    const selected = selection || selected || defaultSelection;
 
     return (
       <div className={wrapperClass}>
@@ -156,7 +173,7 @@ var SelectorMenu = createReactClass({
           />
           <List
             defaultSelection={selected}
-            optionNames={visible}
+            optionNames={isVisible}
             onOptionSelect={this.selectOption}
           />
         </div>
@@ -164,5 +181,3 @@ var SelectorMenu = createReactClass({
     );
   }
 });
-
-module.exports = SelectorMenu;
