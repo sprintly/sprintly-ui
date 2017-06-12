@@ -54,7 +54,7 @@ const TagEditor = createReactClass({
       return;
     }
 
-    var showOrHide = this.state.showMenu ? false : true;
+    const showOrHide = this.state.showMenu ? false : true;
 
     this.setState({
       showMenu: showOrHide
@@ -89,11 +89,14 @@ const TagEditor = createReactClass({
       return;
     }
 
-    var tag = this.state.value;
+    const tag = this.state.value;
     this.props.tagChanger.addOrRemove(this.props.modelId, this.props.tags, tag, 'add');
 
     // Close popup if we've just added our first tag
-    var newState = {value: ''};
+    const newState = {
+      value: ''
+    };
+
     if (this.props.tags.length < 1) {
       newState.showMenu = false;
     }
