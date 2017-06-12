@@ -62,8 +62,8 @@ describe('SortableTable', () => {
 
     it('should render a column for each in columnNames array prop', () => {
       // testing against number of <th> and <td>s in a single row.
-      var headerCols = sortable.find('th');
-      var rowCols = sortable.find(Row).first().find('td');
+      const headerCols = sortable.find('th');
+      const rowCols = sortable.find(Row).first().find('td');
 
       _.each([sortable.prop('columnNames'), headerCols, rowCols], (cols) => {
         assert.equal(cols.length, 8);
@@ -71,26 +71,26 @@ describe('SortableTable', () => {
     });
 
     it('should render the product name as a permalink', () => {
-      var anchors = sortable.find(Row).first().find('td').find('a')
-      var item = items[0];
-      var node = anchors.first();
+      const anchors = sortable.find(Row).first().find('td').find('a')
+      const item = items[0];
+      const node = anchors.first();
 
       assert.equal(node.text(), item.product.name);
       assert.include(node.getDOMNode().href, item.product.id);
     });
 
     it('should render the item number be a permalink', () => {
-      var anchors = sortable.find(Row).find('td').find('a');
-      var item = items[0];
-      var node = anchors.get(1);
+      const anchors = sortable.find(Row).find('td').find('a');
+      const item = items[0];
+      const node = anchors.get(1);
 
       assert.equal(node.text, '#' + item.number);
       assert.include(node.href, item.product.id + '/item/' + item.number);
     });
 
     it('should render a table row for each collection item', () => {
-      var collectionLength = sortable.prop('collection').length;
-      var rows = sortable.find(Row);
+      const collectionLength = sortable.prop('collection').length;
+      const rows = sortable.find(Row);
       assert.equal(collectionLength, 3);
       assert.equal(rows.length, collectionLength);
     });
@@ -113,9 +113,9 @@ describe('SortableTable', () => {
 
     it('should render an item component element for each applicable property in each row', () => {
       // incl. Estimator, Status, Tags, TagEditor item component elements
-      var estimators = sortable.find(Estimator);
-      var tags = sortable.find(Tags);
-      var tagEditors = sortable.find(TagEditor);
+      const estimators = sortable.find(Estimator);
+      const tags = sortable.find(Tags);
+      const tagEditors = sortable.find(TagEditor);
 
       _.each([estimators, tags, tagEditors], (comps) => {
         assert.equal(comps.length, 3);
@@ -167,7 +167,7 @@ describe('SortableTable', () => {
     });
 
     it('should trigger the onBulkSelect callback on edit checkbox select', () => {
-      var checkboxInput = sortable.find('input').first();
+      const checkboxInput = sortable.find('input').first();
       checkboxInput.simulate('click');
       sinon.assert.calledOnce(stub);
     });
@@ -190,19 +190,19 @@ describe('SortableTable', () => {
     });
 
     it('should trigger the onSortCollection callback on column label click', () => {
-      var numberLabel = sortable.find('.number').first();
+      const numberLabel = sortable.find('.number').first();
       numberLabel.simulate('click');
       sinon.assert.calledOnce(stub);
     });
 
     it('should pass table type, column type, and direction to callback', () => {
-      var createdByLabel = sortable.find('.created-by').first();
+      const createdByLabel = sortable.find('.created-by').first();
       createdByLabel.simulate('click');
       sinon.assert.calledWith(stub, 'someday', 'created by', 'descending');
     });
 
     it('should alternate passing descending and ascending as direction argument', () => {
-      var titleLabel = sortable.find('.title').first();
+      const titleLabel = sortable.find('.title').first();
 
       titleLabel.simulate('click');
       sinon.assert.calledWith(stub, 'someday', 'title', 'descending');

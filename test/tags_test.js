@@ -15,7 +15,7 @@ const _ = {
 
 describe('Tags', () => {
   it('should render an empty wrapper div if there are no tags', () => {
-    var tags = ReactTestUtils.renderIntoDocument(
+    const tags = ReactTestUtils.renderIntoDocument(
       <Tags
         modelId={[1,1]}
         tags={[]}
@@ -25,20 +25,20 @@ describe('Tags', () => {
   });
 
   it('should render a the tag name if a single tag passed in as prop', () => {
-    var tags = ReactTestUtils.renderIntoDocument(
+    const tags = ReactTestUtils.renderIntoDocument(
       <Tags
         modelId={[1,1]}
         tags={["test"]}
       />
     );
-    var node = ReactDOM.findDOMNode(tags);
+    const node = ReactDOM.findDOMNode(tags);
 
     assert.equal(node.children.length, 1);
     assert.equal(node.textContent, 'test');
   });
 
   it('should not be in condensed mode by default', () => {
-    var tags = ReactTestUtils.renderIntoDocument(
+    const tags = ReactTestUtils.renderIntoDocument(
       <Tags
         modelId={[1,1]}
         tags={[]}
@@ -48,14 +48,14 @@ describe('Tags', () => {
   });
 
   it('should render a list of tag names if more than one tag and not condensed', () => {
-    var itemTags = ["test", "test2", "test3", "4/4/15"];
-    var tags = ReactTestUtils.renderIntoDocument(
+    const itemTags = ["test", "test2", "test3", "4/4/15"];
+    const tags = ReactTestUtils.renderIntoDocument(
       <Tags
         modelId={[1,1]}
         tags={itemTags}
       />
     );
-    var renderedItemTags = ReactTestUtils.scryRenderedDOMComponentsWithTag(tags, 'button');
+    const renderedItemTags = ReactTestUtils.scryRenderedDOMComponentsWithTag(tags, 'button');
 
     assert.equal(renderedItemTags.length, 4);
     _.each(renderedItemTags, (tag, i) => {
@@ -64,14 +64,14 @@ describe('Tags', () => {
   });
 
   it('should render that list of tag names with appropriately placed commas', () => {
-    var itemTags = ["test", "test2", "test3", "4/4/15"];
-    var tags = ReactTestUtils.renderIntoDocument(
+    const itemTags = ["test", "test2", "test3", "4/4/15"];
+    const tags = ReactTestUtils.renderIntoDocument(
       <Tags
         modelId={[1,1]}
         tags={itemTags}
       />
     );
-    var haveTrailingComma = _.map(ReactTestUtils.scryRenderedDOMComponentsWithTag(tags, 'li'), (li, i) => {
+    const haveTrailingComma = _.map(ReactTestUtils.scryRenderedDOMComponentsWithTag(tags, 'li'), (li, i) => {
       return ReactDOM.findDOMNode(li).textContent.match(',') ? true : false;
     });
 
@@ -79,7 +79,7 @@ describe('Tags', () => {
   });
 
   it('should render tags count as "_#_ tags" if more than one tag and condensed', () => {
-    var tags = ReactTestUtils.renderIntoDocument(
+    const tags = ReactTestUtils.renderIntoDocument(
       <Tags
         modelId={[1,1]}
         tags={["test", "test2", "test3", "4/4/15"]}
@@ -91,10 +91,10 @@ describe('Tags', () => {
   });
 
   it('should trigger a navigation event on tag click if navigator utility prop provided', () => {
-    var stub = {
+    const stub = {
       setTagFilterAndRoute: sinon.stub()
     };
-    var tags = ReactTestUtils.renderIntoDocument(
+    const tags = ReactTestUtils.renderIntoDocument(
       <Tags
         modelId={[1,1]}
         tags={["test"]}
@@ -108,8 +108,8 @@ describe('Tags', () => {
   });
 
   it('should call alternative callback if provided instead of a navigator', () => {
-    var stub = sinon.stub();
-    var tags = ReactTestUtils.renderIntoDocument(
+    const stub = sinon.stub();
+    const tags = ReactTestUtils.renderIntoDocument(
       <Tags
         modelId={[1,1]}
         tags={["test"]}
