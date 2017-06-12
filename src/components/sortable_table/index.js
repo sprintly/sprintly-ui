@@ -1,9 +1,14 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var _ = require('lodash');
-var TableHeader = require('./header');
-var TableRow = require('./row');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import TableHeader from './header';
+import TableRow from './row';
+import createReactClass from 'create-react-class';
+
+const _ = {
+  noop: require('lodash/noop'),
+  each: require('lodash/each'),
+  bind: require('lodash/bind')
+};
 
 /*
  * Takes an array of json objects (for example, a Backbone.Collection.toJSON())
@@ -16,7 +21,7 @@ var createReactClass = require('create-react-class');
  */
 
 
-var SortableTable = createReactClass({
+const SortableTable = createReactClass({
 
   propTypes: {
     tableType: PropTypes.string,
@@ -56,11 +61,11 @@ var SortableTable = createReactClass({
   },
 
   render: function() {
-    var rows = [];
+    let rows = [];
 
     _.each(this.props.collection, _.bind(function(model) {
-      var modelId = [model.product.id, model.number];
-      var rowProps = {
+      const modelId = [model.product.id, model.number];
+      const rowProps = {
         key: modelId,
         model: model,
         columns: this.props.columnNames,
@@ -83,7 +88,7 @@ var SortableTable = createReactClass({
       );
     }, this));
 
-    var headerProps = {
+    const headerProps = {
       tableType: this.props.tableType,
       columns: this.props.columnNames,
       sortedBy: this.state.sortBy,
@@ -109,4 +114,4 @@ var SortableTable = createReactClass({
   }
 });
 
-module.exports = SortableTable;
+export default SortableTable;

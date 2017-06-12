@@ -1,16 +1,15 @@
-var _ = require('lodash');
-var React = window.React || require('react');
-var ReactDOM = require('react-dom');
-var ReactTestUtils = require('react-dom/test-utils');
-var sinon = require('sinon');
-var TagEditor = require('../src/components/tag_editor');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactTestUtils from 'react-dom/test-utils';
+import sinon from 'sinon';
+import TagEditor from '../src/components/tag_editor';
 
 /*
  * TagEditor element tests.
  */
 
-describe('TagEditor', function() {
-  it('should always render a tag edit icon', function() {
+describe('TagEditor', () => {
+  it('should always render a tag edit icon', () => {
     var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
@@ -21,7 +20,7 @@ describe('TagEditor', function() {
     assert.ok(ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'i'));
   });
 
-  it('should also render "Add a tag." if the item has no tags', function() {
+  it('should also render "Add a tag." if the item has no tags', () => {
     var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
@@ -33,7 +32,7 @@ describe('TagEditor', function() {
     assert.equal(button.textContent, 'Add a tag.');
   });
 
-  it('should not render the edit menu by default', function() {
+  it('should not render the edit menu by default', () => {
     var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
@@ -46,7 +45,7 @@ describe('TagEditor', function() {
     assert.notOk(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
   });
 
-  it('should render the edit menu containing an input if "Add a tag." clicked', function() {
+  it('should render the edit menu containing an input if "Add a tag." clicked', () => {
     var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
@@ -61,7 +60,7 @@ describe('TagEditor', function() {
     assert.ok(ReactTestUtils.findRenderedDOMComponentWithTag(tagEditor, 'input'));
   });
 
-  it('should trigger an add event on tag change utility if a new tag is added', function() {
+  it('should trigger an add event on tag change utility if a new tag is added', () => {
     var stub = {
       addOrRemove: sinon.stub()
     };
@@ -86,7 +85,7 @@ describe('TagEditor', function() {
     sinon.assert.calledWith(stub.addOrRemove, [1,1], [], 'new tag', 'add');
   });
 
-  it('should close the edit menu if adding the first tag on an item', function() {
+  it('should close the edit menu if adding the first tag on an item', () => {
     var stub = {
       addOrRemove: sinon.stub()
     };
@@ -111,7 +110,7 @@ describe('TagEditor', function() {
     assert.notOk(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor__menu').length);
   });
 
-  it('should render the current item tags in the edit menu if item has tags', function() {
+  it('should render the current item tags in the edit menu if item has tags', () => {
     var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}
@@ -125,7 +124,7 @@ describe('TagEditor', function() {
     assert.equal(ReactTestUtils.scryRenderedDOMComponentsWithTag(tagEditor, 'li').length, 2);
   });
 
-  it('should trigger a remove event on tag changer utility if tag is deleted from menu', function() {
+  it('should trigger a remove event on tag changer utility if tag is deleted from menu', () => {
     var stub = {
       addOrRemove: sinon.stub()
     };
@@ -149,7 +148,7 @@ describe('TagEditor', function() {
     sinon.assert.calledWith(stub.addOrRemove, [1,1], currentTags, 'test', 'remove');
   });
 
-  it('should close the edit menu automatically if the last item tag is deleted', function() {
+  it('should close the edit menu automatically if the last item tag is deleted', () => {
     var stub = {
       addOrRemove: sinon.stub()
     };
@@ -172,7 +171,7 @@ describe('TagEditor', function() {
     assert.notOk(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag-editor-menu').length);
   });
 
-  it('should not close the menu if there are still item tags left', function() {
+  it('should not close the menu if there are still item tags left', () => {
     var stub = {
       addOrRemove: sinon.stub()
     };
@@ -195,7 +194,7 @@ describe('TagEditor', function() {
     assert.ok(ReactTestUtils.scryRenderedDOMComponentsWithClass(tagEditor, 'tag_editor__menu').length);
   });
 
-  it('should close the menu if the tag edit button is clicked a second time', function() {
+  it('should close the menu if the tag edit button is clicked a second time', () => {
     var tagEditor = ReactTestUtils.renderIntoDocument(
       <TagEditor
         modelId= {[1,1]}

@@ -1,27 +1,29 @@
-var _ = require('lodash');
-var React = window.React || require('react');
-var ReactTestUtils = require('react-dom/test-utils');
-var sinon = require('sinon');
-var Expander = require('../src/components/expander');
+import React from 'react';
+import ReactTestUtils from 'react-dom/test-utils';
+import sinon from 'sinon';
+import Expander from '../src/components/expander';
 
-describe('Expander', function() {
-  beforeEach(function() {
-    this.stub = sinon.stub();
-    this.expander = ReactTestUtils.renderIntoDocument(
+describe('Expander', () => {
+  let stub = null;
+  let expander = null;
+
+  beforeEach(() => {
+    stub = sinon.stub();
+    expander = ReactTestUtils.renderIntoDocument(
       <Expander
-        onExpanderClick={this.stub}
+        onExpanderClick={stub}
       />
     );
   });
 
-  it('should render expander buttons element with condensed selected by default', function() {
-    assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(this.expander, 'expander condensed'));
-    assert.isFalse(this.expander.props.expanded);
+  it('should render expander buttons element with condensed selected by default', () => {
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(expander, 'expander condensed'));
+    assert.isFalse(expander.props.expanded);
   });
 
-  it('should call onClick prop if button toggled', function() {
-    var expandButton = ReactTestUtils.scryRenderedDOMComponentsWithTag(this.expander, 'button')[0];
+  it('should call onClick prop if button toggled', () => {
+    const expandButton = ReactTestUtils.scryRenderedDOMComponentsWithTag(expander, 'button')[0];
     ReactTestUtils.Simulate.click(expandButton);
-    sinon.assert.calledOnce(this.stub);
+    sinon.assert.calledOnce(stub);
   });
 });

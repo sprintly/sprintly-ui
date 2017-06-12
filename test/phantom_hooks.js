@@ -1,8 +1,8 @@
 // Hook writes istanbul coverage data to coverage.json file
 module.exports = {
   afterEnd: function(runner) {
-    var fs = require('fs');
-    var coverage = runner.page.evaluate(function() {
+    const fs = require('fs');
+    const coverage = runner.page.evaluate(function() {
       return window.__coverage__;
     });
     if (coverage) {

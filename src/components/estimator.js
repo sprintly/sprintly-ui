@@ -1,4 +1,4 @@
-import React from '../vendor/react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import onClickOutside from '@sprintly/react-onclickoutside';
 import createReactClass from 'create-react-class';
@@ -10,7 +10,7 @@ import createReactClass from 'create-react-class';
  * and syncing any changes with the backend.
  */
 
-export default Estimator = createReactClass({
+const Estimator = createReactClass({
   ALL_ESTIMATES: [0, 1, 3, 5, 8],
 
   ESTIMATE_HASH: {
@@ -59,7 +59,7 @@ export default Estimator = createReactClass({
       return;
     }
 
-    var openOrClose = this.state.menuOpen === false ? true : false;
+    const openOrClose = this.state.menuOpen === false ? true : false;
 
     this.setState({
       menuOpen: openOrClose
@@ -71,7 +71,7 @@ export default Estimator = createReactClass({
       return;
     }
 
-    var newScore = parseInt(ev.target.getAttribute('data-score'), 10);
+    const newScore = parseInt(ev.target.getAttribute('data-score'), 10);
 
     if (this.props.score === this.ESTIMATE_HASH[newScore].toLowerCase()) {
       return;
@@ -84,11 +84,11 @@ export default Estimator = createReactClass({
   },
 
   render: function() {
-    var currentScore = this.props.score === '~' ? '?' : this.props.score;
-    var scoreMenu = null;
+    const currentScore = this.props.score === '~' ? '?' : this.props.score;
+    let scoreMenu = null;
 
     if (this.state.menuOpen) {
-      var scores = this.ALL_ESTIMATES.map(function(score) {
+      const scores = this.ALL_ESTIMATES.map(function(score) {
         return (
           <li key={score} className='estimator__score'>
             <button className={'estimator__button ' + this.props.itemType}
@@ -120,3 +120,5 @@ export default Estimator = createReactClass({
     );
   }
 });
+
+export default Estimator;

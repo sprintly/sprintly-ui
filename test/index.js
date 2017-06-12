@@ -1,7 +1,7 @@
 window._ = require('lodash');
 require('es5-shim');
 
-var chai = require('chai');
+import chai from 'chai';
 window.assert = chai.assert;
 
 // Component tests

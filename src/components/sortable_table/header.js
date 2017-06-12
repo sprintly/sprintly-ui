@@ -1,8 +1,18 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var _ = require('lodash');
-var Expander = require('../expander');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import Expander from '../expander';
+import createReactClass from 'create-react-class';
+
+const _ = {
+  zipObject: require('lodash/zipObject'),
+  times: require('lodash/times'),
+  cloneDeep: require('lodash/cloneDeep'),
+  includes: require('lodash/includes'),
+  without: require('lodash/without'),
+  map: require('lodash/map'),
+  bind: require('lodash/bind'),
+  partial: require('lodash/partial')
+};
 
 /*
  * Renders header bar where cells are clickable elements that trigger a
@@ -13,8 +23,7 @@ var createReactClass = require('create-react-class');
  * action on that table's data alone (if rendering multiple tables in a view.)
  */
 
-
-var TableHeader = createReactClass({
+const TableHeader = createReactClass({
 
   propTypes: {
     tableType: PropTypes.string,
@@ -29,7 +38,7 @@ var TableHeader = createReactClass({
     /*
      * Keeps track of sort direction on each column.
      */
-    var directionHash = _.zipObject(this.props.columns,
+    const directionHash = _.zipObject(this.props.columns,
       _.times(this.props.columns.length, function() { return 'ascending'; }));
 
     return {
@@ -42,8 +51,8 @@ var TableHeader = createReactClass({
      * Grabs table type and sort option and passes to sort callback.
      * Flips direction in direction hash.
      */
-    var direction = this.state.directionHash[columnName] === 'ascending' ? 'descending' : 'ascending';
-    var hashCopy = _.cloneDeep(this.state.directionHash);
+    const direction = this.state.directionHash[columnName] === 'ascending' ? 'descending' : 'ascending';
+    let hashCopy = _.cloneDeep(this.state.directionHash);
 
     this.props.onLabelClick(this.props.tableType, columnName, direction);
     hashCopy[columnName] = direction;
@@ -58,12 +67,12 @@ var TableHeader = createReactClass({
      * Render column labels and optionally render an expander element that proxies click events
      * to table (Note: we'll only render this if we have a control column to render it into).
      */
-    var hasProductColumn = _.includes(this.props.columns, 'product');
+    const hasProductColumn = _.includes(this.props.columns, 'product');
 
-    var control = this.props.isBulkEditable ?
+    const control = this.props.isBulkEditable ?
         <th key='control' className='sortable__label control' /> : null;
 
-    var expander = hasProductColumn ?
+    const expander = hasProductColumn ?
       (
         <th key='expander' className='sortable__label'>
           <Expander
@@ -84,7 +93,7 @@ var TableHeader = createReactClass({
 
   buildColumnLabels: function() {
     // We don't want to render a label for the 'Control' column, so pop it off the list.
-    var columns = _.without(this.props.columns, 'product');
+    const columns = _.without(this.props.columns, 'product');
 
     return _.map(columns, _.bind(function(column) {
       return (
@@ -99,4 +108,4 @@ var TableHeader = createReactClass({
   }
 });
 
-module.exports = TableHeader;
+export default TableHeader;

@@ -1,4 +1,4 @@
-import React from '../../vendor/react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Label from './label';
 import List from './list';
@@ -29,7 +29,7 @@ const _ = {
  *
  */
 
-export default SelectorMenu = createReactClass({
+const SelectorMenu = createReactClass({
 
   propTypes: {
     defaultSelection: PropTypes.string,
@@ -151,12 +151,12 @@ export default SelectorMenu = createReactClass({
   },
 
   render: function() {
-    const { expanded, visible, selected } = this.state;
+    const { expanded, visible } = this.state;
     const { selection, defaultSelection } = this.props;
     const wrapperClass = expanded ? 'selector__wrapper expanded' : 'selector__wrapper';
     const innerClass = expanded ? 'inner-wrapper expanded' : 'inner-wrapper';
     const isVisible = visible.length > 0 ? visible : this.getOptionNames();
-    const selected = selection || selected || defaultSelection;
+    const selected = selection || this.state.selected || defaultSelection;
 
     return (
       <div className={wrapperClass}>
@@ -181,3 +181,5 @@ export default SelectorMenu = createReactClass({
     );
   }
 });
+
+export default SelectorMenu;

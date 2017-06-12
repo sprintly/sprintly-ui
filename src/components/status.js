@@ -1,21 +1,19 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 /*
  * (WIP)
  * TODO(fw)
  */
 
-var Status = createReactClass({
+const Status = createReactClass({
   propTypes: {
     modelId: PropTypes.arrayOf(PropTypes.number),
     readOnly: PropTypes.bool,
     status: PropTypes.number.isRequired,
     statusChanger: PropTypes.object
   },
-
-  mixins: [],
 
   getDefaultProps: function() {
     return {
@@ -35,4 +33,4 @@ var Status = createReactClass({
   }
 });
 
-module.exports = Status;
+export default Status;

@@ -1,4 +1,4 @@
-import React from '../vendor/react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 
@@ -7,7 +7,7 @@ import createReactClass from 'create-react-class';
  * column items and table rows.
  */
 
-export default Expander = createReactClass({
+const Expander = createReactClass({
 
   propTypes: {
     expanded: PropTypes.bool,
@@ -21,11 +21,11 @@ export default Expander = createReactClass({
   },
 
   render: function() {
-    var expanded = this.props.expanded;
-    var className = this.props.expanded ? 'expanded' : 'condensed';
+    const expanded = this.props.expanded;
+    const className = expanded ? 'expanded' : 'condensed';
 
-    var buttonClass = 'expander__button';
-    var iconClass = 'expander__icon';
+    const buttonClass = 'expander__button';
+    const iconClass = 'expander__icon';
 
     return (
       <div className={'expander ' + className}>
@@ -43,3 +43,5 @@ export default Expander = createReactClass({
     );
   }
 });
+
+export default Expander;

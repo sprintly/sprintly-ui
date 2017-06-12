@@ -1,9 +1,9 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 
-var Label = createReactClass({
+const Label = createReactClass({
 
   propTypes: {
     selected: PropTypes.string,
@@ -26,5 +26,4 @@ var Label = createReactClass({
   }
 });
 
-
-module.exports = Label;
+export default Label;

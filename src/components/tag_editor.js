@@ -1,8 +1,11 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var _ = require('lodash');
-var onClickOutside = require('@sprintly/react-onclickoutside');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import onClickOutside from '@sprintly/react-onclickoutside';
+import createReactClass from 'create-react-class';
+
+const _ = {
+  partial: require('lodash/partial')
+};
 
 /*
  * TagEditor element provides interface for adding and removing item tags.
@@ -11,7 +14,7 @@ var createReactClass = require('create-react-class');
  * you'll probably want to pass those in.
  */
 
-var TagEditor = createReactClass({
+const TagEditor = createReactClass({
 
   propTypes: {
     modelId: PropTypes.arrayOf(PropTypes.number),
@@ -99,9 +102,9 @@ var TagEditor = createReactClass({
   },
 
   render: function() {
-    var tagsLength = this.props.tags.length;
-    var addTagText = tagsLength ? null : 'Add a tag.';
-    var tagEditMenu = this.state.showMenu ?
+    const tagsLength = this.props.tags.length;
+    const addTagText = tagsLength ? null : 'Add a tag.';
+    const tagEditMenu = this.state.showMenu ?
       (
         <div>
           <div className='tag_editor__menu'>
@@ -146,4 +149,4 @@ var TagEditor = createReactClass({
   }
 });
 
-module.exports = TagEditor;
+export default TagEditor;

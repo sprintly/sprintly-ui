@@ -1,9 +1,9 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 
-var List = createReactClass({
+const List = createReactClass({
 
   propTypes: {
     optionNames: PropTypes.array,
@@ -17,7 +17,7 @@ var List = createReactClass({
   },
 
   render: function() {
-    var options = this.props.optionNames.map(function(optionName) {
+    const options = this.props.optionNames.map(function(optionName) {
       return optionName.length ? (
         <li key={optionName} className='option' onClick={_.partial(this.props.onOptionSelect, optionName)}>
           <span className='inner'>{optionName}</span>
@@ -31,6 +31,6 @@ var List = createReactClass({
       </ul>
     );
   }
-});
+}); 
 
-module.exports = List;
+export default List;

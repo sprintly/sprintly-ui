@@ -1,10 +1,10 @@
-var React = window.React || require('react');
-var ReactDOM = require('react-dom');
-var PropTypes = require('prop-types');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 
-var Search = createReactClass({
+const Search = createReactClass({
 
   propTypes: {
     inputOverride: PropTypes.string,
@@ -31,7 +31,7 @@ var Search = createReactClass({
   },
 
   handleChange: function(ev) {
-    var val = ev.target.value;
+    const val = ev.target.value;
 
     this.setState({
       value: val
@@ -41,7 +41,7 @@ var Search = createReactClass({
   },
 
   maybeSubmit: function(ev) {
-    var val = this.state.value;
+    const val = this.state.value;
 
     if (ev.which === 13 && val.length) {
       this.setState({
@@ -64,5 +64,4 @@ var Search = createReactClass({
   }
 });
 
-
-module.exports = Search;
+export default Search;

@@ -1,6 +1,6 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 /*
  * Tags element displays either a textual list of tags ("one, two, three")
@@ -14,7 +14,7 @@ var createReactClass = require('create-react-class');
  * conjunction with the TagEdit element.
  */
 
-var Tags = createReactClass({
+const Tags = createReactClass({
 
   propTypes: {
     tags: PropTypes.arrayOf(PropTypes.string),
@@ -39,7 +39,7 @@ var Tags = createReactClass({
      * If navigatorUtility prop passed in, will trigger navigation event to tag-filtered
      * view. Alternatively, pass in a different callback to trigger some other event.
      */
-    var tag = ev.target.textContent;
+    const tag = ev.target.textContent;
 
     if (this.props.navigatorUtility) {
       this.props.navigatorUtility.setTagFilterAndRoute(tag);
@@ -57,10 +57,8 @@ var Tags = createReactClass({
      * prints the number of tags: ie, "4 tags"; or, if expanded,
      * shows a full textual representation of tags: "tag1, tag2, tag3"
      */
-    var wrapped = null;
-    var tagListItems = [];
-
-    var len = this.props.tags.length;
+    let wrapped = null;
+    const len = this.props.tags.length;
 
     if (len === 1) {
       wrapped = (
@@ -91,7 +89,7 @@ var Tags = createReactClass({
 
   buildTagList: function() {
     return this.props.tags.map(function(tag, i, arr) {
-      var maybeComma = i === (arr.length - 1) ? null : ',';
+      const maybeComma = i === (arr.length - 1) ? null : ',';
       return (
         <li key={'tag' + ':' + i} className='tags__list expanded'>
           <button className='tags__tag' onClick={this.onTagClick}>
@@ -103,4 +101,4 @@ var Tags = createReactClass({
   }
 });
 
-module.exports = Tags;
+export default Tags;

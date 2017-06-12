@@ -1,12 +1,17 @@
-var React = window.React || require('react');
-var PropTypes = require('prop-types');
-var _ = require('lodash');
-var Estimator = require('../estimator');
-var Status = require('../status');
-var Tags = require('../tags');
-var TagEditor = require('../tag_editor');
-var moment = require('moment');
-var createReactClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import Estimator from '../estimator';
+import Status from '../status';
+import Tags from '../tags';
+import TagEditor from '../tag_editor';
+import moment from 'moment';
+import createReactClass from 'create-react-class';
+
+const _ = {
+  each: require('lodash/each'),
+  bind: require('lodash/bind'),
+  partial: require('lodash/partial')
+};
 
 /*
  * Renders a single table row for displaying item data.
@@ -16,12 +21,12 @@ var createReactClass = require('create-react-class');
  * TODO(fw): reorg styles so don't have to calculate here.
  */
 
-var abbreviateUsername = function (user) {
+const abbreviateUsername = (user) => {
   return user.last_name ? user.first_name + ' ' + user.last_name[0] + '.' :
     user.first_name;
 };
 
-var TableRow = createReactClass({
+const TableRow = createReactClass({
   propTypes: {
     model: PropTypes.object.isRequired,
     columns: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -34,7 +39,7 @@ var TableRow = createReactClass({
   },
 
   getCellBuilder: function(column, className, id) {
-    var methodMap = {
+    const methodMap = {
       product: this.buildProductCell,
       number: this.buildNumberCell,
       size: this.buildEstimateCell,
@@ -49,10 +54,10 @@ var TableRow = createReactClass({
   },
 
   render: function() {
-    var modelId = [this.props.model.product.id, this.props.model.number];
+    const modelId = [this.props.model.product.id, this.props.model.number];
 
-    var wrapperClass = 'wrapper ' + (this.props.expanded ? 'expanded' : 'condensed');
-    var rowClass = 'sortable__row ' + this.props.model.type;
+    const wrapperClass = 'wrapper ' + (this.props.expanded ? 'expanded' : 'condensed');
+    let rowClass = 'sortable__row ' + this.props.model.type;
     if (this.props.expanded) {
       rowClass += ' expanded';
     }
@@ -63,7 +68,7 @@ var TableRow = createReactClass({
       rowClass += this.props.model.isNonMatching ? ' matched non-matching' : ' matched';
     }
 
-    var cells = [];
+    let cells = [];
     if (this.props.isBulkEditable) {
       cells.push(
         <td key={'control' + ':' + modelId} className='sortable__cell'>
@@ -100,13 +105,13 @@ var TableRow = createReactClass({
   },
 
   buildProductCell: function(classes) {
-    var linkProps = {
+    const linkProps = {
       href: this.props.baseUrl + '/product/' + this.props.model.product.id,
       className: 'js-item-link link product-cell',
     };
 
-    var subitemClass = this.props.expanded ? 'subitem expanded' : 'subitem';
-    var subitemArrow = this.props.model.parent ? <i className={subitemClass}></i> : null;
+    const subitemClass = this.props.expanded ? 'subitem expanded' : 'subitem';
+    const subitemArrow = this.props.model.parent ? <i className={subitemClass}></i> : null;
 
     return (
       <div className={classes + ' wider'}>
@@ -117,7 +122,7 @@ var TableRow = createReactClass({
   },
 
   buildNumberCell: function(classes) {
-    var props = {
+    const props = {
       href: this.props.baseUrl + '/product/' + this.props.model.product.id + '/item/' + this.props.model.number,
       className: 'js-item-link link number-cell',
       'data-item-number': this.props.model.number
@@ -131,7 +136,7 @@ var TableRow = createReactClass({
   },
 
   buildEstimateCell: function(classes, mId) {
-    var props = {
+    const props = {
       modelId: mId,
       readOnly: !!this.props.model.isNonMatching,
       itemType: this.props.model.type,
@@ -147,7 +152,7 @@ var TableRow = createReactClass({
   },
 
   buildStatusCell: function(classes, mId) {
-    var props = {
+    const props = {
       modelId: mId,
       readOnly: !!this.props.model.isNonMatching,
       status: this.props.model.status,
@@ -175,7 +180,7 @@ var TableRow = createReactClass({
   },
 
   buildTitleCell: function(classes) {
-    var props = {
+    const props = {
       href: this.props.baseUrl + '/product/' + this.props.model.product.id + '/item/' + this.props.model.number,
       className: 'js-item-link link title-cell',
       'data-item-number': this.props.model.number
@@ -191,14 +196,14 @@ var TableRow = createReactClass({
   },
 
   buildTagsCell: function(classes, mId) {
-    var editorProps = {
+    const editorProps = {
       modelId: mId,
       readOnly: !!this.props.model.isNonMatching,
       tags: this.props.model.tags,
       tagChanger: this.props.modelChangerUtilities.tagChanger
     };
 
-    var tagsProps = {
+    const tagsProps = {
       tags: this.props.model.tags,
       condensed: !this.props.expanded,
       navigatorUtility: this.props.navigatorUtility
@@ -221,4 +226,4 @@ var TableRow = createReactClass({
   }
 });
 
-module.exports = TableRow;
+export default TableRow;

@@ -1,5 +1,11 @@
-var _ = require('lodash');
-var lookup = require('object-path');
+import lookup from 'object-path';
+
+const _ = {
+  each: require('lodash/each'),
+  sortBy: require('lodash/sortBy'),
+  extend: require('lodash/extend'),
+  union: require('lodash/union')
+}
 
 /*
  * Takes a array of items json data (such as a sprintly-data or sprintly-search-backed
@@ -12,7 +18,7 @@ var lookup = require('object-path');
  * parents b/c matching parents will come in with a nested "children" property.
  */
 
-var propertyConversion = {
+const propertyConversion = {
   /*
    * Normalizes property names, handling plain english as well as underscored names,
    * and converts for deep property lookups on nested models.
@@ -30,7 +36,7 @@ var propertyConversion = {
   'created_at': 'created_at'
 };
 
-var scoreConversion = {
+const scoreConversion = {
   /*
    * Normalizes score strings to numerical values for sort comparison
    */
@@ -41,157 +47,154 @@ var scoreConversion = {
   'xl': 8
 };
 
-var GroupSort = {};
+export default class GroupSort {
+  static groupSort(jsonArray, property, direction) {
+    /*
+     * Generally the method you want to call from external views.
+     */
+    property = propertyConversion[property] || 'number';
+    direction = direction || 'descending';
+  
+    const lookups = this.createParentLookups(jsonArray);
+    const parents = lookups.parents;
+    const matched = lookups.matched;
+  
+    const preparedItems = this.prepareArrayForSort(jsonArray, parents, matched);
+  
+    return direction === 'ascending' ?
+      this.sort(preparedItems, property) :
+      this.reverseSort(this.sort(preparedItems, property));
+  }
 
-GroupSort.groupSort = function(jsonArray, property, direction) {
-  /*
-   * Generally the method you want to call from external views.
-   */
-  property = propertyConversion[property] || 'number';
-  direction = direction || 'descending';
+  static createParentLookups(arr) {
+    /*
+     * Makes a hash of unique parent ids ("productId:parentNumber") for each:
+     * first, all the array's subitems' parents - whether the parent is a member of
+     * the array or not; second, the parents that are members of the array.
+     * We need this for inclusion checking below, and are making hashes for
+     * inexpensive lookups.
+     */
+    let parents = {};
+    let matched = {};
 
-  var lookups = GroupSort.createParentLookups(jsonArray);
-  var parents = lookups.parents;
-  var matched = lookups.matched;
+    _.each(arr, (item) => {
+      let parentId;
+      if (item.parent) {
+        parentId = item.product.id + ':' + item.parent.number;
+        matched[parentId] = true;
+      } else if (item.children) {
+        parentId = item.product.id + ':' + item.number;
+        parents[parentId] = true;
+      }
+    });
 
-  var preparedItems = GroupSort.prepareArrayForSort(jsonArray, parents, matched);
+    return {
+      parents: parents,
+      matched: matched
+    };
+  }
 
-  return direction === 'ascending' ?
-    GroupSort.sort(preparedItems, property) :
-    GroupSort.reverseSort(GroupSort.sort(preparedItems, property));
-};
+  static prepareArrayForSort(arr, memberParents, matchingParents) {
+    /*
+     * Preprocesses items, adding any parents that aren't members to the array.
+     * Also adds convenience attributes for styling.
+     * Uses matchingParents to keep track of parent-subitem relationships.
+     * Uses nonMatching to keep track of parents that may have been
+     * added to the array already via other subitems.
+     */
+    let preprocessed = [];
+    let nonMatching = {};
+  
+    _.each(arr, (item) => {
+      const parentId = item.parent ? item.product.id + ':' + item.parent.number : null;
+  
+      // Check if item is parent of subitems in our array.
+      if (item.children && matchingParents[item.product.id + ':' + item.number]) {
+        item.isMatched = true;
+      }
+  
+      // Check if item is a subitem. If its parent is not yet a member of our array,
+      // add the parent. All subitems are matched here if not already.
+      if (item.parent) {
+        item.isMatched = true;
+  
+        if (!memberParents[parentId] && !nonMatching[parentId]) {
+          preprocessed.push(_.extend({}, item.parent, {
+            isMatched: true,
+            isNonMatching: true
+          }));
+          nonMatching[parentId] = true;
+        }
+      }
+  
+      // Don't push any nonmatching parents in that are hanging around from previous sorts
+      if (!item.isNonMatching) {
+        preprocessed.push(item);
+      }
+    });
 
+    return preprocessed;
+  }
 
-GroupSort.createParentLookups = function(arr) {
-  /*
-   * Makes a hash of unique parent ids ("productId:parentNumber") for each:
-   * first, all the array's subitems' parents - whether the parent is a member of
-   * the array or not; second, the parents that are members of the array.
-   * We need this for inclusion checking below, and are making hashes for
-   * inexpensive lookups.
-   */
-  var parents = {};
-  var matched = {};
+  static sort(processedJson, property) {
+    /*
+     * Ensure that subitems are grouped to parent, while respecting product id.
+     * True sorts later than false in this array-based sort,
+     * so the fourth value causes subitems to show later in the list.
+     */
+  
+    return _.sortBy(processedJson, (item) => {
+      let itemProperty = this.parentPreferred(item, property);
+  
+      if (typeof itemProperty === 'string') {
+        itemProperty = property === 'score' ?
+          scoreConversion[itemProperty.toLowerCase()] : itemProperty.toLowerCase();
+      }
+  
+      return [
+        itemProperty,
+        this.parentPreferred(item, 'number'),
+        item.product.id,
+        !!item.parent,
+        item.number
+      ];
+    });
+  }
 
-  _.each(arr, function(item) {
-    var parentId;
-    if (item.parent) {
-      parentId = item.product.id + ':' + item.parent.number;
-      matched[parentId] = true;
-    } else if (item.children) {
-      parentId = item.product.id + ':' + item.number;
-      parents[parentId] = true;
-    }
-  });
-
-  return {parents: parents, matched: matched};
-};
-
-
-GroupSort.prepareArrayForSort = function(arr, memberParents, matchingParents) {
-  /*
-   * Preprocesses items, adding any parents that aren't members to the array.
-   * Also adds convenience attributes for styling.
-   * Uses matchingParents to keep track of parent-subitem relationships.
-   * Uses nonMatching to keep track of parents that may have been
-   * added to the array already via other subitems.
-   */
-  var preprocessed = [];
-  var nonMatching = {};
-
-  _.each(arr, function(item) {
-    var parentId = item.parent ? item.product.id + ':' + item.parent.number : null;
-
-    // Check if item is parent of subitems in our array.
-    if (item.children && matchingParents[item.product.id + ':' + item.number]) {
-      item.isMatched = true;
-    }
-
-    // Check if item is a subitem. If its parent is not yet a member of our array,
-    // add the parent. All subitems are matched here if not already.
-    if (item.parent) {
-      item.isMatched = true;
-
-      if (!memberParents[parentId] && !nonMatching[parentId]) {
-        preprocessed.push(_.extend({}, item.parent, {
-          isMatched: true,
-          isNonMatching: true
-        }));
-        nonMatching[parentId] = true;
+  static reverseSort(sortedArray) {
+    /*
+     * When reversing, we want to preserve the order of parent followed
+     * by children, so we push parents and subitems into a temporary intermediate array
+     * while reversing to maintain sorted chunks. The chunks are parent/child groupings.
+    */
+    let reverseSorted = [];
+    let temp = [];
+  
+    for (let i = sortedArray.length - 1; i >= 0; i--) {
+      // if the current item's value isn't the same as the temp,
+      // push the full temp onto the resorted list; otherwise, add it to temp.
+      const item = sortedArray[i];
+  
+      if (!temp.length) {
+        temp = [item];
+        continue;
+      }
+  
+      if (
+        (item.parent && temp[0].parent && temp[0].parent.number === item.parent.number)
+        || (temp[0].parent && item.number === temp[0].parent.number)
+      ) { // add to head of array to maintain original sort order
+        temp.unshift(item);
+      } else {
+        reverseSorted = _.union(reverseSorted, temp);
+        temp = [item];
       }
     }
 
-    // Don't push any nonmatching parents in that are hanging around from previous sorts
-    if (!item.isNonMatching) {
-      preprocessed.push(item);
-    }
-  });
-
-  return preprocessed;
-};
-
-
-GroupSort.parentPreferred = function (item, prop) {
-  return lookup.get(item.parent ? item.parent : item, prop);
-};
-
-
-GroupSort.sort = function(processedJson, property) {
-  /*
-   * Ensure that subitems are grouped to parent, while respecting product id.
-   * True sorts later than false in this array-based sort,
-   * so the fourth value causes subitems to show later in the list.
-   */
-
-  return _.sortBy(processedJson, function(item) {
-    var itemProperty = GroupSort.parentPreferred(item, property);
-
-    if (typeof itemProperty === 'string') {
-      itemProperty = property === 'score' ?
-        scoreConversion[itemProperty.toLowerCase()] : itemProperty.toLowerCase();
-    }
-
-    return [
-      itemProperty,
-      GroupSort.parentPreferred(item, 'number'),
-      item.product.id,
-      !!item.parent,
-      item.number
-    ];
-  }, this);
-};
-
-
-GroupSort.reverseSort = function(sortedArray) {
-  /*
-   * When reversing, we want to preserve the order of parent followed
-   * by children, so we push parents and subitems into a temporary intermediate array
-   * while reversing to maintain sorted chunks. The chunks are parent/child groupings.
-  */
-  var reverseSorted = [];
-  var temp = [];
-
-  for (var i = sortedArray.length - 1; i >= 0; i--) {
-    // if the current item's value isn't the same as the temp,
-    // push the full temp onto the resorted list; otherwise, add it to temp.
-    var item = sortedArray[i];
-
-    if (!temp.length) {
-      temp = [item];
-      continue;
-    }
-
-    if (
-      (item.parent && temp[0].parent && temp[0].parent.number === item.parent.number)
-      || (temp[0].parent && item.number === temp[0].parent.number)
-    ) { // add to head of array to maintain original sort order
-      temp.unshift(item);
-    } else {
-      reverseSorted = _.union(reverseSorted, temp);
-      temp = [item];
-    }
+    return temp.length ? _.union(reverseSorted, temp) : reverseSorted;
   }
-  return temp.length ? _.union(reverseSorted, temp) : reverseSorted;
-}
 
-module.exports = GroupSort;
+  static parentPreferred(item, prop) {
+    return lookup.get(item.parent ? item.parent : item, prop);
+  }
+};
