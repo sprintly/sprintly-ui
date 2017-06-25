@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
+import ReactTestUtils from 'react-addons-test-utils';
 import ReactDOM from 'react-dom';
 import sinon from 'sinon';
 import Tags from '../src/components/tags';

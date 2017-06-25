@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
-import ReactTestUtils from 'react-dom/test-utils';
+import ReactTestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 
 import SelectorMenu from '../src/components/selector_menu/index';

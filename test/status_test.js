@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
+import ReactTestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import Status from '../src/components/status';
 
